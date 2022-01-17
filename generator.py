@@ -1141,6 +1141,13 @@ def output_html():
             margin: 0 auto;
         }
 
+        /* The "visited" colors for links is not very useful */
+        a, a:visited { color: rgb(0, 0, 238); }
+
+        /* Many of our link contain underscores, which look weird when underlined*/
+        a { text-decoration: none; }
+        a:hover, a:focus { text-decoration: underline; }
+
         h2 {
             font-size: medium;
         }
