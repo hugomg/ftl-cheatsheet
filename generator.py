@@ -482,20 +482,23 @@ def graph_add_event(event, enemy_ship_name):
         else:
             extra_str = ""
 
-        if amount_num < 0:
-            n = str(abs(amount_num))
-            actions.append('<li><strong>Lose {n} random crew</strong>'.format(n = H(n)))
-        elif amount_num == 0:
-            abort("receive 0 crew")
-        else: # amount_num > 0:
-            actions.append('<li><strong>New crewmember</strong>{extra_str}'.format(extra_str = H(extra_str)))
+        n = str(abs(amount_num))
+
+        if   amount_num <= -2: template = '<li><strong>Lose {n} Crew</strong>'
+        elif amount_num == -1: template = '<li><strong>Lose Crew</strong>'
+        elif amount_num ==  0: template = None; log("receive 0 crew")
+        elif amount_num ==  1: template = '<li><strong>Gain Crew</strong>{extra_str}'
+        elif amount_num >=  2: template = '<li><strong>Gain {n} Crew</strong>{extra_str}'
+
+        if template:
+            actions.append(template.format(n = H(n), extra_str = H(extra_str)))
 
     removeCrew = event.find('removeCrew')
     if removeCrew is not None:
         cls = removeCrew.get('class') or 'random'
 
         if cls == 'random':
-            spc = "random"
+            spc = ""
         else:
             spc = species_name[cls]
 
@@ -511,8 +514,8 @@ def graph_add_event(event, enemy_ship_name):
         else:
             msg = ''
 
-        actions.append('<li><strong>Lose 1 {cls} crew</strong> {clone_msg}'.format(
-            cls = H(cls),
+        actions.append('<li><strong>Lose {spc} Crew</strong> {clone_msg}'.format(
+            spc = H(spc),
             clone_msg = clone_html))
 
     repair = event.find('repair')
