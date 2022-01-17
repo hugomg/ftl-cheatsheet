@@ -1018,11 +1018,11 @@ def goto_event_or_group(name):
     else:
         assert False
 
-def output_event(eventID, is_root=False):
+def output_event(eventID):
     event = event_dict[eventID]
     printed_events.add(eventID)
 
-    if is_root or (event.choices and len(event.choices) >= 2):
+    if (eventID in root_event_set) or (event.choices and len(event.choices) >= 2) :
         # Don't print the text for events without a choice,
         # This reduces clutter, and the total Kb of the webpage.
         print(event.text_html)
@@ -1116,10 +1116,10 @@ def output_html():
     # Events
     print('<h1>Events</h1>')
     for key in event_dict:
-        if event_nparents[key] != 1:
+        if (not key.startswith('evt-')) and (key in root_event_set or event_nparents[key] > 1):
             print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
             print('<div class="indent">')
-            output_event(key, is_root=True)
+            output_event(key)
             print('</div>')
 
     # Event groups
