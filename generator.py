@@ -212,7 +212,7 @@ event_schema = {
     'augment'       : set(['name']),
     'autoReward'    : set(['level']),
     'boarders'      : set(['min', 'max', 'class', 'breach']),
-    'choice'        : set(['req', 'hidden', 'blue']),
+    'choice'        : set(['req', 'hidden', 'hiiden', 'blue', 'lvl', 'min_level', 'max_lvl', 'max_group']),
     'crewMember'    : set(['amount','class','type','id','all_skills','weapons','shields','pilot','engines','combat','repair']),
     'damage'        : set(['amount', 'system', 'effect']),
     'distressBeacon': set([]),
@@ -736,11 +736,30 @@ def graph_add_event(event, enemy_ship_name):
         for choice in choice_node:
             choice_text_node = choice.find('text')
             text = translate_message(choice_text_node)
+
+            req       = choice.get('req')
+            blue      = choice.get('blue')
+            min_level = choice.get('lvl') or choice.get('min_level')
+            max_level = choice.get('max_lvl')
+            hidden    = choice.get('hidden')
+            if hidden: hidden = hidden.lower()
+
+            is_blue = ((req is not None) and (hidden == 'true') and (blue != 'false'))
             
-            is_blue = (
-                (choice.get('req') is not None) and
-                (choice.get('hidden') == 'true') and
-                (choice.get('blue') != 'false'))
+            if req and not is_blue:
+                if   (min_level is not None) and (max_level is not None):
+                    req_msg = '[{} ≤ {} ≤ {}] '.format(min_level, H(req), max_level)
+                elif (min_level is not None) and (max_level is None):
+                    req_msg = '[{} ≥ {}] '.format(H(req), min_level)
+                elif (min_level is  None)    and (max_level is not None):
+                    req_msg = '[{} ≤ {}] '.format(H(req), max_level)
+                elif (min_level is  None)    and (max_level is None):
+                    req_msg = '[{}] '.format(H(req))
+                else:
+                    assert False
+            else:
+                req_msg = ''
+
      
             sub_event = choice.find('event')
             if sub_event is not None:
@@ -749,7 +768,7 @@ def graph_add_event(event, enemy_ship_name):
                 log("EMPTY CHOICE: " + id)
                 eventID = None
 
-            parsed_choices.append( (text, is_blue, eventID) )
+            parsed_choices.append( (req_msg+text, is_blue, eventID) )
         parsed_choices = tuple(parsed_choices)
 
     #
