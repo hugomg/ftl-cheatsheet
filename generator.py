@@ -1057,8 +1057,8 @@ def output_event(eventID):
     if event.choices:
         print('<ol>')
         for (text, is_blue, nextID) in event.choices:
-            cls = 'option blue' if is_blue else 'option'
-            print('<li><span class="{cls}">{text}</span>'.format(cls = H(cls), text = H(text)))
+            cls_html = 'class="option" if is_blue else '''
+            print('<li><em {cls_html}>{text}</em>'.format(cls_html = cls_html, text = H(text)))
             print('<div>')
             goto_group_or_event(nextID)
             print('</div>')
@@ -1121,13 +1121,36 @@ def output_html():
 <head>
     <meta charset="utf-8">
     <style>
-        body { font-family: sans-serif; }
-        h2 { font-size: medium; }
-        ul { list-style: initial; } /* Use top-level bullets in nested lists */
-        ul.textlist { padding-left: 15px; }
-        .indent { padding-left: 20px; }
-        .option { font-style: italic; }
-        .blue { color: #10aee8; }
+
+        body {
+            /* More readable text*/
+            font-family: sans-serif;
+            color: #222;
+            max-width:800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: medium;
+        }
+
+        ul {
+            /* Use top-level bullets in nested lists */
+            list-style: initial;
+        }
+
+        ul.textlist {
+            /* Don't indent the text-alternative lists */
+            padding-left: 15px;
+        }
+
+        .indent {
+            padding-left: 20px;
+        }
+
+        .blue {
+            color: #10aee8;
+        }
     </style>
 </head>
 <body>
@@ -1136,7 +1159,8 @@ def output_html():
        I created it because I got tired of wading through slow wiki pages and unreadable XML data files,
        when I am trying to remember what a particular event does.
        Use Ctrl-F to find the event your are looking for, and have fun!
-       <p>Note: Some events in the list may be test/debug events, which cannot be encountered via normal gameplay.""")
+    <p>Notes: You can use Ctrl-S to save a local copy of this page.
+       Some events in the list may be test/debug events, which cannot be encountered via normal gameplay.""")
 
     # Events
     print('<h1>Events</h1>')
