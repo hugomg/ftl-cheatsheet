@@ -208,50 +208,68 @@ def init_blueprint_names():
 #
 
 # Children of the <event> nodes
-event_known_tags = set([
-    'augment',
-    'autoReward',
-    'boarders',
-    'choice',
-    'crewMember',
-    'damage',
-    'distressBeacon',
-    'drone',
-    'environment',
-    'fleet',
-    'img',
-    'item_modify',
-    'modifyPursuit',
-    'quest',
-    'removeCrew',
-    'remove',
-    'repair',
-    'reveal_map',
-    'secretSector',
-    'ship',
-    'status',
-    'store',
-    'text',
-    'unlockShip',
-    'upgrade',
-    'weapon',
-])
+event_schema = {
+    'augment'       : set(['name']),
+    'autoReward'    : set(['level']),
+    'boarders'      : set(['min', 'max', 'class', 'breach']),
+    'choice'        : set(['req', 'hidden', 'blue']),
+    'crewMember'    : set(['amount','class','type','id','all_skills','weapons','shields','pilot','engines','combat','repair']),
+    'damage'        : set(['amount', 'system', 'effect']),
+    'distressBeacon': set([]),
+    'drone'         : set(['name']),
+    'environment'   : set(['type', 'target']),
+    'fleet'         : set([]),
+    'img'           : set(['back', 'planet']), 
+    'item_modify'   : set(['type', 'min', 'max', 'steal']),
+    'modifyPursuit' : set(['amount']),
+    'quest'         : set(['event']),
+    'removeCrew'    : set(['class', 'clone']),
+    'remove'        : set(['name']),
+    'repair'        : set([]),
+    'reveal_map'    : set([]),
+    'secretSector'  : set([]),
+    'ship'          : set(['load', 'hostile']),
+    'status'        : set(['type', 'target', 'system', 'amount']),
+    'store'         : set([]),
+    'text'          : set(['id', 'load', 'planet']),
+    'unlockShip'    : set(['id']),
+    'upgrade'       : set(['amount', 'system']),
+    'weapon'        : set(['name']),
+
+    'event': None, #buggy test event GHOST_DOCK
+}
 
 # Children of <ship> nodes
-ship_known_tags = set([
-    'crew',
-    'destroyed',
-    'deadCrew',
-    'escape',
-    'gotaway',
-    'surrender',
-])
+ship_schema = {
+    'crew'     : set([]),
+    'destroyed': set(['load']),
+    'deadCrew' : set(['load']),
+    'escape'   : set(['load', 'chance', 'min', 'max', 'timer']),
+    'gotaway'  : set(['load']),
+    'surrender': set(['load', 'chance', 'min', 'max']),
+    'weaponOverride': None, # TODO
+}
 
 # Children of <eventList> nodes
-group_known_tags = set([
-    'event',
-])
+group_schema = {
+    'event': set(['load']),
+}
 
+def check_schema(parent, schema):
+    for child in parent:
+        tag = child.tag
+        if tag in schema:
+            attrs = schema[tag]
+            if attrs is None: continue
+            for k in child.attrib:
+                if not k in attrs:
+                    log('Unknown attr {}.{}.{}'.format(parent.tag, child.tag, k))
+                    attrs.add(k)
+        else:
+            log(ET.tostring(parent))
+            log("Unknown tag {}.{}".format(parent.tag, child.tag))
+            schema[tag] = set([])
+            
 def check_child_nodes(parent, known_tags):
     for child in parent:
         tag = child.tag
@@ -350,7 +368,7 @@ def graph_add_event(event, enemy_ship_name):
     # Note: We set the enemy_ship_name param in the <ship> child case
 
     # Consistency check
-    check_child_nodes(event, event_known_tags)
+    check_schema(event, event_schema)
 
     key = event.get("name")
 
@@ -395,6 +413,7 @@ def graph_add_event(event, enemy_ship_name):
     img = event.find('img')
     if img is not None:
         # Custom background image
+        # attrs: back planet
         pass
 
     ship = event.find('ship')
@@ -457,6 +476,7 @@ def graph_add_event(event, enemy_ship_name):
         lo = int(boarders.get('min'))
         hi = int(boarders.get('max'))
         cls = boarders.get('class') or 'random'
+        breach = boarders.get('breach')
 
         num = num_range(lo, hi)
 
@@ -464,10 +484,16 @@ def graph_add_event(event, enemy_ship_name):
             spc = 'enemies'
         else:
             spc = species_name[cls]
+
+        if breach and breach.lower() == 'true':
+            breach_html = ' (with <strong>breach</strong>)'
+        else:
+            breach_html = ''
         
-        actions.append('<li><strong>Boarded</strong> by {num} {spc}</strong>'.format(
+        actions.append('<li><strong>Boarded</strong> by {num} {spc}</strong>{breach_html}'.format(
             num = H(num),
-            spc = H(spc)))
+            spc = H(spc),
+            breach_html = breach_html))
 
     remove = event.find('remove')
     if remove is not None:
@@ -477,7 +503,7 @@ def graph_add_event(event, enemy_ship_name):
     crew = event.find('crewMember')
     if crew is not None:
         amount_str = crew.get('amount')
-        cls        = crew.get('class')
+        cls        = crew.get('class') or crew.get('type')
         id         = crew.get('id')
 
         amount_num = int(amount_str)
@@ -612,6 +638,7 @@ def graph_add_event(event, enemy_ship_name):
 
     item_modify = event.find('item_modify')
     if item_modify is not None:
+        steal = item_modify.get('steal') # Determines if "trade" ammount is shown next to the parent choice
         for item in item_modify.iterfind('item'):
             typ = item.get('type')
             lo  = int(item.get('min'))
@@ -761,7 +788,7 @@ ship_event_types = ['destroyed', 'deadCrew', 'gotaway', 'surrender']
 def graph_add_ship(ship):
 
     # Consistency check
-    check_child_nodes(ship, ship_known_tags)
+    check_schema(ship, ship_schema)
 
     key = ship.get("name")
     assert key
@@ -775,6 +802,7 @@ def graph_add_ship(ship):
     if escape is not None:
         # The message that appears when the enemy tries to escape
         # Which is not very interesting for the cheatsheet
+        # attrs: chance min max timer
         pass
 
     evts = {}
@@ -790,14 +818,14 @@ def graph_add_ship(ship):
         'destroyed': evts['destroyed'],
         'dead_crew': evts['deadCrew'],
         'gotaway'  : evts['gotaway'],
-        'surrender': evts['surrender'],
+        'surrender': evts['surrender'], # attrs: chance min max
     }
     return key
 
 def graph_add_group(group):
 
     # Consistency check
-    check_child_nodes(group, group_known_tags)
+    check_schema(group, group_schema)
 
     cases = []
     for event in group.iterfind('event'):
