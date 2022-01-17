@@ -338,9 +338,9 @@ def blueprint_event(what, id):
     """Common functionality for adding weapon/drone/augment"""
     
     if id == 'RANDOM':
-        return '<li><strong>Random {what}</strong>'.format(what = H(what))
+        return '<li><strong>{what}</strong>'.format(what = H(what))
     elif id == 'DLC_AUGMENTS' or id == 'DLC_DRONES' or id == 'DLC_WEAPONS':
-        return '<li><strong>Random {what}</strong> (from Advanced Edition)'.format(what = H(what))
+        return '<li><strong>{what}</strong> (from Advanced Edition)'.format(what = H(what))
     else:
         name = blueprint_name[id]
         return '<li><strong>{what}</strong> ({name})'.format(what = H(what), name = H(name))
@@ -595,7 +595,7 @@ def graph_add_event(event, enemy_ship_name):
 
     drone = event.find('drone')
     if drone is not None:
-        actions.append( blueprint_event('Drone', drone.get('name')) )
+        actions.append( blueprint_event('Drone Schematic', drone.get('name')) )
 
     item_modify = event.find('item_modify')
     if item_modify is not None:
@@ -625,9 +625,9 @@ def graph_add_event(event, enemy_ship_name):
         level = reward.get('level').upper()
         kind  = reward.text
 
-        if   kind == 'augment': blueprint = 'Augment'; kind = 'scrap_only'
-        elif kind == 'drone':   blueprint = 'Drone';   kind = 'scrap_only'
-        elif kind == 'weapon':  blueprint = 'Weapon';  kind = 'scrap_only'
+        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augment'
+        elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
+        elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
         else : blueprint = None
         
         level_html = autoreward_level_html[level]
