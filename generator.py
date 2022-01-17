@@ -1137,7 +1137,7 @@ def output_html():
             /* More readable text*/
             font-family: sans-serif;
             color: #222;
-            max-width:800px;
+            max-width:50em;
             margin: 0 auto;
         }
 
