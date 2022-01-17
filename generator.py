@@ -79,20 +79,12 @@ damage_effect = {
     "random" : "may cause breach or fire",
 }
 
-resource_name_singular = {
-    'drones'  : "drone part",
-    'fuel'    : "fuel",
-    'missile' : "missile",
-    'missiles': "missile",
-    'scrap'   : "scrap",
-}
-
-resource_name_plural = {
-    'drones'  : "drone parts",
-    'fuel'    : "fuel",
-    'missile' : "missiles",
-    'missiles': "missiles",
-    'scrap'   : "scrap",
+resource_name = {
+    'drones'  : "Drone parts",
+    'fuel'    : "Fuel",
+    'missile' : "Missiles",
+    'missiles': "Missiles",
+    'scrap'   : "Scrap",
 }
 
 autoreward_kind_html = {
@@ -616,19 +608,16 @@ def graph_add_event(event, enemy_ship_name):
             lo  = int(item.get('min'))
             hi  = int(item.get('max'))
 
-            if abs(lo) == 1 and abs(hi) == 1:
-                what = resource_name_singular[typ]
-            else:
-                what = resource_name_plural[typ]
-            
+            what = resource_name[typ]
+
             if lo >= 0 and hi >= 0:
                 rng = num_range(lo, hi)
-                actions.append('<li><strong>Receive</strong> {rng} {what}'.format(
+                actions.append('<li>+ {rng} <strong>{what}</strong>'.format(
                     rng = H(rng),
                     what = H(what)))
             elif lo <= 0 and hi <= 0:
                 rng = num_range(-hi, -lo)
-                actions.append('<li><strong>Pay</strong> {rng} {what}'.format(
+                actions.append('<li>− {rng} <strong>{what}</strong>'.format(
                     rng = H(rng),
                     what = H(what)))
             else:
