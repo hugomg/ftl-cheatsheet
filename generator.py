@@ -607,61 +607,6 @@ def graph_add_event(event, enemy_ship_name):
         else:
             abort("Unknown <status> type: "+typ)
 
-    augment = event.find('augment')
-    if augment is not None:
-        actions.append( blueprint_event('Augmentation', augment.get('name')) )
-
-    weapon = event.find('weapon')
-    if weapon is not None:
-        actions.append( blueprint_event('Weapon', weapon.get('name')) )
-
-    drone = event.find('drone')
-    if drone is not None:
-        actions.append( blueprint_event('Drone Schematic', drone.get('name')) )
-
-    item_modify = event.find('item_modify')
-    if item_modify is not None:
-        steal = item_modify.get('steal') # Determines if "trade" ammount is shown next to the parent choice
-        for item in item_modify.iterfind('item'):
-            typ = item.get('type')
-            lo  = int(item.get('min'))
-            hi  = int(item.get('max'))
-
-            what = resource_name[typ]
-
-            if lo >= 0 and hi >= 0:
-                rng = num_range(lo, hi)
-                actions.append('<li>+ {rng} <strong>{what}</strong>'.format(
-                    rng = H(rng),
-                    what = H(what)))
-            elif lo <= 0 and hi <= 0:
-                rng = num_range(-hi, -lo)
-                actions.append('<li>− {rng} <strong>{what}</strong>'.format(
-                    rng = H(rng),
-                    what = H(what)))
-            else:
-                abort("nonsensical resource range")
-
-    reward = event.find('autoReward')
-    if reward is not None:
-        level = reward.get('level').upper()
-        kind  = reward.text
-
-        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augmentation'
-        elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
-        elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
-        else : blueprint = None
-
-        level_html = autoreward_level_html[level]
-        kind_html  = autoreward_kind_html[kind]
-
-        actions.append('<li><strong>{level_html}</strong> {kind_html}'.format(
-            level_html = level_html,
-            kind_html = kind_html))
-
-        if blueprint:
-            actions.append(blueprint_event(blueprint, 'RANDOM'))
-
     pursuit = event.find('modifyPursuit')
     if pursuit is not None:
         amount_str = pursuit.get('amount')
@@ -690,6 +635,72 @@ def graph_add_event(event, enemy_ship_name):
     if reveal_map is not None:
         actions.append('<li><strong>Map Update</strong>')
 
+    upgrade = event.find("upgrade")
+    if upgrade is not None:
+        amount   = upgrade.get('amount')
+        systemID = upgrade.get('system')
+
+        system = system_name[systemID]
+        html = '<li><strong>Upgrade</strong> {system}'.format(system = H(system))
+        if amount != '1':
+            html += ' (by {amount})'.format(amount = H(amount))
+        actions.append(html)
+
+    augment = event.find('augment')
+    if augment is not None:
+        actions.append( blueprint_event('Augmentation', augment.get('name')) )
+
+    weapon = event.find('weapon')
+    if weapon is not None:
+        actions.append( blueprint_event('Weapon', weapon.get('name')) )
+
+    drone = event.find('drone')
+    if drone is not None:
+        actions.append( blueprint_event('Drone Schematic', drone.get('name')) )
+
+    reward = event.find('autoReward')
+    if reward is not None:
+        level = reward.get('level').upper()
+        kind  = reward.text
+
+        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augmentation'
+        elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
+        elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
+        else : blueprint = None
+
+        level_html = autoreward_level_html[level]
+        kind_html  = autoreward_kind_html[kind]
+
+        if blueprint:
+            actions.append(blueprint_event(blueprint, 'RANDOM'))
+
+        actions.append('<li><strong>{level_html}</strong> {kind_html}'.format(
+            level_html = level_html,
+            kind_html = kind_html))
+
+    item_modify = event.find('item_modify')
+    if item_modify is not None:
+        steal = item_modify.get('steal') # Determines if "trade" ammount is shown next to the parent choice
+        for item in item_modify.iterfind('item'):
+            typ = item.get('type')
+            lo  = int(item.get('min'))
+            hi  = int(item.get('max'))
+
+            what = resource_name[typ]
+
+            if lo >= 0 and hi >= 0:
+                rng = num_range(lo, hi)
+                actions.append('<li>+ {rng} <strong>{what}</strong>'.format(
+                    rng = H(rng),
+                    what = H(what)))
+            elif lo <= 0 and hi <= 0:
+                rng = num_range(-hi, -lo)
+                actions.append('<li>− {rng} <strong>{what}</strong>'.format(
+                    rng = H(rng),
+                    what = H(what)))
+            else:
+                abort("nonsensical resource range")
+
     secret_sector = event.find('secretSector')
     if secret_sector is not None:
         actions.append('<li><strong>Travel</strong> to the crystal sector!')
@@ -706,17 +717,6 @@ def graph_add_event(event, enemy_ship_name):
         id = unlock.get('id')
         name = unlock_name[id]
         actions.append('<li><strong>Unlock</strong> the {name}'.format(name = H(name)))
-
-    upgrade = event.find("upgrade")
-    if upgrade is not None:
-        amount   = upgrade.get('amount')
-        systemID = upgrade.get('system')
-
-        system = system_name[systemID]
-        html = '<li><strong>Upgrade</strong> {system}'.format(system = H(system))
-        if amount != '1':
-            html += ' (by {amount})'.format(amount = H(amount))
-        actions.append(html)
 
     store = event.find('store')
     if store is not None:
