@@ -1,0 +1,7 @@
+body { font-family: sans-serif; }
+h2 { font-size: medium; }
+ul { list-style: initial; } /* Use top-level bullets in nested lists */
+ul.textlist { padding-left: 15px; }
+.indent { padding-left: 20px; }
+.option { font-style: italic; }
+.blue { color: #10aee8; }
