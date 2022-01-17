@@ -101,9 +101,9 @@ autoreward_kind_html = {
     'standard': 'scrap and resources',
     'stuff'   : 'resources and scrap',
 
-    'augment' : 'scrap and <strong>random augment</strong>',
-    'drone'   : 'scrap and <strong>random drone</strong>',
-    'weapon'  : 'scrap and <strong>random weapon</strong>',
+    #'augment' : 'scrap and <strong>random augment</strong>',
+    #'drone'   : 'scrap and <strong>random drone</strong>',
+    #'weapon'  : 'scrap and <strong>random weapon</strong>',
 }
 
 autoreward_level_html = {
@@ -334,10 +334,9 @@ def build_graph():
             graph_add_ship(ship)
 
 
-def blueprint_event(what, node):
+def blueprint_event(what, id):
     """Common functionality for adding weapon/drone/augment"""
     
-    id = node.get('name')
     if id == 'RANDOM':
         return '<li><strong>Random {what}</strong>'.format(what = H(what))
     elif id == 'DLC_AUGMENTS' or id == 'DLC_DRONES' or id == 'DLC_WEAPONS':
@@ -588,15 +587,15 @@ def graph_add_event(event, enemy_ship_name):
 
     augment = event.find('augment')
     if augment is not None:
-        actions.append( blueprint_event('Augment', augment) )
+        actions.append( blueprint_event('Augment', augment.get('name')) )
 
     weapon = event.find('weapon')
     if weapon is not None:
-        actions.append( blueprint_event('Weapon', weapon) )
+        actions.append( blueprint_event('Weapon', weapon.get('name')) )
 
     drone = event.find('drone')
     if drone is not None:
-        actions.append( blueprint_event('drone', drone) )
+        actions.append( blueprint_event('Drone', drone.get('name')) )
 
     item_modify = event.find('item_modify')
     if item_modify is not None:
@@ -626,12 +625,20 @@ def graph_add_event(event, enemy_ship_name):
         level = reward.get('level').upper()
         kind  = reward.text
 
+        if   kind == 'augment': blueprint = 'Augment'; kind = 'scrap_only'
+        elif kind == 'drone':   blueprint = 'Drone';   kind = 'scrap_only'
+        elif kind == 'weapon':  blueprint = 'Weapon';  kind = 'scrap_only'
+        else : blueprint = None
+        
         level_html = autoreward_level_html[level]
         kind_html  = autoreward_kind_html[kind]
 
         actions.append('<li><strong>{level_html}</strong> {kind_html}'.format(
             level_html = level_html,
             kind_html = kind_html))
+
+        if blueprint:
+            actions.append(blueprint_event(blueprint, 'RANDOM'))
 
     pursuit = event.find('modifyPursuit')
     if pursuit is not None:
@@ -720,7 +727,7 @@ def graph_add_event(event, enemy_ship_name):
             if is_hostile:
                 actions.append('<li><strong>Fight</strong>')
             else:
-                actions.append('<li><strong>Stop Fight</strong>')
+                actions.append('<li><strong>End Fight</strong>')
 
         if is_hostile and enemy_ship_name:
             ends_with_fight = True
