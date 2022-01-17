@@ -411,24 +411,22 @@ def graph_add_event(event, enemy_ship_name):
     hazard = event.find('environment')
     if hazard is not None:
         typ = hazard.get('type')
-        if typ == 'asteroid':
-            actions.append('<li><strong>Environmental Hazard</strong>: asteroid field')
-        elif typ == 'nebula':
-            actions.append('<li><strong>Environmental Hazard</strong>: nebula')
-        elif typ == 'pulsar':
-            actions.append('<li><strong>Environmental Hazard</strong>: pulsar')
-        elif typ == 'storm':
-            actions.append('<li><strong>Environmental Hazard</strong>: ion storm')
-        elif typ == 'sun':
-            actions.append('<li><strong>Environmental Hazard</strong>: red giant star')
+
+        
+        if   typ == 'asteroid': what = "Asteroid Field"
+        elif typ == 'nebula': what = "Nebula"
+        elif typ == 'pulsar': what = "Pulsar"
+        elif typ == 'storm': what = "Plasma Storm"
+        elif typ == 'sun': what = "Red Star"
         elif typ == 'PDS':
             target = hazard.get('target')
-            if target == 'all':
-                actions.append('<li><strong>Confused Anti-Ship Battery</strong> targeting both ships')
-            elif target == 'enemy':
-                actions.append('<li><strong>Friendly Anti-Ship Battery</strong> targeting the enemy')
-            elif target == 'player':
-                actions.append('<li><strong>Anti-Ship Battery</strong> targeting us')
+            if   target == 'all': what = "Confused Anti-Ship Battery targeting both ships"
+            elif target == 'enemy': what = "Friendly Anti-Ship Battery"
+            elif target == 'player': what = "Anti-Ship Battery targeting us"
+            else: assert False
+        else: assert False
+
+        actions.append('<li><strong>Environment</strong> is {what}'.format(what = H(what)))
 
     boarders = event.find('boarders')
     if boarders is not None:
