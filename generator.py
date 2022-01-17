@@ -299,14 +299,12 @@ Fight = namedtuple('Fight', [
     'surrender', # eventid
 ])
 
-#
-# Note: in 
-#
-
 texts_dict = {} # <testList>
 event_dict = {} # <event>
 ship_dict  = {} # <ship>
 group_dict = {} # <eventList>
+
+quest_events_set = set()
 
 anon_events = 0
 def gen_event_id():
@@ -675,8 +673,9 @@ def graph_add_event(event, enemy_ship_name):
     quest = event.find('quest')
     if quest is not None:
         id = quest.get('event')
+        quest_events_set.add(id)
         url_html = event_link(id)
-        actions.append('<li><strong>Add quest marker</strong> for {url_html}'.format(url_html = url_html))
+        actions.append('<li><strong>Quest</strong> marker for {url_html}'.format(url_html = url_html))
 
     unlock = event.find("unlockShip")
     if unlock is not None:
@@ -1125,7 +1124,10 @@ def output_html():
     # Events
     print('<h1>Events</h1>')
     for key in event_dict:
-        if (not key.startswith('evt-')) and (key in root_event_set or event_nparents[key] > 1):
+        if (
+            (not key.startswith('evt-')) and
+            (key in root_event_set or key in quest_events_set or event_nparents[key] > 1)
+        ):
             print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
             print('<div class="indent">')
             output_event(key)
