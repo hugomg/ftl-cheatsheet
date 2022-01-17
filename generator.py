@@ -757,7 +757,7 @@ def graph_add_event(event, enemy_ship_name):
 
             is_blue = ((req is not None) and (hidden == 'true') and (blue != 'false'))
             
-            if req and not is_blue:
+            if req and (not is_blue or (min_level and min_level != '1')):
                 if   (min_level is not None) and (max_level is not None):
                     req_msg = '[{} ≤ {} ≤ {}] '.format(min_level, H(req), max_level)
                 elif (min_level is not None) and (max_level is None):
