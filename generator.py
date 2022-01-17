@@ -416,39 +416,6 @@ def graph_add_event(event, enemy_ship_name):
         # attrs: back planet
         pass
 
-    ship = event.find('ship')
-    if ship is not None:
-        shipID = ship.get('load')
-        if shipID:
-            url_html = ship_link(shipID)
-            enemy_ship_name = shipID
-                    
-        hostility = ship.get('hostile')
-        if hostility:
-            hostility = hostility.lower()
-            if   hostility == 'true':
-                is_hostile = True
-            elif hostility == 'false':
-                is_hostile = False
-            else:
-                abort("Unknown hostile=" + hostility)
-        else:
-            is_hostile = False
-
-        if shipID:
-            if is_hostile:
-                actions.append('<li><strong>Fight</strong> a {url_html}'.format(url_html = url_html))
-            else:
-                actions.append('<li><strong>Encounter</strong> a {url_html}'.format(url_html = url_html))
-        else:
-            if is_hostile:
-                actions.append('<li><strong>Fight</strong>')
-            else:
-                actions.append('<li><strong>End fight</strong>')
-
-        if is_hostile and enemy_ship_name:
-            ends_with_fight = True
-
     hazard = event.find('environment')
     if hazard is not None:
         typ = hazard.get('type')
@@ -722,6 +689,39 @@ def graph_add_event(event, enemy_ship_name):
     store = event.find('store')
     if store is not None:
         actions.append('<li><strong>Opens a store</strong>')
+
+    ship = event.find('ship')
+    if ship is not None:
+        shipID = ship.get('load')
+        if shipID:
+            url_html = ship_link(shipID)
+            enemy_ship_name = shipID
+                    
+        hostility = ship.get('hostile')
+        if hostility:
+            hostility = hostility.lower()
+            if   hostility == 'true':
+                is_hostile = True
+            elif hostility == 'false':
+                is_hostile = False
+            else:
+                abort("Unknown hostile=" + hostility)
+        else:
+            is_hostile = False
+
+        if shipID:
+            if is_hostile:
+                actions.append('<li><strong>Fight</strong> a {url_html}'.format(url_html = url_html))
+            else:
+                actions.append('<li><strong>Encounter</strong> a {url_html}'.format(url_html = url_html))
+        else:
+            if is_hostile:
+                actions.append('<li><strong>Fight</strong>')
+            else:
+                actions.append('<li><strong>End fight</strong>')
+
+        if is_hostile and enemy_ship_name:
+            ends_with_fight = True
 
 
 
