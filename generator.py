@@ -982,9 +982,6 @@ def output_event(eventID, is_root=False):
 
     print(event.actions_html)
 
-    if event.choices and event.fight:
-        log('choice and ship fight: '+ eventID)
-
     if event.choices:
         print('<ol>')
         for (text, is_blue, nextID) in event.choices:
@@ -1120,12 +1117,6 @@ def main():
     init_nesting()
     init_root_events()
     output_html()
-
-    for e in event_dict:
-        if e not in printed_events:
-            log("!!"+e)
-
-    log('DISTRESS_ENGI_REBEL_RESULT' in event_dict)
 
 if __name__ == "__main__":
     main()
