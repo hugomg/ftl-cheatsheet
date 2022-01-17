@@ -765,26 +765,32 @@ def graph_add_event(event, enemy_ship_name):
             req       = choice.get('req')
             blue      = choice.get('blue')
             min_level = choice.get('lvl') or choice.get('min_level')
-            max_level = choice.get('max_lvl')
+            max_level = choice.get('max_lvl') or choice.get('max_level')
             hidden    = choice.get('hidden')
             if hidden: hidden = hidden.lower()
 
             is_blue = ((req is not None) and (hidden == 'true') and (blue != 'false'))
+            is_complex = (max_level or (min_level and min_level != '1'))
             
-            if req and (not is_blue or (min_level and min_level != '1')):
+            if req and is_complex:
                 if   (min_level is not None) and (max_level is not None):
-                    req_msg = '[{} ≤ {} ≤ {}] '.format(min_level, H(req), max_level)
+                    req_msg = '({} ≤ {} ≤ {}) '.format(min_level, H(req), max_level)
                 elif (min_level is not None) and (max_level is None):
-                    req_msg = '[{} ≥ {}] '.format(H(req), min_level)
+                    req_msg = '({} ≥ {}) '.format(H(req), min_level)
                 elif (min_level is  None)    and (max_level is not None):
-                    req_msg = '[{} ≤ {}] '.format(H(req), max_level)
+                    req_msg = '({} ≤ {}) '.format(H(req), max_level)
                 elif (min_level is  None)    and (max_level is None):
-                    req_msg = '[{}] '.format(H(req))
+                    assert False
                 else:
                     assert False
             else:
                 req_msg = ''
 
+            if req_msg and text.startswith('('):
+                # In this case, the raw requirement is probably clearer than the
+                # fancy english name. E.g. "weapons ≥ 6" instead of "Improved Weapons"
+                i = text.index(')') + 2
+                text = text[i:]
      
             sub_event = choice.find('event')
             if sub_event is not None:
@@ -1057,7 +1063,7 @@ def output_event(eventID):
     if event.choices:
         print('<ol>')
         for (text, is_blue, nextID) in event.choices:
-            cls_html = 'class="option" if is_blue else '''
+            cls_html = 'class="blue"' if is_blue else ''
             print('<li><em {cls_html}>{text}</em>'.format(cls_html = cls_html, text = H(text)))
             print('<div>')
             goto_group_or_event(nextID)
