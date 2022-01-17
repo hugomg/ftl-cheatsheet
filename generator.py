@@ -43,7 +43,7 @@ def num_range(lo, hi):
 #
 # Hardcoded translations text. Typically these are things that the cheatsheet
 # must spell out in writing, but that the game does not.
-# 
+#
 
 species_name = {
     'anaerobic': "Lanius",
@@ -80,7 +80,7 @@ system_name = {
     'sensors' : "sensors",
     'shields' : "shields",
     'weapons' : "weapons",
-    
+
     'random'  : "random system",
     'room'    : "random room(?)",
     'reactor' : "reactor",
@@ -163,7 +163,7 @@ def init_translations():
         "text_tooltips.xml",
         "text_tutorial.xml",
         ]:
-            
+
         tree = ET.parse(filename)
         for node in tree.iterfind('text'):
             key = node.get('name')
@@ -173,12 +173,12 @@ def init_translations():
             translations[key] = val
 
 def translate_message(text_node):
-    """Get the english text for a <text> node"""    
-    
+    """Get the english text for a <text> node"""
+
     # Hardcoded text
     msg = text_node.text
     if msg is not None: return msg
-    
+
     # Regular translated string
     id = text_node.get('id')
     if id: return translations[id]
@@ -198,7 +198,7 @@ def init_blueprint_names():
 
     for k, v in blueprintlist_name.items():
         blueprint_name[k] = v
-    
+
     for tag in ['augBlueprint', 'droneBlueprint', 'weaponBlueprint']:
         for blueprint in tree.iterfind(tag):
             id     = blueprint.get('name')
@@ -225,7 +225,7 @@ event_schema = {
     'drone'         : set(['name']),
     'environment'   : set(['type', 'target']),
     'fleet'         : set([]),
-    'img'           : set(['back', 'planet']), 
+    'img'           : set(['back', 'planet']),
     'item_modify'   : set(['type', 'min', 'max', 'steal']),
     'modifyPursuit' : set(['amount']),
     'quest'         : set(['event']),
@@ -275,7 +275,7 @@ def check_schema(parent, schema):
             log(ET.tostring(parent))
             log("Unknown tag {}.{}".format(parent.tag, child.tag))
             schema[tag] = set([])
-            
+
 def check_child_nodes(parent, known_tags):
     for child in parent:
         tag = child.tag
@@ -291,7 +291,7 @@ def check_child_nodes(parent, known_tags):
 # references to events we haven't processed yet. Secondly, it will allow us to de-duplicate events with
 # repeated choices (such as DESTROYED_DEFAULT and DEAD_CREW_DEFAULT). To simplify this deduplication,
 # we represent the data using namedTuples and we store all the event actions in a single HTML string.
-# 
+#
 # Note: eventid may refer to either an individual event, or to an event group. Unfortunately, there
 # are some identifiers (e.g. NEBULA_PIRATE) that are used both as an eventList and as an individual
 # event. Therefore, the meaning depends on context. If we are in an event group, then child events
@@ -328,27 +328,35 @@ def gen_event_id():
 
 
 def build_graph():
-    for filename in glob.glob("./*.xml"):
+
+    overrides = []
+    for filename in glob.glob("*.xml"):
         tree = ET.parse(filename)
 
         for txtgroup in tree.iterfind('textList'):
             key = txtgroup.get('name')
             assert key not in texts_dict
-            texts_dict[key] = txtgroup
-        
+            texts_dict[key] = [node for node in txtgroup.iterfind('text')]
+
         for event in tree.iterfind("event"):
             graph_add_event(event, None)
 
         for group in tree.iterfind('eventList'):
-            graph_add_group(group)
+            if group.get('name').startswith('OVERRIDE_'):
+                overrides.append(group)
+            else:
+                graph_add_group(group)
 
         for ship in tree.iterfind("ship"):
             graph_add_ship(ship)
 
+    for group in overrides:
+        graph_add_group(group)
+
 
 def blueprint_event(what, id):
     """Common functionality for adding weapon/drone/augment"""
-    
+
     if id == 'RANDOM':
         return '<li><strong>{what}</strong>'.format(what = H(what))
     elif id == 'DLC_AUGMENTS' or id == 'DLC_DRONES' or id == 'DLC_WEAPONS':
@@ -377,7 +385,6 @@ def graph_add_event(event, enemy_ship_name):
 
     loadevt = event.get('load')
     if loadevt:
-        
         return loadevt
 
     text_node = event.find('text')
@@ -387,7 +394,7 @@ def graph_add_event(event, enemy_ship_name):
             # Multiple texts
             out = []
             out.append('<ul class="textlist">')
-            for child_text_node in texts_dict[textID].iterfind('text'):
+            for child_text_node in texts_dict[textID]:
                 text = translate_message(child_text_node)
                 out.append('<li>{text}'.format(text = H(text)))
             out.append('</ul>')
@@ -423,7 +430,7 @@ def graph_add_event(event, enemy_ship_name):
     if hazard is not None:
         typ = hazard.get('type')
 
-        
+
         if   typ == 'asteroid': what = "Asteroid Field"
         elif typ == 'nebula': what = "Nebula"
         elif typ == 'pulsar': what = "Pulsar"
@@ -457,7 +464,7 @@ def graph_add_event(event, enemy_ship_name):
             breach_html = ' (with <strong>breach</strong>)'
         else:
             breach_html = ''
-        
+
         actions.append('<li><strong>Boarded</strong> by {num} {spc}</strong>{breach_html}'.format(
             num = H(num),
             spc = H(spc),
@@ -562,7 +569,7 @@ def graph_add_event(event, enemy_ship_name):
                     effect_msg = ' (' + damage_effect[effect] + ')'
                 else:
                     effect_msg = ''
-                    
+
                 actions.append('<li>{amount} <strong>System Damage</strong> to {system}{effect_msg}</strong>'.format(
                      amount = H(amount),
                      system = H(system),
@@ -575,14 +582,14 @@ def graph_add_event(event, enemy_ship_name):
         amount   = status.get('amount')
 
         system = system_name[systemID]
-         
+
         if typ == 'clear':
             actions.append('<li><strong>Restore Power</strong> to {system}'.format(system = H(system)))
 
         elif typ == 'divide':
             if amount != '2': abort("expected <status> divide is not by 2")
             actions.append('<li><strong>Half Power</strong> to {system}'.format(system = H(system)))
-             
+
         elif typ == 'limit':
             if amount == '0':
                 actions.append('<li><strong>Disable</strong> {system}'.format(
@@ -644,7 +651,7 @@ def graph_add_event(event, enemy_ship_name):
         elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
         elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
         else : blueprint = None
-        
+
         level_html = autoreward_level_html[level]
         kind_html  = autoreward_kind_html[kind]
 
@@ -666,7 +673,7 @@ def graph_add_event(event, enemy_ship_name):
             plural = 'jump'
         else:
             plural = 'jumps'
-        
+
         if amount_num > 0:
             what = "Rebel Fleet Advances"
         elif amount_num < 0:
@@ -721,7 +728,7 @@ def graph_add_event(event, enemy_ship_name):
         if shipID:
             url_html = ship_link(shipID)
             enemy_ship_name = shipID
-                    
+
         hostility = ship.get('hostile')
         if hostility:
             hostility = hostility.lower()
@@ -776,7 +783,7 @@ def graph_add_event(event, enemy_ship_name):
 
             is_blue = ((req is not None) and (hidden == 'true') and (blue != 'false'))
             is_complex = (max_level or (min_level and min_level != '1'))
-            
+
             if req and is_complex:
                 if   (min_level is not None) and (max_level is not None):
                     req_msg = '({} ≤ {} ≤ {}) '.format(min_level, H(req), max_level)
@@ -796,7 +803,7 @@ def graph_add_event(event, enemy_ship_name):
                 # fancy english name. E.g. "weapons ≥ 6" instead of "Improved Weapons"
                 i = text.index(')') + 2
                 text = text[i:]
-     
+
             sub_event = choice.find('event')
             if sub_event is not None:
                 eventID = graph_add_event(sub_event, enemy_ship_name)
@@ -811,7 +818,7 @@ def graph_add_event(event, enemy_ship_name):
     # End
     #
 
-    
+
     if actions:
         actions_html = '<ul>' + '\n'.join(actions) + '</ul>'
     else:
@@ -888,7 +895,11 @@ def graph_add_group(group):
         cases.append((1, eventID))
 
     key = group.get("name")
-    assert key not in group_dict
+    if key.startswith("OVERRIDE_"):
+        key = key.removeprefix("OVERRIDE_")
+    else:
+        assert key not in group_dict
+
     group_dict[key] = cases
 
     return key
@@ -934,7 +945,7 @@ def canonicalize_groups():
 
 #
 # Nesting
-# 
+#
 # If an event is only ever referenced by its parent event, then it is safe to render it
 # nested inside the other event.
 #
@@ -995,7 +1006,8 @@ def add_root_event(name):
         for (_, ev) in group_dict[name]:
             add_root_event(ev)
     else:
-        abort('event does not exist')
+        # event does not exist
+        assert False
 
 def add_root_group(name):
     if name in event_dict:
@@ -1006,9 +1018,44 @@ def add_root_group(name):
         for (_, ev) in group_dict[name]:
             add_root_event(ev)
     else:
-        abort('event does not exist')
+        # event does not exist
+        assert False
 
 def init_root_events():
+
+    # These appear to be hardcoded events
+    # That don't happen at the start of a beacon
+    add_root_event("STALEMATE_SURRENDER")
+    add_root_event("CREW_STUCK")
+    add_root_event("FUEL_ESCAPE_SUN")
+    add_root_event("FUEL_ESCAPE_STORM")
+    add_root_event("FUEL_ESCAPE_ASTEROIDS")
+    add_root_event("AUGMENT_FULL")
+    add_root_event("EQUIP_FULL")
+    add_root_event("START_DEMO")
+    add_root_event("START_GAME")
+    add_root_event("TUTORIAL_START")
+    add_root_event("TUTORIAL_MISSILE")
+    add_root_event("TUTORIAL_ENEMY")
+    add_root_event("TOO_MANY_CREW")
+
+    # These are hardcoded "structural" events
+    add_root_event("START_BEACON")
+    add_root_event("FINISH_BEACON")
+    add_root_event("FINISH_BEACON_NEBULA")
+    add_root_event("FLEET_EASY")
+    add_root_event("FLEET_EASY_DLC")
+    add_root_event("FLEET_EASY_BEACON")
+    add_root_event("FLEET_EASY_BEACON_DLC")
+    add_root_event("FLEET_HARD")
+    add_root_event("NOTHING")
+    add_root_event('FEDERATION_BASE')
+
+    # No fuel events
+    add_root_event('NO_FUEL_FLEET')
+    add_root_event('NO_FUEL_FLEET_DLC')
+    add_root_group('NO_FUEL')
+    add_root_group('NO_FUEL_DISTRESS')
 
     tree = ET.parse("sector_data.xml")
     for sector in tree.iterfind("sectorDescription"):
@@ -1017,10 +1064,21 @@ def init_root_events():
             add_root_event(start_event.text)
         for lst in sector.iterfind("event"):
             add_root_group(lst.get("name"))
-    add_root_event('START_GAME')
-    add_root_group('OVERRIDE_NEUTRAL')
-    add_root_group('NO_FUEL')
-    add_root_group('NO_FUEL_DISTRESS')
+
+    # Last stand events
+    tree = ET.parse("events_boss.xml")
+    for event in tree.iterfind("event"):
+        add_root_event(event.get("name"))
+
+    # DLC Events that I don't understand exactly
+    # how they're added to the event list. But
+    # they are...
+    add_root_group("HOSTILE1")
+    add_root_group("HOSTILE2")
+
+    # The parser seems to be buggy for this one,
+    # because there is a neaby commented-out event
+    add_root_event('DOCK_DRONE_SALESMAN')
 
 #
 # HTML
@@ -1037,7 +1095,7 @@ def goto_url(url):
 def goto_group_or_event(name):
     if   name in group_dict:
         if group_nparents[name] == 1: output_group(name)
-        else: goto_url(group_link(name))          
+        else: goto_url(group_link(name))
     elif name in event_dict:
         if event_nparents[name] == 1: output_event(name)
         else: goto_url(event_link(name))
@@ -1056,6 +1114,7 @@ def goto_event_or_group(name):
 
 def output_event(eventID):
     event = event_dict[eventID]
+    if eventID in printed_events: log('dupe:'+eventID)
     printed_events.add(eventID)
 
     if (eventID in root_event_set) or (event.choices and len(event.choices) >= 2) :
@@ -1075,37 +1134,34 @@ def output_event(eventID):
             print('</div>')
         print('</ol>')
 
-    #if event.fight:
-        #print('Show fight results here')
-
 def output_group(groupID):
     group = group_dict[groupID]
+    if groupID in printed_groups: log('dupe:'+groupID)
     printed_groups.add(groupID)
 
-    if len(group) == 1:
-        # Simple case of no choice
-        (_, nextID) = group[0]
-        goto_event_or_group(nextID)
+    m = 0
+    for (weight, _) in group:
+        m += weight
 
-    else:
-    
-        m = 0
-        for (weight, _) in group:
-            m += weight
+    print('<ul>')
+    for (n, nextID) in group:
+        print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
+        #print('<li> {p}%'.format(p =  "%2.0f"%math.floor(100.0 * n / m)))
+        if nextID.startswith('evt-'):
+            output_event(nextID)
+        else:
+            if   nextID in event_dict: print(event_link(nextID))
+            elif nextID in group_dict: print(group_link(nextID))
+            else: assert False
 
-        print('<ul>')
-        for (n, nextID) in group:
-            print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
-            #print('<li> {p}%'.format(p =  "%.0f"%math.floor(100.0 * n / m)))
-            goto_event_or_group(nextID)
-        print('</ul>')
+    print('</ul>')
 
 def output_ship(shipID):
     ship = ship_dict[shipID]
     printed_ships.add(shipID)
 
     def case(evtID, msg):
-        print('<li><em>{msg}'.format(msg = H(msg)))
+        print('<li><em>{msg}</em>'.format(msg = H(msg)))
         print('<div>')
         goto_group_or_event(evtID)
         print('</div>')
@@ -1183,23 +1239,22 @@ def output_html():
     # Events
     print('<h1>Events</h1>')
     for key in event_dict:
-        if (
-            (not key.startswith('evt-')) and
-            (key in root_event_set or key in quest_events_set or event_nparents[key] > 1)
-        ):
-            print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
-            print('<div class="indent">')
-            output_event(key)
-            print('</div>')
+        if key.startswith('evt-'): continue
+        if event_nparents[key] == 1 and not (key in root_event_set or key in quest_events_set): continue
+        print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
+        print('<div class="indent">')
+        output_event(key)
+        print('</div>')
 
     # Event groups
     print('<h1>Event Pools</h1>')
-    for key in group_dict:   
-        print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
-        print('<div class="indent">')
-        output_group(key)
-        print('</div>')
-        
+    for key in group_dict:
+        if group_nparents[key] != 1:
+            print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
+            print('<div class="indent">')
+            output_group(key)
+            print('</div>')
+
     # Ships
     print('<h1>Fights</h1>')
     for key in ship_dict:
@@ -1223,9 +1278,8 @@ def main():
     parser = argparse.ArgumentParser(description="Create an FTL Cheatsheet in HTML")
     parser.add_argument('datadir', metavar='DATADIR', type=str, help="Path to FTL data folder")
     args = parser.parse_args()
-    
+
     # Generate the HTML file
-    
     os.chdir(args.datadir)
     init_translations()
     init_blueprint_names()
@@ -1234,6 +1288,11 @@ def main():
     init_nesting()
     init_root_events()
     output_html()
+
+    # Check for forgotten events
+    for k in event_dict.keys():
+        if not k.startswith('evt-') and k not in printed_events:
+            log('missing:'+k)
 
 if __name__ == "__main__":
     main()
