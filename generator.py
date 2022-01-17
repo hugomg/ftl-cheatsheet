@@ -585,7 +585,7 @@ def graph_add_event(event, enemy_ship_name):
 
     augment = event.find('augment')
     if augment is not None:
-        actions.append( blueprint_event('Augment', augment.get('name')) )
+        actions.append( blueprint_event('Augmentation', augment.get('name')) )
 
     weapon = event.find('weapon')
     if weapon is not None:
@@ -623,7 +623,7 @@ def graph_add_event(event, enemy_ship_name):
         level = reward.get('level').upper()
         kind  = reward.text
 
-        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augment'
+        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augmentation'
         elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
         elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
         else : blueprint = None
