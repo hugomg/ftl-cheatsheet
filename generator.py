@@ -761,6 +761,7 @@ def graph_add_event(event, enemy_ship_name):
         for choice in choice_node:
             choice_text_node = choice.find('text')
             text = translate_message(choice_text_node)
+            text = text.strip()
 
             req       = choice.get('req')
             blue      = choice.get('blue')
@@ -768,6 +769,10 @@ def graph_add_event(event, enemy_ship_name):
             max_level = choice.get('max_lvl') or choice.get('max_level')
             hidden    = choice.get('hidden')
             if hidden: hidden = hidden.lower()
+
+            # Remove redundant missile-cost from certain events
+            # (The missile cost also appears in the results)
+            text = text.removesuffix("[ Missiles: -1 ]")
 
             is_blue = ((req is not None) and (hidden == 'true') and (blue != 'false'))
             is_complex = (max_level or (min_level and min_level != '1'))
