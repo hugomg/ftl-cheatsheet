@@ -563,11 +563,11 @@ def graph_add_event(event, enemy_ship_name):
         system = system_name[systemID]
          
         if typ == 'clear':
-            actions.append('<li><strong>Restore power</strong> to {system}'.format(system = H(system)))
+            actions.append('<li><strong>Restore Power</strong> to {system}'.format(system = H(system)))
 
         elif typ == 'divide':
             if amount != '2': abort("expected <status> divide is not by 2")
-            actions.append('<li><strong>Half power</strong> to {system}'.format(system = H(system)))
+            actions.append('<li><strong>Half Power</strong> to {system}'.format(system = H(system)))
              
         elif typ == 'limit':
             if amount == '0':
@@ -575,12 +575,12 @@ def graph_add_event(event, enemy_ship_name):
                     system = H(system),
                     amount = H(amount)))
             else:
-                actions.append('<li><strong>Limit power</strong> to {system}, down to {amount}'.format(
+                actions.append('<li><strong>Limit Power</strong> to {system}, down to {amount}'.format(
                     system = H(system),
                     amount = H(amount)))
 
         elif typ == 'loss':
-            actions.append('<li><strong>Reduce power</strong> to {system} by {amount}'.format(
+            actions.append('<li><strong>Reduce Power</strong> to {system} by {amount}'.format(
                 system = H(system),
                 amount = H(amount)))
         else:
@@ -639,13 +639,23 @@ def graph_add_event(event, enemy_ship_name):
         amount_num = int(amount_str)
 
         n = str(abs(amount_num))
+
+        if n == '1':
+            plural = 'jump'
+        else:
+            plural = 'jumps'
         
         if amount_num > 0:
-            actions.append('<li><strong>Rebel fleet advances</strong> {n} jumps'.format(n = H(n)))
+            what = "Rebel Fleet Advances"
         elif amount_num < 0:
-            actions.append('<li><strong>Rebel fleet delayed</strong> by {n} jumps'.format(n = H(n)))
+            what = "Rebel Fleet Delayed"
         else:
              abort('fleet pursuit 0?')
+
+        actions.append('<li><strong>{what}</strong> by {n} {plural}'.format(
+            what = H(what),
+            n = H(n),
+            plural = H(plural)))
 
     reveal_map = event.find('reveal_map')
     if reveal_map is not None:
@@ -680,7 +690,7 @@ def graph_add_event(event, enemy_ship_name):
 
     store = event.find('store')
     if store is not None:
-        actions.append('<li><strong>Opens a store</strong>')
+        actions.append('<li><strong>Enter Store</strong>')
 
     ship = event.find('ship')
     if ship is not None:
@@ -710,7 +720,7 @@ def graph_add_event(event, enemy_ship_name):
             if is_hostile:
                 actions.append('<li><strong>Fight</strong>')
             else:
-                actions.append('<li><strong>End fight</strong>')
+                actions.append('<li><strong>Stop Fight</strong>')
 
         if is_hostile and enemy_ship_name:
             ends_with_fight = True
