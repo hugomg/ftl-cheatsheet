@@ -1021,7 +1021,7 @@ printed_groups = set()
 printed_ships = set()
 
 def goto_url(url):
-    print('<ul><li>Goto {url}</ul>'.format(url = url))
+    print('<ul><li>Go to {url}</ul>'.format(url = url))
 
 def goto_group_or_event(name):
     if   name in group_dict:
