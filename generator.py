@@ -662,7 +662,7 @@ def graph_add_event(event, enemy_ship_name):
 
     reveal_map = event.find('reveal_map')
     if reveal_map is not None:
-        actions.append('<li><strong>Reveal sector map</strong>')
+        actions.append('<li><strong>Map Update</strong>')
 
     secret_sector = event.find('secretSector')
     if secret_sector is not None:
