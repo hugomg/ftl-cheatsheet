@@ -1051,7 +1051,15 @@ def output_html():
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: sans-serif; }
+        h2 { font-size: medium; }
+        ul { list-style: initial; } /* Use top-level bullets in nested lists */
+        ul.textlist { padding-left: 15px; }
+        .indent { padding-left: 20px; }
+        .option { font-style: italic; }
+        .blue { color: #10aee8; }
+    </style>
 </head>
 <body>
     <h1>FTL Cheatsheet</h1>
