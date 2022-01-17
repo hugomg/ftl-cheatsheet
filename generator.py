@@ -580,9 +580,14 @@ def graph_add_event(event, enemy_ship_name):
             actions.append('<li><strong>Half power</strong> to {system}'.format(system = H(system)))
              
         elif typ == 'limit':
-            actions.append('<li><strong>Limit power</strong> to {system}, down to {amount}'.format(
-                system = H(system),
-                amount = H(amount)))
+            if amount == '0':
+                actions.append('<li><strong>Disable</strong> {system}'.format(
+                    system = H(system),
+                    amount = H(amount)))
+            else:
+                actions.append('<li><strong>Limit power</strong> to {system}, down to {amount}'.format(
+                    system = H(system),
+                    amount = H(amount)))
 
         elif typ == 'loss':
             actions.append('<li><strong>Reduce power</strong> to {system} by {amount}'.format(
