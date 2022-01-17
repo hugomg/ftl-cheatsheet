@@ -4,6 +4,7 @@ import argparse
 import xml.etree.ElementTree as ET
 import glob
 from html import escape as H
+import math
 import os
 import sys
 
@@ -336,8 +337,13 @@ def blueprint_event(what, node):
         return '<li><strong>{what}</strong> ({name})'.format(what = H(what), name = H(name))
 
 def event_link(id):
-    """URL for an event"""
-    return '<a href="#{id}">{id}</a>'.format(id = H(id))
+    return '<a href="#event-{id}">{id}</a>'.format(id = H(id))
+
+def group_link(id):
+    return '<a href="#list-{id}">{id}</a>'.format(id = H(id))
+
+def ship_link(id):
+    return '<a href="#ship-{id}">{id}</a>'.format(id = H(id))
 
 def graph_add_event(event, enemy_ship_name):
     """Interpret one <event> node from the xml file"""
@@ -395,8 +401,7 @@ def graph_add_event(event, enemy_ship_name):
     if ship is not None:
         shipID = ship.get('load')
         if shipID:
-            #url_html = '<a href="#ship-{load}">{load}</a>'.format(load = H(load))
-            url_html =  H(shipID)
+            url_html = ship_link(shipID)
             enemy_ship_name = shipID
                     
         hostility = ship.get('hostile')
@@ -601,7 +606,7 @@ def graph_add_event(event, enemy_ship_name):
     if weapon is not None:
         actions.append( blueprint_event('Weapon', weapon) )
 
-    drone = event.find('Drone')
+    drone = event.find('drone')
     if drone is not None:
         actions.append( blueprint_event('drone', drone) )
 
@@ -735,7 +740,7 @@ def graph_add_event(event, enemy_ship_name):
     else:
         fight = None
 
-    if text_html == "" and (not actions) and (not ends_with_fight):
+    if (not actions) and (not parsed_choices) and (not ends_with_fight):
         actions_html = '<ul><li>Nothing happens</ul>'
 
     key = key or gen_event_id()
@@ -938,19 +943,47 @@ def init_root_events():
 # HTML
 #
 
-def output_event(event_id, is_root=False):
+# For checking missing events
+printed_events = set()
+printed_groups = set()
+printed_ships = set()
 
-    event = event_dict[event_id]
+def goto_url(url):
+    print('<ul><li>Goto {url}</ul>'.format(url = url))
+
+def goto_group_or_event(name):
+    if   name in group_dict:
+        if group_nparents[name] == 1: output_group(name)
+        else: goto_url(group_link(name))          
+    elif name in event_dict:
+        if event_nparents[name] == 1: output_event(name)
+        else: goto_url(event_link(name))
+    else:
+        assert False
+
+def goto_event_or_group(name):
+    if name in event_dict:
+        if event_nparents[name] == 1: output_event(name)
+        else: goto_url(event_link(name))
+    elif   name in group_dict:
+        if group_nparents[name] == 1: output_group(name)
+        else: goto_url(group_link(name))
+    else:
+        assert False
+
+def output_event(eventID, is_root=False):
+    event = event_dict[eventID]
+    printed_events.add(eventID)
 
     if is_root or (event.choices and len(event.choices) >= 2):
         # Don't print the text for events without a choice,
         # This reduces clutter, and the total Kb of the webpage.
-        pass
-    print(event.text_html)
+        print(event.text_html)
+
     print(event.actions_html)
 
     if event.choices and event.fight:
-        log('choice and ship fight: '+ event_id)
+        log('choice and ship fight: '+ eventID)
 
     if event.choices:
         print('<ol>')
@@ -958,30 +991,58 @@ def output_event(event_id, is_root=False):
             cls = 'option blue' if is_blue else 'option'
             print('<li><span class="{cls}">{text}</span>'.format(cls = H(cls), text = H(text)))
             print('<div>')
-            if   (nextID in group_dict) and group_nparents[nextID] == 1: output_group(nextID)
-            elif (nextID in event_dict) and event_nparents[nextID] == 1: output_event(nextID)
-            else: print('<ul><li>Goto {url}</ul>'.format(url = event_link(nextID)))
+            goto_group_or_event(nextID)
             print('</div>')
         print('</ol>')
 
-    if event.fight:
-        print('Show fight results here')
+    #if event.fight:
+        #print('Show fight results here')
 
 def output_group(groupID):
     group = group_dict[groupID]
+    printed_groups.add(groupID)
+
+    if len(group) == 1:
+        # Simple case of no choice
+        (_, nextID) = group[0]
+        goto_event_or_group(nextID)
+
+    else:
     
-    m = 0
-    for (weight, _) in group:
-        m += weight
+        m = 0
+        for (weight, _) in group:
+            m += weight
+
+        print('<ul>')
+        for (n, nextID) in group:
+            print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
+            #print('<li> {p}%'.format(p =  "%.0f"%math.floor(100.0 * n / m)))
+            goto_event_or_group(nextID)
+        print('</ul>')
+
+def output_ship(shipID):
+    ship = ship_dict[shipID]
+    printed_ships.add(shipID)
+
+    def case(evtID, msg):
+        print('<li><em>{msg}'.format(msg = H(msg)))
+        print('<div>')
+        goto_group_or_event(evtID)
+        print('</div>')
+
+    destroyed = ship.get('destroyed')
+    dead_crew = ship.get('dead_crew')
+    gotaway   = ship.get('gotaway')
+    surrender = ship.get('surrender')
 
     print('<ul>')
-    for (n, nextID) in group:
-        print('<li> [{n}/{m}]'.format(n = H(str(n)), m = H(str(m))))
-        if   (nextID in event_dict) and event_nparents[nextID] == 1: output_event(nextID)
-        elif (nextID in group_dict) and group_nparents[nextID] == 1: output_group(nextID)
-        else: print('Goto {url}'.format(url = event_link(nextID)))
+    if destroyed: case(destroyed, "You destroy the enemy ship")
+    if dead_crew: case(dead_crew, "You kill the enemy crew")
+    if gotaway:   case(gotaway,   "The enemy ship escaped")
+    if surrender: case(surrender, "The enemy ship offers to surrender")
     print('</ul>')
-    
+
+
 
 def output_html():
 
@@ -1001,49 +1062,28 @@ def output_html():
        <p>Note: Some events in the list may be test/debug events, which cannot be encountered via normal gameplay.""")
 
     # Events
-    
-    for key in root_event_list:
-        print('<h2 id="{key}">{key}</h2>'.format(key = H(key)))
-        print('<div class="indent">')
-        output_event(key, is_root=True)
-        print('</div>')
+    print('<h1>Events</h1>')
+    for key in event_dict:
+        if event_nparents[key] != 1:
+            print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
+            print('<div class="indent">')
+            output_event(key, is_root=True)
+            print('</div>')
 
     # Event groups
-    for key, group in group_dict.items():   
-        print('<h2 id="{key}">{key}</h2>'.format(key = H(key)))
-        print('<div class="toplevel">')
-        print('<ul>')
-
-        m = 0
-        for (weight, _) in group:
-            m += weight
-        
-        for (n, eventID) in group:
-            print('<li> [{n}/{m}] Goto {url}'.format(
-                n = H(str(n)),
-                m = H(str(m)),
-                url = event_link(eventID)))
-        print('</ul>')
+    print('<h1>Event Pools</h1>')
+    for key in group_dict:   
+        print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
+        print('<div class="indent">')
+        output_group(key)
         print('</div>')
         
     # Ships
-    for key, ship in ship_dict.items():
-        print('<h2 id="{key}">{key}</h2>'.format(key = H(key)))
-        print('<div class="toplevel">')
-        print('<ul>')
-        if ship['destroyed']:
-            print('<li><em>You destroy the enemy ship')
-            print('Goto {url}'.format(url = event_link(ship['destroyed'])))
-        if ship['dead_crew']:
-            print('<li><em>You kill the enemy crew')
-            print('Goto {url}'.format(url = event_link(ship['dead_crew'])))
-        if ship['gotaway']:
-            print('<li><em>The enemy ship escaped')
-            print('Goto {url}'.format(url = event_link(ship['gotaway'])))
-        if ship['surrender']:
-            print('<li><em>The enemy ship offers to surrender')
-            print('Goto {url}'.format(url = event_link(ship['surrender'])))
-        print('</ul>')
+    print('<h1>Fights</h1>')
+    for key in ship_dict:
+        print('<h2 id="ship-{key}">{key}</h2>'.format(key = H(key)))
+        print('<div class="indent">')
+        output_ship(key)
         print('</div>')
 
     print("""
@@ -1072,6 +1112,12 @@ def main():
     init_nesting()
     init_root_events()
     output_html()
+
+    for e in event_dict:
+        if e not in printed_events:
+            log("!!"+e)
+
+    log('DISTRESS_ENGI_REBEL_RESULT' in event_dict)
 
 if __name__ == "__main__":
     main()
