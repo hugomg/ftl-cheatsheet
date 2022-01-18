@@ -409,7 +409,7 @@ def graph_add_event(event, enemy_ship_name):
         if textID:
             # Multiple texts
             out = []
-            out.append('<ul class="textlist">')
+            out.append('<ul class="texts">')
             for child_text_node in texts_dict[textID]:
                 text = translate_message(child_text_node)
                 out.append('<li>{text}'.format(text = H(text)))
@@ -419,7 +419,7 @@ def graph_add_event(event, enemy_ship_name):
         else:
             # Single text
             text = translate_message(text_node)
-            text_html = '{text}'.format(text = H(text))
+            text_html = '<p>{text}</p>'.format(text = H(text))
     else:
         # Missing text
         text_html = ""
@@ -845,7 +845,7 @@ def graph_add_event(event, enemy_ship_name):
 
 
     if actions:
-        actions_html = '<ul>' + '\n'.join(actions) + '</ul>'
+        actions_html = '<ul class="result">' + '\n'.join(actions) + '</ul>'
     else:
         actions_html = ''
 
@@ -855,7 +855,7 @@ def graph_add_event(event, enemy_ship_name):
         fight = None
 
     if (not actions) and (not parsed_choices) and (not ends_with_fight):
-        actions_html = '<ul><li>Nothing happens</ul>'
+        actions_html = '<ul class="result"><li>Nothing happens</ul>'
 
     key = key or gen_event_id()
     assert key not in event_dict
@@ -1115,7 +1115,7 @@ printed_groups = set()
 printed_ships = set()
 
 def goto_url(url):
-    print('<ul><li>Go to {url}</ul>'.format(url = url))
+    print('<ul class="result"><li>Go to {url}</ul>'.format(url = url))
 
 def goto_group_or_event(name):
     if   name in group_dict:
@@ -1150,7 +1150,7 @@ def output_event(eventID):
     print(event.actions_html)
 
     if event.choices:
-        print('<ol>')
+        print('<ol class="choice">')
         for (text, is_blue, nextID) in event.choices:
             cls_html = 'class="blue"' if is_blue else ''
             print('<li><em {cls_html}>{text}</em>'.format(cls_html = cls_html, text = H(text)))
@@ -1168,7 +1168,7 @@ def output_group(groupID):
     for (weight, _) in group:
         m += weight
 
-    print('<ul>')
+    print('<ul class="random">')
     for (n, nextID) in group:
         print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
         #print('<li> {p}%'.format(p =  "%2.0f"%math.floor(100.0 * n / m)))
@@ -1196,7 +1196,7 @@ def output_ship(shipID):
     gotaway   = ship.get('gotaway')
     surrender = ship.get('surrender')
 
-    print('<ul>')
+    print('<ul class="fight">')
     if destroyed: case(destroyed, "You destroy the enemy ship")
     if dead_crew: case(dead_crew, "You kill the enemy crew")
     if gotaway:   case(gotaway,   "The enemy ship escaped")
@@ -1233,14 +1233,20 @@ def output_html():
             font-size: medium;
         }
 
-        ul {
-            /* Use top-level bullets in nested lists */
-            list-style: initial;
+        /* Our notation for lists */
+        .texts  { list-style: circle;  } /* RNG text alternatives */
+        .random { list-style: circle;  } /* RNG event alternatives */
+        .result { list-style: disc;    } /* Event outcomes */
+        .choice { list-style: decimal; } /* Player choice */
+        .fight  { list-style: square;  } /* Ship fight */
+
+        ul.fight > li {
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        ul.textlist {
-            /* Don't indent the text-alternative lists */
-            padding-left: 15px;
+        ul.texts {
+            padding-left: 0px;
         }
 
         .indent {
