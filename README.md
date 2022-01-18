@@ -1,9 +1,13 @@
 # FTL Cheatsheet
 
-This HTML file lists all the events in FTL Advanced Edition.
-To re-generate, run
+The HTML inside the docs/ folder lists all the events in FTL Advanced Edition.
+Live version: https://hugomg.github.io/ftl-cheatsheet/
 
-    python generator.py /path/to/ftl/xml/files > index.html
+# Generating the HTML
+
+To re-generate the web page, run
+
+    python generator.py /path/to/ftl/xml/files > docs/index.html
 
 # Getting the XML files
 
