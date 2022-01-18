@@ -38,7 +38,7 @@ def num_range(lo, hi):
     if lo == hi:
         return str(lo)
     else:
-        return '{}-{}'.format(lo, hi)
+        return ' {}-{} '.format(lo, hi)
 
 #
 # Hardcoded translations text. Typically these are things that the cheatsheet
@@ -706,12 +706,12 @@ def graph_add_event(event, enemy_ship_name):
 
             if lo >= 0 and hi >= 0:
                 rng = num_range(lo, hi)
-                actions.append('<li>+ {rng} <strong>{what}</strong>'.format(
+                actions.append('<li>+{rng} <strong>{what}</strong>'.format(
                     rng = H(rng),
                     what = H(what)))
             elif lo <= 0 and hi <= 0:
                 rng = num_range(-hi, -lo)
-                actions.append('<li>− {rng} <strong>{what}</strong>'.format(
+                actions.append('<li>−{rng} <strong>{what}</strong>'.format(
                     rng = H(rng),
                     what = H(what)))
             else:
