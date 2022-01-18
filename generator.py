@@ -94,7 +94,7 @@ damage_effect = {
 }
 
 resource_name = {
-    'drones'  : "Drone parts",
+    'drones'  : "Drone Parts",
     'fuel'    : "Fuel",
     'missile' : "Missiles",
     'missiles': "Missiles",
@@ -112,8 +112,8 @@ autoreward_kind_html = {
     'missiles_only'  : 'missiles',
     'scrap_only'     : 'scrap',
 
-    'standard': 'scrap and resources',
-    'stuff'   : 'resources and scrap',
+    'standard': 'scrap and low resources',
+    'stuff'   : 'resources and low scrap',
 
     #'augment' : 'scrap and <strong>random augment</strong>',
     #'drone'   : 'scrap and <strong>random drone</strong>',
