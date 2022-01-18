@@ -82,7 +82,7 @@ system_name = {
     'weapons' : "weapons",
 
     'random'  : "random system",
-    'room'    : "random room(?)",
+    'room'    : "random room",
     'reactor' : "reactor",
 }
 
