@@ -313,12 +313,17 @@ Fight = namedtuple('Fight', [
     'surrender', # eventid
 ])
 
+event_keys = set()
+group_keys = set()
+ship_keys = set()
+
 texts_dict = {} # <testList>
 event_dict = {} # <event>
 ship_dict  = {} # <ship>
 group_dict = {} # <eventList>
 
 quest_events_set = set()
+quest_groups_set = set()
 
 anon_events = 0
 def gen_event_id():
@@ -328,6 +333,17 @@ def gen_event_id():
 
 
 def build_graph():
+
+    # Compute the full set of event ids ahead of time
+    # because when we process the <quest> item we need to know
+    # what kind of thing it refers to. (Unfortunately, we cannot
+    # use a shared ID for everythign because there are some events
+    # and ships that have the same ID)
+    for filename in glob.glob("*.xml"):
+        tree = ET.parse(filename)
+        for event in tree.iterfind("event"): event_keys.add(event.attrib['name'])
+        for ship in tree.iterfind("ship"): ship_keys.add(ship.attrib['name'])
+        for group in tree.iterfind('eventList'): group_keys.add(group.attrib['name'])
 
     overrides = []
     for filename in glob.glob("*.xml"):
@@ -708,8 +724,17 @@ def graph_add_event(event, enemy_ship_name):
     quest = event.find('quest')
     if quest is not None:
         id = quest.get('event')
-        quest_events_set.add(id)
-        url_html = event_link(id)
+        if id in event_keys:
+            # This is the case for most quests
+            quest_events_set.add(id)
+            url_html = event_link(id)
+        elif id in group_keys:
+            # A few quests do this
+            # e.g. ALISON_DEFECTOR_QUEST, HIDDEN_FEDERATION_BASE_LIST
+            quest_groups_set.add(id)
+            url_html = group_link(id)
+        else:
+            assert False
         actions.append('<li><strong>Quest</strong> marker for {url_html}'.format(url_html = url_html))
 
     unlock = event.find("unlockShip")
@@ -1249,7 +1274,7 @@ def output_html():
     # Event groups
     print('<h1>Event Pools</h1>')
     for key in group_dict:
-        if group_nparents[key] != 1:
+        if group_nparents[key] != 1 or (key in quest_groups_set):
             print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
             print('<div class="indent">')
             output_group(key)
