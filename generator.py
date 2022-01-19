@@ -1117,23 +1117,42 @@ printed_ships = set()
 def goto_url(url):
     print('<ul class="result"><li>Go to {url}</ul>'.format(url = url))
 
+def can_inline_event(name):
+    return (
+        event_nparents[name] == 1 and
+        (name not in root_event_set) and
+        (name not in quest_events_set))
+
+def can_inline_group(name):
+    return (
+        group_nparents[name] == 1 and
+        (name not in quest_groups_set))
+
 def goto_group_or_event(name):
     if   name in group_dict:
-        if group_nparents[name] == 1: output_group(name)
-        else: goto_url(group_link(name))
+        if can_inline_group(name):
+            output_group(name)
+        else:
+            goto_url(group_link(name))
     elif name in event_dict:
-        if event_nparents[name] == 1: output_event(name)
-        else: goto_url(event_link(name))
+        if can_inline_event(name):
+            output_event(name)
+        else:
+            goto_url(event_link(name))
     else:
         assert False
 
 def goto_event_or_group(name):
     if name in event_dict:
-        if event_nparents[name] == 1: output_event(name)
-        else: goto_url(event_link(name))
+        if can_inline_event(name):
+            output_event(name)
+        else:
+            goto_url(event_link(name))
     elif   name in group_dict:
-        if group_nparents[name] == 1: output_group(name)
-        else: goto_url(group_link(name))
+        if can_inline_group(name):
+            output_group(name)
+        else:
+            goto_url(group_link(name))
     else:
         assert False
 
@@ -1172,12 +1191,7 @@ def output_group(groupID):
     for (n, nextID) in group:
         print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
         #print('<li> {p}%'.format(p =  "%2.0f"%math.floor(100.0 * n / m)))
-        if nextID.startswith('evt-'):
-            output_event(nextID)
-        else:
-            if   nextID in event_dict: print(event_link(nextID))
-            elif nextID in group_dict: print(group_link(nextID))
-            else: assert False
+        goto_event_or_group(nextID)
 
     print('</ul>')
 
@@ -1271,7 +1285,7 @@ def output_html():
     print('<h1>Events</h1>')
     for key in event_dict:
         if key.startswith('evt-'): continue
-        if event_nparents[key] == 1 and not (key in root_event_set or key in quest_events_set): continue
+        if can_inline_event(key): continue
         print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
         print('<div class="indent">')
         output_event(key)
@@ -1280,11 +1294,11 @@ def output_html():
     # Event groups
     print('<h1>Event Pools</h1>')
     for key in group_dict:
-        if group_nparents[key] != 1 or (key in quest_groups_set):
-            print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
-            print('<div class="indent">')
-            output_group(key)
-            print('</div>')
+        if can_inline_group(key): continue
+        print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
+        print('<div class="indent">')
+        output_group(key)
+        print('</div>')
 
     # Ships
     print('<h1>Fights</h1>')
@@ -1321,9 +1335,18 @@ def main():
     output_html()
 
     # Check for forgotten events
-    for k in event_dict.keys():
-        if not k.startswith('evt-') and k not in printed_events:
-            log('missing:'+k)
+    for k in event_dict:
+        if k not in printed_events:
+            if not k.startswith('evt-'):
+                log('missing event:'+k)
+
+    for k in group_dict.keys():
+        if k not in printed_groups:
+            log('missing event:'+k)
+
+    for k in ship_dict.keys():
+        if k not in printed_ships:
+            log('missing ship:'+k)
 
 if __name__ == "__main__":
     main()
