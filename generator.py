@@ -602,34 +602,38 @@ def graph_add_event(event, enemy_ship_name):
     for status in event.iterfind('status'):
         typ      = status.get('type')
         target   = status.get('target')
-        systemID = status.get('system')
-        amount   = status.get('amount')
+        systemID = status.get('system') or '???'
+        amount   = status.get('amount') or '???'
 
         system = system_name[systemID]
 
         if typ == 'clear':
-            actions.append('<li><strong>Restore Power</strong> to {system}'.format(system = H(system)))
-
+            template = '<strong>Restore Power</strong> to {system}'
+            
         elif typ == 'divide':
             if amount != '2': abort("expected <status> divide is not by 2")
-            actions.append('<li><strong>Half Power</strong> to {system}'.format(system = H(system)))
+            template = '<strong>Half Power</strong> to {system}'
 
         elif typ == 'limit':
             if amount == '0':
-                actions.append('<li><strong>Disable</strong> {system}'.format(
-                    system = H(system),
-                    amount = H(amount)))
+                template = '<strong>Disable</strong> {system}'
             else:
-                actions.append('<li><strong>Limit Power</strong> to {system}, down to {amount}'.format(
-                    system = H(system),
-                    amount = H(amount)))
+                template = '<strong>Limit Power</strong> to {system}, down to {amount}'
 
         elif typ == 'loss':
-            actions.append('<li><strong>Reduce Power</strong> to {system} by {amount}'.format(
-                system = H(system),
-                amount = H(amount)))
+            template = '<strong>Reduce Power</strong> to {system} by {amount}'
         else:
-            abort("Unknown <status> type: "+typ)
+            abort("Unknown <status> type:",typ)
+
+        msg_html = template.format(system = H(system), amount = H(amount))
+        if target == 'player':
+            pass
+        elif target == 'enemy':
+            msg_html = '<strong>Enemy ship: </strong>' + msg_html
+        else:
+            abort('Unknown <status> target:', target)
+
+        actions.append('<li>'+msg_html)
 
     pursuit = event.find('modifyPursuit')
     if pursuit is not None:
@@ -1126,7 +1130,7 @@ def goto_url(url):
     print('<ul class="result"><li>Go to {url}</ul>'.format(url = url))
 
 def can_inline_event(name):
-    return (
+    return name.startswith('evt') or (
         event_nparents[name] == 1 and
         (name not in root_event_set) and
         (name not in quest_events_set))
@@ -1326,12 +1330,6 @@ def output_html():
     # alphabetical event is one where the "show sub-event text" matters.
     print('<h1>Events</h1>')
     for key in sorted(event_dict.keys()):
-        if key.startswith('evt-'):
-            # Generally speaking the anonymoust events always can be inlined and therefore
-            # don't need to be shown at the toplevel. However, there is one exception: one
-            # of the events of NO_FUEL_DISTRESS. We cover that case by testing if it is in
-            # the root event set.
-            if key not in root_event_set: continue
         if can_inline_event(key): continue
         output_anchor('event', key)
         print('<div class="indent">')
