@@ -3056,9 +3056,46 @@
 <div>
 <ul class="random">
 <li> 1/2
-<a href="#list-NEUTRAL_EXIT">NEUTRAL_EXIT</a>
+<ul class="random">
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-DONOR_PONY">DONOR_PONY</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-DONOR_PLAGUE">DONOR_PLAGUE</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-EMPTY_STATION2">EMPTY_STATION2</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-TRADER_UPGRADES">TRADER_UPGRADES</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-REFUGEE_NO_DISTRESS">REFUGEE_NO_DISTRESS</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-WRECKAGE_EVENT">WRECKAGE_EVENT</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-FUELING_STATION">FUELING_STATION</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-PIRATE_SALESMAN">PIRATE_SALESMAN</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-REBEL_CHECKPOINT">REBEL_CHECKPOINT</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-REBEL_HELPERS">REBEL_HELPERS</a></ul>
+<li> 1/18
+<ul class="result"><li>Go to <a href="#event-ROGUE_REBEL">ROGUE_REBEL</a></ul>
+</ul>
 <li> 1/2
-<a href="#list-ITEMS">ITEMS</a>
+<ul class="result"><li>Go to <a href="#list-ITEMS">ITEMS</a></ul>
 </ul>
 </div>
 </ol>
@@ -3929,7 +3966,7 @@
 </div>
 </ol>
 <li> 1/2
-<a href="#list-GHOST_BOARDING">GHOST_BOARDING</a>
+<ul class="result"><li>Go to <a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></ul>
 </ul>
 </div>
 <li><em >We&#x27;re in a hurry, let&#x27;s just quickly pull some scrap off the ship.</em>
@@ -6450,9 +6487,77 @@
 <div>
 <ul class="random">
 <li> 1/2
-<a href="#list-FUELING_STATION_NORMAL_LIST">FUELING_STATION_NORMAL_LIST</a>
+<ul class="random">
+<li> 1/3
+<p>The platform makes an offer.</p>
+
+<ol class="choice">
+<li><em >Accept it.</em>
+<div>
+<ul class="result"><li>+5 <strong>Fuel</strong>
+<li>− 5-10  <strong>Scrap</strong></ul>
+</div>
+<li><em >Reject it.</em>
+<div>
+<ul class="result"><li>Nothing happens</ul>
+</div>
+</ol>
+<li> 1/3
+<p>The automated platform seems to be damaged. You can likely steal as much fuel as remains.</p>
+
+<ol class="choice">
+<li><em >Steal it.</em>
+<div>
+<ul class="result"><li>+ 3-5  <strong>Fuel</strong></ul>
+</div>
+<li><em >War doesn&#x27;t justify abandoning one&#x27;s values. You leave it alone.</em>
+<div>
+<ul class="result"><li>Nothing happens</ul>
+</div>
+</ol>
+<li> 1/3
+<p>The platform seems to be malfunctioning and could ignite at any moment.</p>
+
+<ol class="choice">
+<li><em >Quickly dock and refuel.</em>
+<div>
+<ul class="random">
 <li> 1/2
-<a href="#list-FUELING_STATION_PIRATE_LIST">FUELING_STATION_PIRATE_LIST</a>
+<ul class="result"><li>+5 <strong>Fuel</strong></ul>
+<li> 1/2
+<ul class="result"><li>3 <strong>Hull Damage</strong>
+<li>3 <strong>System Damage</strong> to engines (fire)</strong>
+<li>−3 <strong>Fuel</strong></ul>
+</ul>
+</div>
+<li><em >Give the station a wide berth and carry on.</em>
+<div>
+<ul class="result"><li>Nothing happens</ul>
+</div>
+</ol>
+</ul>
+<li> 1/2
+<ul class="random">
+<li> 1/2
+<p>You dock and signal the fuel station&#x27;s staff to begin refueling.</p>
+
+<ol class="choice">
+<li><em >Wait for them to finish.</em>
+<div>
+<ul class="result"><li><strong>Boarded</strong> by  2-4  enemies</strong>
+<li>3 <strong>Hull Damage</strong>
+<li>3 <strong>System Damage</strong> to engines</strong></ul>
+</div>
+<li><em class="blue">(doors ≥ 2) Seal your blast doors, one can never be too careful when docked.</em>
+<div>
+<ul class="result"><li>+5 <strong>Fuel</strong></ul>
+</div>
+</ol>
+<li> 1/2
+<ul class="result"><li>3 <strong>Hull Damage</strong>
+<li>3 <strong>System Damage</strong> to engines</strong>
+<li><strong>Fight</strong> a <a href="#ship-PIRATE">PIRATE</a></ul>
+</ul>
 </ul>
 </div>
 <li><em >Ignore the refueling platform.</em>
@@ -7368,6 +7473,11 @@
 <p>A refugee ship fleeing the Rebel advance enters the system. It seems surprised to see you stranded, and admits it was following you from afar in the hopes of you leading it to Federation space. While it doesn&#x27;t have much fuel to spare, it recognizes you are part of the Federation and offers to split its remaining fuel with you.</p>
 <ul class="result"><li><strong>Medium</strong> fuel</ul>
 </div>
+<h2 id="event-evt-1378">evt-1378</h2>
+<div class="indent">
+<p>A refugee ship fleeing the Rebel advance enters the system, having picked up your distress beacon. While it doesn&#x27;t have much fuel to spare, it recognizes you are part of the Federation and offers to split its remaining fuel with you.</p>
+<ul class="result"><li><strong>Low</strong> fuel</ul>
+</div>
 <h2 id="event-NOTHING_SLUG">NOTHING_SLUG</h2>
 <div class="indent">
 <ul class="texts"><li>You arrive at the beacon and are relieved at the sight of open space. Nebulas are terribly claustrophobic.<li>This beacon marks a &#x27;small&#x27; gap in the nebula. No colonies or ships in scanning distance.<li>You are relieved to see your sensors blink back on after the jump. No ships detected.<li>The Slugs rely heavily on their telepathic powers and are reluctant to give up that advantage by extending beyond nebulas. It&#x27;s unlikely you&#x27;ll encounter any this far from the clouds.<li>You arrive in an area clear of nebula and quickly check to see if the sensors are working. Everything is fine and no ships are detected in the vicinity.</ul>
@@ -8166,102 +8276,102 @@
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/6
-<a href="#event-REBEL_AUTO">REBEL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 <li> 1/6
-<a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a></ul>
 <li> 1/6
-<a href="#event-AUTO_WARNING">AUTO_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_WARNING">AUTO_WARNING</a></ul>
 <li> 1/6
-<a href="#event-SQUAT_WARNING">SQUAT_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_WARNING">SQUAT_WARNING</a></ul>
 <li> 1/6
-<a href="#event-REBEL_PULSAR">REBEL_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_PULSAR">REBEL_PULSAR</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_REBEL">NEUTRAL_REBEL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-AUTO_CIVILIAN">AUTO_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_CIVILIAN">AUTO_CIVILIAN</a></ul>
 <li> 1/8
-<a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a></ul>
 <li> 1/8
-<a href="#event-AUTO_DEFENSE_MAP">AUTO_DEFENSE_MAP</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_MAP">AUTO_DEFENSE_MAP</a></ul>
 <li> 1/8
-<a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a></ul>
 <li> 1/8
-<a href="#event-AUTO_DEFENSE_RADAR">AUTO_DEFENSE_RADAR</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_RADAR">AUTO_DEFENSE_RADAR</a></ul>
 <li> 1/8
-<a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a></ul>
 <li> 1/8
-<a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a></ul>
 <li> 1/8
-<a href="#event-ALISON_DEFECTOR">ALISON_DEFECTOR</a>
+<ul class="result"><li>Go to <a href="#event-ALISON_DEFECTOR">ALISON_DEFECTOR</a></ul>
 </ul>
 </div>
 <h2 id="list-BOARDERS_REBEL">BOARDERS_REBEL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#event-BOARDERS_SUN">BOARDERS_SUN</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_SUN">BOARDERS_SUN</a></ul>
 <li> 1/2
-<a href="#event-BOARDERS_REBEL_SHIP">BOARDERS_REBEL_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_REBEL_SHIP">BOARDERS_REBEL_SHIP</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_REBEL">DISTRESS_BEACON_REBEL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a></ul>
 <li> 1/6
-<a href="#event-REBEL_VS_FEDERATION">REBEL_VS_FEDERATION</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_VS_FEDERATION">REBEL_VS_FEDERATION</a></ul>
 <li> 1/6
-<a href="#event-ESCORT_BEACON">ESCORT_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-ESCORT_BEACON">ESCORT_BEACON</a></ul>
 <li> 1/6
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/6
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/6
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_REBEL">NEBULA_REBEL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/12
-<a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_REBEL">NEBULA_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL">NEBULA_REBEL</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_AUTO">NEBULA_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO">NEBULA_AUTO</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_AUTO_WARNING">NEBULA_AUTO_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_WARNING">NEBULA_AUTO_WARNING</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_TRADER">NEBULA_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_TRADER">NEBULA_TRADER</a></ul>
 <li> 1/12
-<a href="#event-STORM_REBEL">STORM_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-STORM_REBEL">STORM_REBEL</a></ul>
 <li> 1/12
-<a href="#event-STORM_AUTO">STORM_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-STORM_AUTO">STORM_AUTO</a></ul>
 <li> 1/12
-<a href="#event-STORM_ITEMS">STORM_ITEMS</a>
+<ul class="result"><li>Go to <a href="#event-STORM_ITEMS">STORM_ITEMS</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a></ul>
 <li> 1/12
-<a href="#event-NEBULA_REBEL_BOARDING">NEBULA_REBEL_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_BOARDING">NEBULA_REBEL_BOARDING</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_REBEL">QUESTS_REBEL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a>
+<ul class="result"><li>Go to <a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a></ul>
 <li> 1/2
-<a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a>
+<ul class="result"><li>Go to <a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a></ul>
 </ul>
 </div>
 <h2 id="list-DEFENSE_ITEM_LIST">DEFENSE_ITEM_LIST</h2>
@@ -8355,117 +8465,117 @@
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-LANIUS_FIGHT">LANIUS_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_FIGHT">LANIUS_FIGHT</a></ul>
 <li> 1/6
-<a href="#event-LANIUS_REBEL_FIGHT">LANIUS_REBEL_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_REBEL_FIGHT">LANIUS_REBEL_FIGHT</a></ul>
 <li> 1/6
-<a href="#event-LANIUS_PIRATE_FIGHT">LANIUS_PIRATE_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_PIRATE_FIGHT">LANIUS_PIRATE_FIGHT</a></ul>
 <li> 1/6
-<a href="#event-LANIUS_HARVESTER">LANIUS_HARVESTER</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_HARVESTER">LANIUS_HARVESTER</a></ul>
 <li> 1/6
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/6
-<a href="#event-REBEL_AUTO">REBEL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE_ENVIRONMENT_LANIUS">HOSTILE_ENVIRONMENT_LANIUS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/3
-<a href="#event-LANIUS_FIGHT_ASTEROID">LANIUS_FIGHT_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_FIGHT_ASTEROID">LANIUS_FIGHT_ASTEROID</a></ul>
 <li> 1/3
-<a href="#event-LANIUS_FIGHT_PULSAR">LANIUS_FIGHT_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_FIGHT_PULSAR">LANIUS_FIGHT_PULSAR</a></ul>
 <li> 1/3
-<a href="#event-LANIUS_NOBOARDERS_PDS">LANIUS_NOBOARDERS_PDS</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_NOBOARDERS_PDS">LANIUS_NOBOARDERS_PDS</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_LANIUS">NEUTRAL_LANIUS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/13
-<a href="#event-LANIUS_CIVILIAN">LANIUS_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_CIVILIAN">LANIUS_CIVILIAN</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_PIRATE_CIVILIAN">LANIUS_PIRATE_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_PIRATE_CIVILIAN">LANIUS_PIRATE_CIVILIAN</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_SOLO_SALVAGE">LANIUS_SOLO_SALVAGE</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_SOLO_SALVAGE">LANIUS_SOLO_SALVAGE</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_SCARED_CIVILIAN">LANIUS_SCARED_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_SCARED_CIVILIAN">LANIUS_SCARED_CIVILIAN</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_AUTO_REBEL">LANIUS_AUTO_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_AUTO_REBEL">LANIUS_AUTO_REBEL</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_GROUP_AUTO">LANIUS_GROUP_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_GROUP_AUTO">LANIUS_GROUP_AUTO</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_BEACON_EATER">LANIUS_BEACON_EATER</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_BEACON_EATER">LANIUS_BEACON_EATER</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_DORMANT_EVENT">LANIUS_DORMANT_EVENT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_DORMANT_EVENT">LANIUS_DORMANT_EVENT</a></ul>
 <li> 1/13
-<a href="#event-LANIUS_FUELING_STATION">LANIUS_FUELING_STATION</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_FUELING_STATION">LANIUS_FUELING_STATION</a></ul>
 <li> 1/13
-<a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
 <li> 1/13
-<a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
 <li> 1/13
-<a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
 <li> 1/13
-<a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a></ul>
 </ul>
 </div>
 <h2 id="list-ITEM_LANIUS">ITEM_LANIUS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-LANIUS_FREE_STUFF">LANIUS_FREE_STUFF</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_FREE_STUFF">LANIUS_FREE_STUFF</a></ul>
 <li> 1/5
-<a href="#event-LANIUS_TRADER_TRANSLATOR">LANIUS_TRADER_TRANSLATOR</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_TRADER_TRANSLATOR">LANIUS_TRADER_TRANSLATOR</a></ul>
 <li> 1/5
-<a href="#event-LANIUS_TRADER">LANIUS_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_TRADER">LANIUS_TRADER</a></ul>
 <li> 1/5
-<a href="#event-LANIUS_RESEARCHER_CRAFT">LANIUS_RESEARCHER_CRAFT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_RESEARCHER_CRAFT">LANIUS_RESEARCHER_CRAFT</a></ul>
 <li> 1/5
-<a href="#event-LANIUS_RESEARCHER_CONTACT">LANIUS_RESEARCHER_CONTACT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_RESEARCHER_CONTACT">LANIUS_RESEARCHER_CONTACT</a></ul>
 </ul>
 </div>
 <h2 id="list-BOARDERS_LANIUS">BOARDERS_LANIUS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/1
-<a href="#event-LANIUS_PIRATE_BOARDERS">LANIUS_PIRATE_BOARDERS</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_PIRATE_BOARDERS">LANIUS_PIRATE_BOARDERS</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_LANIUS">DISTRESS_BEACON_LANIUS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/12
-<a href="#event-LANIUS_DISTRESS_FIGHT">LANIUS_DISTRESS_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_DISTRESS_FIGHT">LANIUS_DISTRESS_FIGHT</a></ul>
 <li> 1/12
-<a href="#event-LANIUS_DISTRESS_EMPTY">LANIUS_DISTRESS_EMPTY</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_DISTRESS_EMPTY">LANIUS_DISTRESS_EMPTY</a></ul>
 <li> 1/12
-<a href="#event-LANIUS_DISTRESS_TOOLATE">LANIUS_DISTRESS_TOOLATE</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_DISTRESS_TOOLATE">LANIUS_DISTRESS_TOOLATE</a></ul>
 <li> 1/12
-<a href="#event-LANIUS_DISTRESS_TRAP">LANIUS_DISTRESS_TRAP</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_DISTRESS_TRAP">LANIUS_DISTRESS_TRAP</a></ul>
 <li> 1/12
-<a href="#event-LANIUS_SLUG_DISTRESS">LANIUS_SLUG_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_SLUG_DISTRESS">LANIUS_SLUG_DISTRESS</a></ul>
 <li> 1/12
-<a href="#event-LANIUS_MANTIS_DISTRESS">LANIUS_MANTIS_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_MANTIS_DISTRESS">LANIUS_MANTIS_DISTRESS</a></ul>
 <li> 1/12
-<a href="#event-LANIUS_ROCK_DISTRESS">LANIUS_ROCK_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-LANIUS_ROCK_DISTRESS">LANIUS_ROCK_DISTRESS</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 <li> 1/12
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/12
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/12
-<a href="#event-STRANDED_BEACON">STRANDED_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-STRANDED_BEACON">STRANDED_BEACON</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_LANIUS">QUESTS_LANIUS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/1
-<a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a>
+<ul class="result"><li>Go to <a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a></ul>
 </ul>
 </div>
 <h2 id="list-LANIUS_ESCAPE">LANIUS_ESCAPE</h2>
@@ -8597,80 +8707,80 @@
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-ROCK_SHIP">ROCK_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_SHIP">ROCK_SHIP</a></ul>
 <li> 1/5
-<a href="#event-ROCK_PIRATE">ROCK_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_PIRATE">ROCK_PIRATE</a></ul>
 <li> 1/5
-<a href="#event-ROCK_FIGHT_ASTEROID">ROCK_FIGHT_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_FIGHT_ASTEROID">ROCK_FIGHT_ASTEROID</a></ul>
 <li> 1/5
-<a href="#event-ROCK_PIRATE_ASTEROID">ROCK_PIRATE_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_PIRATE_ASTEROID">ROCK_PIRATE_ASTEROID</a></ul>
 <li> 1/5
-<a href="#event-ROCK_PIRATE_SUN">ROCK_PIRATE_SUN</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_PIRATE_SUN">ROCK_PIRATE_SUN</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_ROCK">NEUTRAL_ROCK</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/10
-<a href="#event-ROCK_MANTIS_HUNTER">ROCK_MANTIS_HUNTER</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_MANTIS_HUNTER">ROCK_MANTIS_HUNTER</a></ul>
 <li> 1/10
-<a href="#event-ROCK_MANTIS_FREIGHTER">ROCK_MANTIS_FREIGHTER</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_MANTIS_FREIGHTER">ROCK_MANTIS_FREIGHTER</a></ul>
 <li> 1/10
-<a href="#event-ROCK_ATHIEST">ROCK_ATHIEST</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_ATHIEST">ROCK_ATHIEST</a></ul>
 <li> 1/10
-<a href="#event-ROCK_LOOTING">ROCK_LOOTING</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_LOOTING">ROCK_LOOTING</a></ul>
 <li> 1/10
-<a href="#event-ROCK_STARSHIP_MINE">ROCK_STARSHIP_MINE</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_STARSHIP_MINE">ROCK_STARSHIP_MINE</a></ul>
 <li> 1/10
-<a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a></ul>
 <li> 1/10
-<a href="#event-MERCENARY">MERCENARY</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY">MERCENARY</a></ul>
 <li> 1/10
-<a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
 <li> 1/10
-<a href="#event-ASTEROID_DERELICT_SHIP">ASTEROID_DERELICT_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_DERELICT_SHIP">ASTEROID_DERELICT_SHIP</a></ul>
 <li> 1/10
-<a href="#event-ROCK_SLUG_ARGUMENT">ROCK_SLUG_ARGUMENT</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_SLUG_ARGUMENT">ROCK_SLUG_ARGUMENT</a></ul>
 </ul>
 </div>
 <h2 id="list-BOARDERS_ROCK">BOARDERS_ROCK</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/3
-<a href="#event-ROCK_BOARDERS_SHIP">ROCK_BOARDERS_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_BOARDERS_SHIP">ROCK_BOARDERS_SHIP</a></ul>
 <li> 1/3
-<a href="#event-ROCK_BOARDERS_ASTEROID">ROCK_BOARDERS_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_BOARDERS_ASTEROID">ROCK_BOARDERS_ASTEROID</a></ul>
 <li> 1/3
-<a href="#event-ROCK_BOARDERS_SUN">ROCK_BOARDERS_SUN</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_BOARDERS_SUN">ROCK_BOARDERS_SUN</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_ROCK">DISTRESS_BEACON_ROCK</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/12
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/12
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/12
-<a href="#event-STRANDED_BEACON">STRANDED_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-STRANDED_BEACON">STRANDED_BEACON</a></ul>
 <li> 1/12
-<a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a></ul>
 <li> 1/12
-<a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a></ul>
 <li> 1/12
-<a href="#event-REBEL_VS_FEDERATION">REBEL_VS_FEDERATION</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_VS_FEDERATION">REBEL_VS_FEDERATION</a></ul>
 <li> 1/12
-<a href="#event-ESCORT_BEACON">ESCORT_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-ESCORT_BEACON">ESCORT_BEACON</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 <li> 1/12
-<a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_ROCK">NEBULA_ROCK</h2>
@@ -8682,15 +8792,15 @@
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-ROCK_QUEST_MARRIAGE_START">ROCK_QUEST_MARRIAGE_START</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_QUEST_MARRIAGE_START">ROCK_QUEST_MARRIAGE_START</a></ul>
 <li> 1/5
-<a href="#event-QUEST_ESCORT">QUEST_ESCORT</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_ESCORT">QUEST_ESCORT</a></ul>
 <li> 1/5
-<a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a>
+<ul class="result"><li>Go to <a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a></ul>
 <li> 1/5
-<a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a></ul>
 <li> 1/5
-<a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a></ul>
 </ul>
 </div>
 <h2 id="list-ROCK_STARSHIP_MINE_DEFUSE2">ROCK_STARSHIP_MINE_DEFUSE2</h2>
@@ -8708,184 +8818,184 @@
 <div class="indent">
 <ul class="random">
 <li> 2/8
-<a href="#event-MANTIS_FIGHT">MANTIS_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_FIGHT">MANTIS_FIGHT</a></ul>
 <li> 1/8
-<a href="#event-MANTIS_SUN_FIGHT">MANTIS_SUN_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_SUN_FIGHT">MANTIS_SUN_FIGHT</a></ul>
 <li> 1/8
-<a href="#event-DONOR_MANTIS_CHASE">DONOR_MANTIS_CHASE</a>
+<ul class="result"><li>Go to <a href="#event-DONOR_MANTIS_CHASE">DONOR_MANTIS_CHASE</a></ul>
 <li> 1/8
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/8
-<a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a></ul>
 <li> 1/8
-<a href="#event-AUTO_WARNING">AUTO_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_WARNING">AUTO_WARNING</a></ul>
 <li> 1/8
-<a href="#event-REBEL_PULSAR">REBEL_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_PULSAR">REBEL_PULSAR</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_MANTIS">NEUTRAL_MANTIS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-MANTIS_FIGHT_CHOICE">MANTIS_FIGHT_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_FIGHT_CHOICE">MANTIS_FIGHT_CHOICE</a></ul>
 <li> 1/6
-<a href="#event-MANTIS_CIVILIAN">MANTIS_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_CIVILIAN">MANTIS_CIVILIAN</a></ul>
 <li> 1/6
-<a href="#event-MANTIS_CREW">MANTIS_CREW</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_CREW">MANTIS_CREW</a></ul>
 <li> 1/6
-<a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a></ul>
 <li> 1/6
-<a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a></ul>
 <li> 1/6
-<a href="#event-ALISON_MANTIS_CREW">ALISON_MANTIS_CREW</a>
+<ul class="result"><li>Go to <a href="#event-ALISON_MANTIS_CREW">ALISON_MANTIS_CREW</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_MANTIS">DISTRESS_BEACON_MANTIS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-ESCORT_BEACON">ESCORT_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-ESCORT_BEACON">ESCORT_BEACON</a></ul>
 <li> 1/8
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/8
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a></ul>
 </ul>
 </div>
 <h2 id="list-BOARDERS_MANTIS">BOARDERS_MANTIS</h2>
 <div class="indent">
 <ul class="random">
 <li> 2/3
-<a href="#event-MANTIS_BOARDERS">MANTIS_BOARDERS</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_BOARDERS">MANTIS_BOARDERS</a></ul>
 <li> 1/3
-<a href="#event-BOARDERS_SUN">BOARDERS_SUN</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_SUN">BOARDERS_SUN</a></ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE_PIRATE">HOSTILE_PIRATE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-PIRATE">PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE">PIRATE</a></ul>
 <li> 1/8
-<a href="#event-REBEL_AUTO">REBEL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 <li> 1/8
-<a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_SLAVER">PIRATE_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SLAVER">PIRATE_SLAVER</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_SUN">PIRATE_SUN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SUN">PIRATE_SUN</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_PIRATE">NEUTRAL_PIRATE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/9
-<a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a></ul>
 <li> 1/9
-<a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a></ul>
 <li> 1/9
-<a href="#event-MERCENARY">MERCENARY</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY">MERCENARY</a></ul>
 <li> 1/9
-<a href="#list-DISTRESS_BEACON">DISTRESS_BEACON</a>
+<ul class="result"><li>Go to <a href="#list-DISTRESS_BEACON">DISTRESS_BEACON</a></ul>
 <li> 1/9
-<a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
 <li> 1/9
-<a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
 <li> 1/9
-<a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
 <li> 1/9
-<a href="#event-ASTEROID_DERELICT_SHIP">ASTEROID_DERELICT_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_DERELICT_SHIP">ASTEROID_DERELICT_SHIP</a></ul>
 <li> 1/9
-<a href="#event-REFUGEE_NO_DISTRESS_PIRATE">REFUGEE_NO_DISTRESS_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_NO_DISTRESS_PIRATE">REFUGEE_NO_DISTRESS_PIRATE</a></ul>
 </ul>
 </div>
 <h2 id="list-BOARDERS_PIRATE">BOARDERS_PIRATE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-BOARDERS">BOARDERS</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS">BOARDERS</a></ul>
 <li> 1/5
-<a href="#event-STATION_SICK">STATION_SICK</a>
+<ul class="result"><li>Go to <a href="#event-STATION_SICK">STATION_SICK</a></ul>
 <li> 1/5
-<a href="#event-BOARDERS_SUN">BOARDERS_SUN</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_SUN">BOARDERS_SUN</a></ul>
 <li> 1/5
-<a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a></ul>
 <li> 1/5
-<a href="#event-FLOATING_CARGO">FLOATING_CARGO</a>
+<ul class="result"><li>Go to <a href="#event-FLOATING_CARGO">FLOATING_CARGO</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_PIRATE">DISTRESS_BEACON_PIRATE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/10
-<a href="#event-STRANDED_BEACON">STRANDED_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-STRANDED_BEACON">STRANDED_BEACON</a></ul>
 <li> 1/10
-<a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a></ul>
 <li> 1/10
-<a href="#event-ESCORT_BEACON">ESCORT_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-ESCORT_BEACON">ESCORT_BEACON</a></ul>
 <li> 1/10
-<a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a></ul>
 <li> 1/10
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/10
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/10
-<a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a></ul>
 <li> 1/10
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 <li> 1/10
-<a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a></ul>
 <li> 1/10
-<a href="#event-REFUGEE_DISTRESS_PIRATE">REFUGEE_DISTRESS_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_DISTRESS_PIRATE">REFUGEE_DISTRESS_PIRATE</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_PIRATE">NEBULA_PIRATE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/11
-<a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a></ul>
 <li> 1/11
-<a href="#event-NEBULA_REBEL">NEBULA_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL">NEBULA_REBEL</a></ul>
 <li> 1/11
-<a href="#event-NEBULA_PIRATE_SMUGGLE">NEBULA_PIRATE_SMUGGLE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_PIRATE_SMUGGLE">NEBULA_PIRATE_SMUGGLE</a></ul>
 <li> 1/11
-<a href="#event-NEBULA_TRADER">NEBULA_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_TRADER">NEBULA_TRADER</a></ul>
 <li> 2/11
-<a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a></ul>
 <li> 1/11
-<a href="#event-NEBULA_BOARDING">NEBULA_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_BOARDING">NEBULA_BOARDING</a></ul>
 <li> 1/11
-<a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a></ul>
 <li> 1/11
-<a href="#event-NEBULA_REBEL_BOARDING">NEBULA_REBEL_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_BOARDING">NEBULA_REBEL_BOARDING</a></ul>
 <li> 2/11
-<a href="#event-STORM_ITEMS">STORM_ITEMS</a>
+<ul class="result"><li>Go to <a href="#event-STORM_ITEMS">STORM_ITEMS</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_PIRATE">QUESTS_PIRATE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/3
-<a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a>
+<ul class="result"><li>Go to <a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a></ul>
 <li> 1/3
-<a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a></ul>
 <li> 1/3
-<a href="#event-QUEST_ESCORT">QUEST_ESCORT</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_ESCORT">QUEST_ESCORT</a></ul>
 </ul>
 </div>
 <h2 id="list-SAVE_CIVILIAN_LIST">SAVE_CIVILIAN_LIST</h2>
@@ -8975,57 +9085,57 @@
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-CRYSTAL_CACHE">CRYSTAL_CACHE</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_CACHE">CRYSTAL_CACHE</a></ul>
 <li> 1/6
-<a href="#event-CRYSTAL_SCRAP_EXCITED">CRYSTAL_SCRAP_EXCITED</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_SCRAP_EXCITED">CRYSTAL_SCRAP_EXCITED</a></ul>
 <li> 1/6
-<a href="#event-FIND_DRONE">FIND_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-FIND_DRONE">FIND_DRONE</a></ul>
 <li> 1/6
-<a href="#event-FIND_WEAPON">FIND_WEAPON</a>
+<ul class="result"><li>Go to <a href="#event-FIND_WEAPON">FIND_WEAPON</a></ul>
 <li> 1/6
-<a href="#event-REFUEL_STATION">REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REFUEL_STATION">REFUEL_STATION</a></ul>
 <li> 1/6
-<a href="#event-REPAIR_STATION">REPAIR_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REPAIR_STATION">REPAIR_STATION</a></ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE_CRYSTAL">HOSTILE_CRYSTAL</h2>
 <div class="indent">
 <ul class="random">
 <li> 3/7
-<a href="#event-CRYSTAL_FIGHT">CRYSTAL_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_FIGHT">CRYSTAL_FIGHT</a></ul>
 <li> 1/7
-<a href="#event-CRYSTAL_CONVOY">CRYSTAL_CONVOY</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_CONVOY">CRYSTAL_CONVOY</a></ul>
 <li> 1/7
-<a href="#event-CRYSTAL_REBEL">CRYSTAL_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_REBEL">CRYSTAL_REBEL</a></ul>
 <li> 1/7
-<a href="#event-CRYSTAL_HUNTER">CRYSTAL_HUNTER</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_HUNTER">CRYSTAL_HUNTER</a></ul>
 <li> 1/7
-<a href="#event-CRYSTAL_AUTO">CRYSTAL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_AUTO">CRYSTAL_AUTO</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_CRYSTAL">NEUTRAL_CRYSTAL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/10
-<a href="#event-CRYSTAL_REBEL_CRYSTAL">CRYSTAL_REBEL_CRYSTAL</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_REBEL_CRYSTAL">CRYSTAL_REBEL_CRYSTAL</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_REBEL_CRYSTAL2">CRYSTAL_REBEL_CRYSTAL2</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_REBEL_CRYSTAL2">CRYSTAL_REBEL_CRYSTAL2</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_MANTIS_CRYSTAL">CRYSTAL_MANTIS_CRYSTAL</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_MANTIS_CRYSTAL">CRYSTAL_MANTIS_CRYSTAL</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_PIRATE_CRYSTAL">CRYSTAL_PIRATE_CRYSTAL</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_PIRATE_CRYSTAL">CRYSTAL_PIRATE_CRYSTAL</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_FED">CRYSTAL_FED</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_FED">CRYSTAL_FED</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_FED_DESERTER">CRYSTAL_FED_DESERTER</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_FED_DESERTER">CRYSTAL_FED_DESERTER</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_HUMAN_TESTS">CRYSTAL_HUMAN_TESTS</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_HUMAN_TESTS">CRYSTAL_HUMAN_TESTS</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_CHATTY">CRYSTAL_CHATTY</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_CHATTY">CRYSTAL_CHATTY</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_REQUEST">CRYSTAL_REQUEST</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_REQUEST">CRYSTAL_REQUEST</a></ul>
 <li> 1/10
-<a href="#event-CRYSTAL_HELP_DIG">CRYSTAL_HELP_DIG</a>
+<ul class="result"><li>Go to <a href="#event-CRYSTAL_HELP_DIG">CRYSTAL_HELP_DIG</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_CRYSTAL">QUESTS_CRYSTAL</h2>
@@ -9098,117 +9208,117 @@
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-ENGI_GIFT">ENGI_GIFT</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_GIFT">ENGI_GIFT</a></ul>
 <li> 1/6
-<a href="#event-ENGI_FLEET_DELAY">ENGI_FLEET_DELAY</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_FLEET_DELAY">ENGI_FLEET_DELAY</a></ul>
 <li> 1/6
-<a href="#event-ENGI_SURRENDER">ENGI_SURRENDER</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_SURRENDER">ENGI_SURRENDER</a></ul>
 <li> 1/6
-<a href="#event-FIND_DRONE">FIND_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-FIND_DRONE">FIND_DRONE</a></ul>
 <li> 1/6
-<a href="#event-FIND_WEAPON">FIND_WEAPON</a>
+<ul class="result"><li>Go to <a href="#event-FIND_WEAPON">FIND_WEAPON</a></ul>
 <li> 1/6
-<a href="#event-REFUEL_STATION">REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REFUEL_STATION">REFUEL_STATION</a></ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE_ENGI">HOSTILE_ENGI</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/11
-<a href="#event-ENGI_MANTIS_FIGHT">ENGI_MANTIS_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_MANTIS_FIGHT">ENGI_MANTIS_FIGHT</a></ul>
 <li> 1/11
-<a href="#event-ENGI_REBEL_FIGHT">ENGI_REBEL_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_REBEL_FIGHT">ENGI_REBEL_FIGHT</a></ul>
 <li> 1/11
-<a href="#event-ENGI_PIRATE_FIGHT">ENGI_PIRATE_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_PIRATE_FIGHT">ENGI_PIRATE_FIGHT</a></ul>
 <li> 1/11
-<a href="#event-PIRATE">PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE">PIRATE</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a></ul>
 <li> 1/11
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/11
-<a href="#event-SQUAT_WARNING">SQUAT_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_WARNING">SQUAT_WARNING</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_SUN">PIRATE_SUN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SUN">PIRATE_SUN</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_ENGI">NEUTRAL_ENGI</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/16
-<a href="#event-ENGI_STATION_DISTRESS">ENGI_STATION_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_STATION_DISTRESS">ENGI_STATION_DISTRESS</a></ul>
 <li> 1/16
-<a href="#event-MANTIS_FIGHT_CHOICE">MANTIS_FIGHT_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_FIGHT_CHOICE">MANTIS_FIGHT_CHOICE</a></ul>
 <li> 1/16
-<a href="#event-MANTIS_CIVILIAN">MANTIS_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-MANTIS_CIVILIAN">MANTIS_CIVILIAN</a></ul>
 <li> 1/16
-<a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
 <li> 1/16
-<a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
 <li> 1/16
-<a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a></ul>
 <li> 1/16
-<a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a></ul>
 <li> 1/16
-<a href="#event-ALISON_MANTIS_CREW">ALISON_MANTIS_CREW</a>
+<ul class="result"><li>Go to <a href="#event-ALISON_MANTIS_CREW">ALISON_MANTIS_CREW</a></ul>
 <li> 1/16
-<a href="#event-ZOLTAN_CREW_STUDY">ZOLTAN_CREW_STUDY</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_CREW_STUDY">ZOLTAN_CREW_STUDY</a></ul>
 <li> 1/16
-<a href="#event-ASTEROID_DERELICT_SHIP">ASTEROID_DERELICT_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_DERELICT_SHIP">ASTEROID_DERELICT_SHIP</a></ul>
 <li> 1/16
-<a href="#event-REFUGEE_NO_DISTRESS">REFUGEE_NO_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_NO_DISTRESS">REFUGEE_NO_DISTRESS</a></ul>
 <li> 1/16
-<a href="#event-WRECKAGE_EVENT">WRECKAGE_EVENT</a>
+<ul class="result"><li>Go to <a href="#event-WRECKAGE_EVENT">WRECKAGE_EVENT</a></ul>
 <li> 1/16
-<a href="#event-FUELING_STATION">FUELING_STATION</a>
+<ul class="result"><li>Go to <a href="#event-FUELING_STATION">FUELING_STATION</a></ul>
 <li> 1/16
-<a href="#event-CONFUSED_MANTIS">CONFUSED_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-CONFUSED_MANTIS">CONFUSED_MANTIS</a></ul>
 <li> 1/16
-<a href="#event-ENGI_SEX">ENGI_SEX</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_SEX">ENGI_SEX</a></ul>
 <li> 1/16
-<a href="#event-ENGI_VIRUS">ENGI_VIRUS</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_VIRUS">ENGI_VIRUS</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_ENGI">DISTRESS_BEACON_ENGI</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/9
-<a href="#event-ENGI_STATION_DISTRESS">ENGI_STATION_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-ENGI_STATION_DISTRESS">ENGI_STATION_DISTRESS</a></ul>
 <li> 1/9
-<a href="#event-DISTRESS_ENGI_REBEL">DISTRESS_ENGI_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_ENGI_REBEL">DISTRESS_ENGI_REBEL</a></ul>
 <li> 1/9
-<a href="#event-DISTRESS_ENGI_REACTOR">DISTRESS_ENGI_REACTOR</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_ENGI_REACTOR">DISTRESS_ENGI_REACTOR</a></ul>
 <li> 1/9
-<a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a></ul>
 <li> 1/9
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/9
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/9
-<a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a></ul>
 <li> 1/9
-<a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a></ul>
 <li> 1/9
-<a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_ENGI">QUESTS_ENGI</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/4
-<a href="#event-QUEST_ESCORT">QUEST_ESCORT</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_ESCORT">QUEST_ESCORT</a></ul>
 <li> 1/4
-<a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a>
+<ul class="result"><li>Go to <a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a></ul>
 <li> 1/4
-<a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a>
+<ul class="result"><li>Go to <a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a></ul>
 <li> 1/4
-<a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a></ul>
 </ul>
 </div>
 <h2 id="list-SAVE_ENGI_STATION">SAVE_ENGI_STATION</h2>
@@ -9253,31 +9363,31 @@
 <div class="indent">
 <ul class="random">
 <li> 3/3
-<a href="#event-BOSS_SCOUT">BOSS_SCOUT</a>
+<ul class="result"><li>Go to <a href="#event-BOSS_SCOUT">BOSS_SCOUT</a></ul>
 </ul>
 </div>
 <h2 id="list-BOSS_NEUTRAL">BOSS_NEUTRAL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-BOSS_SCOUT_RESCUE">BOSS_SCOUT_RESCUE</a>
+<ul class="result"><li>Go to <a href="#event-BOSS_SCOUT_RESCUE">BOSS_SCOUT_RESCUE</a></ul>
 <li> 1/5
-<a href="#event-BOSS_FLEETS_BOTH_FIGHT">BOSS_FLEETS_BOTH_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-BOSS_FLEETS_BOTH_FIGHT">BOSS_FLEETS_BOTH_FIGHT</a></ul>
 <li> 1/5
-<a href="#event-BOSS_FLEETS_FED">BOSS_FLEETS_FED</a>
+<ul class="result"><li>Go to <a href="#event-BOSS_FLEETS_FED">BOSS_FLEETS_FED</a></ul>
 <li> 1/5
-<a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a></ul>
 <li> 1/5
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 </ul>
 </div>
 <h2 id="list-BOSS_WARNING_NODE">BOSS_WARNING_NODE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#event-BOSS_FLEETS_REBEL">BOSS_FLEETS_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-BOSS_FLEETS_REBEL">BOSS_FLEETS_REBEL</a></ul>
 <li> 1/2
-<a href="#event-BOSS_FLEETS_BOTH_FIGHT">BOSS_FLEETS_BOTH_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-BOSS_FLEETS_BOTH_FIGHT">BOSS_FLEETS_BOTH_FIGHT</a></ul>
 </ul>
 </div>
 <h2 id="list-BOSS_SCOUT_RESCUE_LIST">BOSS_SCOUT_RESCUE_LIST</h2>
@@ -9569,7 +9679,7 @@
 </div>
 </ol>
 <li> 1/5
-<a href="#list-FEDERATION_BASE_ASSIST">FEDERATION_BASE_ASSIST</a>
+<ul class="result"><li>Go to <a href="#list-FEDERATION_BASE_ASSIST">FEDERATION_BASE_ASSIST</a></ul>
 </ul>
 </div>
 <h2 id="list-FEDERATION_BASE_ASSIST">FEDERATION_BASE_ASSIST</h2>
@@ -9638,129 +9748,129 @@
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-ZOLTAN_FIGHT">ZOLTAN_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_FIGHT">ZOLTAN_FIGHT</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_PIRATE">ZOLTAN_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_PIRATE">ZOLTAN_PIRATE</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_MANTIS">ZOLTAN_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_MANTIS">ZOLTAN_MANTIS</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_ENGI">ZOLTAN_ENGI</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_ENGI">ZOLTAN_ENGI</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_ASTEROID">ZOLTAN_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_ASTEROID">ZOLTAN_ASTEROID</a></ul>
 <li> 1/8
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/8
-<a href="#event-REBEL_AUTO">REBEL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 <li> 1/8
-<a href="#event-REBEL_PULSAR">REBEL_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_PULSAR">REBEL_PULSAR</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_ZOLTAN">NEUTRAL_ZOLTAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-ZOLTAN_LIFERAFT">ZOLTAN_LIFERAFT</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_LIFERAFT">ZOLTAN_LIFERAFT</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_SCIENCE_DOCK">ZOLTAN_SCIENCE_DOCK</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_SCIENCE_DOCK">ZOLTAN_SCIENCE_DOCK</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_RIFT_FIGHT">ZOLTAN_RIFT_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_RIFT_FIGHT">ZOLTAN_RIFT_FIGHT</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_CREW_SCAN">ZOLTAN_CREW_SCAN</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_CREW_SCAN">ZOLTAN_CREW_SCAN</a></ul>
 <li> 1/8
-<a href="#event-REFUGEE_NO_DISTRESS_ZOLTAN">REFUGEE_NO_DISTRESS_ZOLTAN</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_NO_DISTRESS_ZOLTAN">REFUGEE_NO_DISTRESS_ZOLTAN</a></ul>
 <li> 1/8
-<a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
 <li> 1/8
-<a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
 </ul>
 </div>
 <h2 id="list-ITEM_ZOLTAN">ITEM_ZOLTAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/9
-<a href="#event-ZOLTAN_FREE_AUGMENT">ZOLTAN_FREE_AUGMENT</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_FREE_AUGMENT">ZOLTAN_FREE_AUGMENT</a></ul>
 <li> 1/9
-<a href="#event-ZOLTAN_FREE_MAP">ZOLTAN_FREE_MAP</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_FREE_MAP">ZOLTAN_FREE_MAP</a></ul>
 <li> 1/9
-<a href="#event-ZOLTAN_ODD_MOON">ZOLTAN_ODD_MOON</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_ODD_MOON">ZOLTAN_ODD_MOON</a></ul>
 <li> 1/9
-<a href="#event-FIND_DRONE">FIND_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-FIND_DRONE">FIND_DRONE</a></ul>
 <li> 1/9
-<a href="#event-FREE_ITEMS">FREE_ITEMS</a>
+<ul class="result"><li>Go to <a href="#event-FREE_ITEMS">FREE_ITEMS</a></ul>
 <li> 1/9
-<a href="#event-FUEL_FOR_DRONE">FUEL_FOR_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_FOR_DRONE">FUEL_FOR_DRONE</a></ul>
 <li> 1/9
-<a href="#event-REFUEL_STATION">REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REFUEL_STATION">REFUEL_STATION</a></ul>
 <li> 1/9
-<a href="#event-REPAIR_STATION">REPAIR_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REPAIR_STATION">REPAIR_STATION</a></ul>
 <li> 1/9
-<a href="#event-TRADER_CIV">TRADER_CIV</a>
+<ul class="result"><li>Go to <a href="#event-TRADER_CIV">TRADER_CIV</a></ul>
 </ul>
 </div>
 <h2 id="list-BOARDERS_ZOLTAN">BOARDERS_ZOLTAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/3
-<a href="#event-ZOLTAN_BOARDERS">ZOLTAN_BOARDERS</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_BOARDERS">ZOLTAN_BOARDERS</a></ul>
 <li> 1/3
-<a href="#event-ZOLTAN_BOARDERS_MANTIS">ZOLTAN_BOARDERS_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_BOARDERS_MANTIS">ZOLTAN_BOARDERS_MANTIS</a></ul>
 <li> 1/3
-<a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_ZOLTAN">DISTRESS_BEACON_ZOLTAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-ZOLTAN_DISTRESS_MANTIS">ZOLTAN_DISTRESS_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_DISTRESS_MANTIS">ZOLTAN_DISTRESS_MANTIS</a></ul>
 <li> 1/8
-<a href="#event-ZOLTAN_DISTRESS_SHELL">ZOLTAN_DISTRESS_SHELL</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_DISTRESS_SHELL">ZOLTAN_DISTRESS_SHELL</a></ul>
 <li> 1/8
-<a href="#event-REFUGEE_DISTRESS_ZOLTAN">REFUGEE_DISTRESS_ZOLTAN</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_DISTRESS_ZOLTAN">REFUGEE_DISTRESS_ZOLTAN</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a></ul>
 <li> 1/8
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 <li> 1/8
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/8
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/8
-<a href="#event-STRANDED_BEACON">STRANDED_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-STRANDED_BEACON">STRANDED_BEACON</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_ZOLTAN">QUESTS_ZOLTAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-ZOLTAN_TRADE_HUB">ZOLTAN_TRADE_HUB</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_TRADE_HUB">ZOLTAN_TRADE_HUB</a></ul>
 <li> 1/5
-<a href="#event-ZOLTAN_QUEST_PRIMITIVES">ZOLTAN_QUEST_PRIMITIVES</a>
+<ul class="result"><li>Go to <a href="#event-ZOLTAN_QUEST_PRIMITIVES">ZOLTAN_QUEST_PRIMITIVES</a></ul>
 <li> 1/5
-<a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a>
+<ul class="result"><li>Go to <a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a></ul>
 <li> 1/5
-<a href="#event-QUEST_MANTIS_INVASION_START">QUEST_MANTIS_INVASION_START</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_MANTIS_INVASION_START">QUEST_MANTIS_INVASION_START</a></ul>
 <li> 1/5
-<a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_ZOLTAN">NEBULA_ZOLTAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/7
-<a href="#event-NEBULA_ZOLTAN_ROCK">NEBULA_ZOLTAN_ROCK</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_ZOLTAN_ROCK">NEBULA_ZOLTAN_ROCK</a></ul>
 <li> 1/7
-<a href="#event-NEBULA_ZOLTAN_EYE">NEBULA_ZOLTAN_EYE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_ZOLTAN_EYE">NEBULA_ZOLTAN_EYE</a></ul>
 <li> 1/7
-<a href="#event-STORM_ZOLTAN_SUPPLY_CHOICE">STORM_ZOLTAN_SUPPLY_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-STORM_ZOLTAN_SUPPLY_CHOICE">STORM_ZOLTAN_SUPPLY_CHOICE</a></ul>
 <li> 2/7
-<a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a></ul>
 <li> 1/7
-<a href="#event-NEBULA_REBEL">NEBULA_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL">NEBULA_REBEL</a></ul>
 <li> 1/7
-<a href="#event-NEBULA_AUTO">NEBULA_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO">NEBULA_AUTO</a></ul>
 </ul>
 </div>
 <h2 id="list-ZOLTAN_TRADE_HUB_SUCCESS">ZOLTAN_TRADE_HUB_SUCCESS</h2>
@@ -9782,273 +9892,317 @@
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-NEBULA_REBEL">NEBULA_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL">NEBULA_REBEL</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_AUTO">NEBULA_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO">NEBULA_AUTO</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_AUTO_WARNING">NEBULA_AUTO_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_WARNING">NEBULA_AUTO_WARNING</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_PIRATE">NEBULA_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_PIRATE">NEBULA_PIRATE</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_MANTIS_FIGHT">NEBULA_MANTIS_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_MANTIS_FIGHT">NEBULA_MANTIS_FIGHT</a></ul>
 <li> 1/8
-<a href="#event-STORM_AUTO">STORM_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-STORM_AUTO">STORM_AUTO</a></ul>
 <li> 1/8
-<a href="#event-STORM_REBEL">STORM_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-STORM_REBEL">STORM_REBEL</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_BOARDING">NEBULA_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_BOARDING">NEBULA_BOARDING</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_NEUTRAL">NEBULA_NEUTRAL</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_PIRATE_SMUGGLE">NEBULA_PIRATE_SMUGGLE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_PIRATE_SMUGGLE">NEBULA_PIRATE_SMUGGLE</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_WEAPONS_TRADER">NEBULA_WEAPONS_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_WEAPONS_TRADER">NEBULA_WEAPONS_TRADER</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_ROCK_RACIST">NEBULA_ROCK_RACIST</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_ROCK_RACIST">NEBULA_ROCK_RACIST</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_MANTIS_CHOICE">NEBULA_MANTIS_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_MANTIS_CHOICE">NEBULA_MANTIS_CHOICE</a></ul>
 <li> 1/8
-<a href="#event-NEBULA_REBEL_CHASE">NEBULA_REBEL_CHASE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_CHASE">NEBULA_REBEL_CHASE</a></ul>
 </ul>
 </div>
 <h2 id="list-NON_HOSTILE">NON_HOSTILE</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#list-NEUTRAL">NEUTRAL</a>
+<ul class="random">
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-BROKEN_REBEL_DRONE">BROKEN_REBEL_DRONE</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-MERCENARY">MERCENARY</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-DONOR_PONY">DONOR_PONY</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-DONOR_PLAGUE">DONOR_PLAGUE</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-EMPTY_STATION2">EMPTY_STATION2</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-REFUGEE_NO_DISTRESS">REFUGEE_NO_DISTRESS</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-WRECKAGE_EVENT">WRECKAGE_EVENT</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-FUELING_STATION">FUELING_STATION</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-PIRATE_SALESMAN">PIRATE_SALESMAN</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-TERRAFORMING_SCAN">TERRAFORMING_SCAN</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-REBEL_CHECKPOINT">REBEL_CHECKPOINT</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-REBEL_HELPERS">REBEL_HELPERS</a></ul>
+<li> 1/20
+<ul class="result"><li>Go to <a href="#event-ROGUE_REBEL">ROGUE_REBEL</a></ul>
+</ul>
 <li> 1/2
-<a href="#list-ITEMS">ITEMS</a>
+<ul class="result"><li>Go to <a href="#list-ITEMS">ITEMS</a></ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE1">HOSTILE1</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/12
-<a href="#event-REBEL_PULSAR">REBEL_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_PULSAR">REBEL_PULSAR</a></ul>
 <li> 1/12
-<a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a></ul>
 <li> 1/12
-<a href="#event-SQUAT_WARNING">SQUAT_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_WARNING">SQUAT_WARNING</a></ul>
 <li> 1/12
-<a href="#event-AUTO_WARNING">AUTO_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_WARNING">AUTO_WARNING</a></ul>
 <li> 1/12
-<a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_ASTEROID">AUTO_ASTEROID</a></ul>
 <li> 1/12
-<a href="#event-AUTO_HACKER">AUTO_HACKER</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_HACKER">AUTO_HACKER</a></ul>
 <li> 1/12
-<a href="#event-REBEL_AUTO">REBEL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 <li> 1/12
-<a href="#event-AUTO_CIVILIAN">AUTO_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_CIVILIAN">AUTO_CIVILIAN</a></ul>
 <li> 1/12
-<a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a></ul>
 <li> 1/12
-<a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a></ul>
 <li> 1/12
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/12
-<a href="#list-MANTIS_HOSTILE">MANTIS_HOSTILE</a>
+<ul class="random">
+<li> 2/2
+<ul class="result"><li>Go to <a href="#event-MANTIS_FIGHT">MANTIS_FIGHT</a></ul>
+</ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE_CIVILIAN">HOSTILE_CIVILIAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/11
-<a href="#event-PIRATE">PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE">PIRATE</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a></ul>
 <li> 1/11
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/11
-<a href="#event-SQUAT_WARNING">SQUAT_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_WARNING">SQUAT_WARNING</a></ul>
 <li> 1/11
-<a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a></ul>
 <li> 1/11
-<a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_SLAVER">PIRATE_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SLAVER">PIRATE_SLAVER</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_SUN">PIRATE_SUN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SUN">PIRATE_SUN</a></ul>
 <li> 1/11
-<a href="#event-AUTO_SUN">AUTO_SUN</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_SUN">AUTO_SUN</a></ul>
 <li> 1/11
-<a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_CIVILIAN">NEUTRAL_CIVILIAN</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/10
-<a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN">PIRATE_CIVILIAN</a></ul>
 <li> 1/10
-<a href="#event-PIRATE_STATION_CROPS">PIRATE_STATION_CROPS</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_STATION_CROPS">PIRATE_STATION_CROPS</a></ul>
 <li> 1/10
-<a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_TRANSPORT">REBEL_TRANSPORT</a></ul>
 <li> 1/10
-<a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
 <li> 1/10
-<a href="#event-MERCENARY">MERCENARY</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY">MERCENARY</a></ul>
 <li> 1/10
-<a href="#list-DISTRESS_BEACON">DISTRESS_BEACON</a>
+<ul class="result"><li>Go to <a href="#list-DISTRESS_BEACON">DISTRESS_BEACON</a></ul>
 <li> 1/10
-<a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_SLAVER">FRIENDLY_SLAVER</a></ul>
 <li> 1/10
-<a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_BRIBER">PIRATE_BRIBER</a></ul>
 <li> 1/10
-<a href="#event-AUTO_DEFENSE_MAP">AUTO_DEFENSE_MAP</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_MAP">AUTO_DEFENSE_MAP</a></ul>
 <li> 1/10
-<a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_DEFENSE_ITEM">AUTO_DEFENSE_ITEM</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA">NEBULA</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/15
-<a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_EMPTY">NEBULA_EMPTY</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_REBEL">NEBULA_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL">NEBULA_REBEL</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_AUTO">NEBULA_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO">NEBULA_AUTO</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_AUTO_WARNING">NEBULA_AUTO_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_WARNING">NEBULA_AUTO_WARNING</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_PIRATE_SMUGGLE">NEBULA_PIRATE_SMUGGLE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_PIRATE_SMUGGLE">NEBULA_PIRATE_SMUGGLE</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_TRADER">NEBULA_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_TRADER">NEBULA_TRADER</a></ul>
 <li> 1/15
-<a href="#event-STORM_REBEL">STORM_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-STORM_REBEL">STORM_REBEL</a></ul>
 <li> 1/15
-<a href="#event-STORM_AUTO">STORM_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-STORM_AUTO">STORM_AUTO</a></ul>
 <li> 1/15
-<a href="#event-STORM_ITEMS">STORM_ITEMS</a>
+<ul class="result"><li>Go to <a href="#event-STORM_ITEMS">STORM_ITEMS</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_BOARDING">NEBULA_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_BOARDING">NEBULA_BOARDING</a></ul>
 <li> 1/15
-<a href="#event-STORM_BOARDING">STORM_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-STORM_BOARDING">STORM_BOARDING</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_MANTIS_FIGHT">NEBULA_MANTIS_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_MANTIS_FIGHT">NEBULA_MANTIS_FIGHT</a></ul>
 <li> 1/15
-<a href="#event-NEBULA_WEAPONS_TRADER">NEBULA_WEAPONS_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_WEAPONS_TRADER">NEBULA_WEAPONS_TRADER</a></ul>
 </ul>
 </div>
 <h2 id="list-ITEMS">ITEMS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/14
-<a href="#event-FIND_DRONE">FIND_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-FIND_DRONE">FIND_DRONE</a></ul>
 <li> 1/14
-<a href="#event-FIND_WEAPON">FIND_WEAPON</a>
+<ul class="result"><li>Go to <a href="#event-FIND_WEAPON">FIND_WEAPON</a></ul>
 <li> 1/14
-<a href="#event-FREE_ITEMS">FREE_ITEMS</a>
+<ul class="result"><li>Go to <a href="#event-FREE_ITEMS">FREE_ITEMS</a></ul>
 <li> 1/14
-<a href="#event-FUEL_FOR_DRONE">FUEL_FOR_DRONE</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_FOR_DRONE">FUEL_FOR_DRONE</a></ul>
 <li> 1/14
-<a href="#event-REFUEL_STATION">REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REFUEL_STATION">REFUEL_STATION</a></ul>
 <li> 1/14
-<a href="#event-REPAIR_STATION">REPAIR_STATION</a>
+<ul class="result"><li>Go to <a href="#event-REPAIR_STATION">REPAIR_STATION</a></ul>
 <li> 1/14
-<a href="#event-SELL_DRONES_STATION">SELL_DRONES_STATION</a>
+<ul class="result"><li>Go to <a href="#event-SELL_DRONES_STATION">SELL_DRONES_STATION</a></ul>
 <li> 1/14
-<a href="#event-SELL_MISSILES_STATION">SELL_MISSILES_STATION</a>
+<ul class="result"><li>Go to <a href="#event-SELL_MISSILES_STATION">SELL_MISSILES_STATION</a></ul>
 <li> 1/14
-<a href="#event-TRADER_CIV">TRADER_CIV</a>
+<ul class="result"><li>Go to <a href="#event-TRADER_CIV">TRADER_CIV</a></ul>
 <li> 1/14
-<a href="#event-TAVERN_HIRE">TAVERN_HIRE</a>
+<ul class="result"><li>Go to <a href="#event-TAVERN_HIRE">TAVERN_HIRE</a></ul>
 <li> 1/14
-<a href="#event-STORE_REBELSIDE">STORE_REBELSIDE</a>
+<ul class="result"><li>Go to <a href="#event-STORE_REBELSIDE">STORE_REBELSIDE</a></ul>
 <li> 1/14
-<a href="#event-TRADER_UPGRADES">TRADER_UPGRADES</a>
+<ul class="result"><li>Go to <a href="#event-TRADER_UPGRADES">TRADER_UPGRADES</a></ul>
 <li> 1/14
-<a href="#event-TRADER_UPGRADES_EXCHANGE">TRADER_UPGRADES_EXCHANGE</a>
+<ul class="result"><li>Go to <a href="#event-TRADER_UPGRADES_EXCHANGE">TRADER_UPGRADES_EXCHANGE</a></ul>
 <li> 1/14
-<a href="#event-HELP_MINERS">HELP_MINERS</a>
+<ul class="result"><li>Go to <a href="#event-HELP_MINERS">HELP_MINERS</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON">DISTRESS_BEACON</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/14
-<a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></ul>
 <li> 1/14
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 <li> 1/14
-<a href="#event-STRANDED_BEACON">STRANDED_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-STRANDED_BEACON">STRANDED_BEACON</a></ul>
 <li> 1/14
-<a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a></ul>
 <li> 1/14
-<a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-CIVILIAN_ASTEROIDS_BEACON">CIVILIAN_ASTEROIDS_BEACON</a></ul>
 <li> 1/14
-<a href="#event-REBEL_VS_FEDERATION">REBEL_VS_FEDERATION</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_VS_FEDERATION">REBEL_VS_FEDERATION</a></ul>
 <li> 1/14
-<a href="#event-ESCORT_BEACON">ESCORT_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-ESCORT_BEACON">ESCORT_BEACON</a></ul>
 <li> 1/14
-<a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_TRAPPED_MINER">DISTRESS_TRAPPED_MINER</a></ul>
 <li> 1/14
-<a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_INFESTATION">DISTRESS_INFESTATION</a></ul>
 <li> 1/14
-<a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_SATELLITE_DEFENSE">DISTRESS_SATELLITE_DEFENSE</a></ul>
 <li> 1/14
-<a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_FIRE">DISTRESS_STATION_FIRE</a></ul>
 <li> 1/14
-<a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a>
+<ul class="result"><li>Go to <a href="#event-DISTRESS_STATION_DISEASE">DISTRESS_STATION_DISEASE</a></ul>
 <li> 1/14
-<a href="#event-REFUGEE_GHOST">REFUGEE_GHOST</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_GHOST">REFUGEE_GHOST</a></ul>
 <li> 1/14
-<a href="#event-REFUGEE_DISTRESS">REFUGEE_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_DISTRESS">REFUGEE_DISTRESS</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS">QUESTS</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/7
-<a href="#event-QUEST_ESCORT">QUEST_ESCORT</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_ESCORT">QUEST_ESCORT</a></ul>
 <li> 1/7
-<a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a>
+<ul class="result"><li>Go to <a href="#event-MERCHANT_REQUEST">MERCHANT_REQUEST</a></ul>
 <li> 1/7
-<a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a>
+<ul class="result"><li>Go to <a href="#event-FEDERATION_PLANET_SIGNAL">FEDERATION_PLANET_SIGNAL</a></ul>
 <li> 1/7
-<a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a>
+<ul class="result"><li>Go to <a href="#event-MERCENARY_WORK_START">MERCENARY_WORK_START</a></ul>
 <li> 1/7
-<a href="#event-QUEST_MANTIS_INVASION_START">QUEST_MANTIS_INVASION_START</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_MANTIS_INVASION_START">QUEST_MANTIS_INVASION_START</a></ul>
 <li> 1/7
-<a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a></ul>
 <li> 1/7
-<a href="#event-QUEST_CONSTRUCTIONYARD">QUEST_CONSTRUCTIONYARD</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_CONSTRUCTIONYARD">QUEST_CONSTRUCTIONYARD</a></ul>
 </ul>
 </div>
 <h2 id="list-HOSTILE_BOARDING">HOSTILE_BOARDING</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-BOARDERS_ASTEROID_GHOST">BOARDERS_ASTEROID_GHOST</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_ASTEROID_GHOST">BOARDERS_ASTEROID_GHOST</a></ul>
 <li> 1/8
-<a href="#event-STATION_SICK">STATION_SICK</a>
+<ul class="result"><li>Go to <a href="#event-STATION_SICK">STATION_SICK</a></ul>
 <li> 1/8
-<a href="#event-BOARDERS_SUN">BOARDERS_SUN</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_SUN">BOARDERS_SUN</a></ul>
 <li> 1/8
-<a href="#event-BOARDERS_ASTEROID">BOARDERS_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_ASTEROID">BOARDERS_ASTEROID</a></ul>
 <li> 1/8
-<a href="#event-BOARDERS">BOARDERS</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS">BOARDERS</a></ul>
 <li> 1/8
-<a href="#event-GHOST_SHIP">GHOST_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-GHOST_SHIP">GHOST_SHIP</a></ul>
 <li> 1/8
-<a href="#event-FLOATING_CARGO">FLOATING_CARGO</a>
+<ul class="result"><li>Go to <a href="#event-FLOATING_CARGO">FLOATING_CARGO</a></ul>
 <li> 1/8
-<a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a>
+<ul class="result"><li>Go to <a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a></ul>
 </ul>
 </div>
 <h2 id="list-HELP_MINERS_1">HELP_MINERS_1</h2>
@@ -10085,7 +10239,7 @@
 <div class="indent">
 <ul class="random">
 <li> 4/8
-<a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a></ul>
 <li> 1/8
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-PIRATE">PIRATE</a></ul>
 <li> 1/8
@@ -10100,7 +10254,7 @@
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a></ul>
 <li> 1/2
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-ZOLTAN_REFUGEE">ZOLTAN_REFUGEE</a></ul>
 </ul>
@@ -10109,7 +10263,7 @@
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a></ul>
 <li> 1/2
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-PIRATE_REFUGEE">PIRATE_REFUGEE</a></ul>
 </ul>
@@ -10118,7 +10272,7 @@
 <div class="indent">
 <ul class="random">
 <li> 1/2
-<a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_TRADER">REFUGEE_TRADER</a></ul>
 <li> 1/2
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-PIRATE_REFUGEE">PIRATE_REFUGEE</a></ul>
 </ul>
@@ -10281,7 +10435,7 @@
 <div class="indent">
 <ul class="random">
 <li> 1/1
-<a href="#event-DOCK_DRONE_SALESMAN">DOCK_DRONE_SALESMAN</a>
+<ul class="result"><li>Go to <a href="#event-DOCK_DRONE_SALESMAN">DOCK_DRONE_SALESMAN</a></ul>
 </ul>
 </div>
 <h2 id="list-REBEL_HELPERS_SUPPLIES">REBEL_HELPERS_SUPPLIES</h2>
@@ -10302,21 +10456,21 @@
 <div class="indent">
 <ul class="random">
 <li> 1/11
-<a href="#event-FUEL_FLEET_DELAY">FUEL_FLEET_DELAY</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_FLEET_DELAY">FUEL_FLEET_DELAY</a></ul>
 <li> 4/11
-<a href="#event-FUEL_NOTHING">FUEL_NOTHING</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_NOTHING">FUEL_NOTHING</a></ul>
 <li> 1/11
-<a href="#event-FUEL_TRADER">FUEL_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_TRADER">FUEL_TRADER</a></ul>
 <li> 1/11
-<a href="#event-FUEL_EXPLORE">FUEL_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_EXPLORE">FUEL_EXPLORE</a></ul>
 <li> 1/11
-<a href="#event-FUEL_APPROACH">FUEL_APPROACH</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_APPROACH">FUEL_APPROACH</a></ul>
 <li> 1/11
-<a href="#event-FUEL_OFF_ENGI_DUBIOUS">FUEL_OFF_ENGI_DUBIOUS</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_OFF_ENGI_DUBIOUS">FUEL_OFF_ENGI_DUBIOUS</a></ul>
 <li> 1/11
-<a href="#event-FUEL_OFF_ROCK_WRECK">FUEL_OFF_ROCK_WRECK</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_OFF_ROCK_WRECK">FUEL_OFF_ROCK_WRECK</a></ul>
 <li> 1/11
-<a href="#event-NO_FUEL_REFUGEE_FRIENDLY">NO_FUEL_REFUGEE_FRIENDLY</a>
+<ul class="result"><li>Go to <a href="#event-NO_FUEL_REFUGEE_FRIENDLY">NO_FUEL_REFUGEE_FRIENDLY</a></ul>
 </ul>
 </div>
 <h2 id="list-FUEL_APPROACH_SCAN_LIST">FUEL_APPROACH_SCAN_LIST</h2>
@@ -10343,27 +10497,34 @@
 <div class="indent">
 <ul class="random">
 <li> 2/12
-<a href="#event-FUEL_NOTHING_DISTRESS">FUEL_NOTHING_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_NOTHING_DISTRESS">FUEL_NOTHING_DISTRESS</a></ul>
 <li> 1/12
-<a href="#event-FUEL_SELLER_DISTRESS">FUEL_SELLER_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_SELLER_DISTRESS">FUEL_SELLER_DISTRESS</a></ul>
 <li> 1/12
-<a href="#event-FUEL_TRADER_DISTRESS">FUEL_TRADER_DISTRESS</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_TRADER_DISTRESS">FUEL_TRADER_DISTRESS</a></ul>
 <li> 1/12
-<a href="#event-FUEL_EXPLORE">FUEL_EXPLORE</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_EXPLORE">FUEL_EXPLORE</a></ul>
 <li> 1/12
-<a href="#event-FUEL_APPROACH">FUEL_APPROACH</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_APPROACH">FUEL_APPROACH</a></ul>
 <li> 1/12
-<a href="#event-FUEL_ON_SLUG_OVERPRICED">FUEL_ON_SLUG_OVERPRICED</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_ON_SLUG_OVERPRICED">FUEL_ON_SLUG_OVERPRICED</a></ul>
 <li> 1/12
-<a href="#event-FUEL_ON_SLUG_CHUCKLE">FUEL_ON_SLUG_CHUCKLE</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_ON_SLUG_CHUCKLE">FUEL_ON_SLUG_CHUCKLE</a></ul>
 <li> 1/12
-<a href="#event-FUEL_ON_MANTIS_ATTACK">FUEL_ON_MANTIS_ATTACK</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_ON_MANTIS_ATTACK">FUEL_ON_MANTIS_ATTACK</a></ul>
 <li> 1/12
-<a href="#event-FUEL_ON_REBEL_WARNING">FUEL_ON_REBEL_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_ON_REBEL_WARNING">FUEL_ON_REBEL_WARNING</a></ul>
 <li> 1/12
-<a href="#event-FUEL_ON_REBEL_ATTACK">FUEL_ON_REBEL_ATTACK</a>
+<ul class="result"><li>Go to <a href="#event-FUEL_ON_REBEL_ATTACK">FUEL_ON_REBEL_ATTACK</a></ul>
 <li> 1/12
-<a href="#list-NO_FUEL_REFUGEE">NO_FUEL_REFUGEE</a>
+<ul class="random">
+<li> 1/3
+<ul class="result"><li>Go to <a href="#event-evt-1378">evt-1378</a></ul>
+<li> 1/3
+<ul class="result"><li>Go to <a href="#event-NO_FUEL_REFUGEE_DAMAGED">NO_FUEL_REFUGEE_DAMAGED</a></ul>
+<li> 1/3
+<ul class="result"><li>Go to <a href="#event-NO_FUEL_REFUGEE_PIRATE">NO_FUEL_REFUGEE_PIRATE</a></ul>
+</ul>
 </ul>
 </div>
 <h2 id="list-FUEL_TRADER_HIGH_LIST">FUEL_TRADER_HIGH_LIST</h2>
@@ -10432,32 +10593,32 @@
 <div class="indent">
 <ul class="random">
 <li> 1/5
-<a href="#event-SLUG_FIGHT">SLUG_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_FIGHT">SLUG_FIGHT</a></ul>
 <li> 1/5
-<a href="#event-SLUG_MANTIS">SLUG_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_MANTIS">SLUG_MANTIS</a></ul>
 <li> 1/5
-<a href="#event-SLUG_PIRATE">SLUG_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_PIRATE">SLUG_PIRATE</a></ul>
 <li> 1/5
-<a href="#event-SLUG_REBEL">SLUG_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_REBEL">SLUG_REBEL</a></ul>
 <li> 1/5
-<a href="#event-DONOR_BLACK_RAVEN">DONOR_BLACK_RAVEN</a>
+<ul class="result"><li>Go to <a href="#event-DONOR_BLACK_RAVEN">DONOR_BLACK_RAVEN</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_HOSTILE_SLUG">NEBULA_HOSTILE_SLUG</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/6
-<a href="#event-NEBULA_SLUG_FIGHT">NEBULA_SLUG_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_FIGHT">NEBULA_SLUG_FIGHT</a></ul>
 <li> 1/6
-<a href="#event-NEBULA_SLUG_MANTIS">NEBULA_SLUG_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_MANTIS">NEBULA_SLUG_MANTIS</a></ul>
 <li> 1/6
-<a href="#event-NEBULA_SLUG_PIRATE">NEBULA_SLUG_PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_PIRATE">NEBULA_SLUG_PIRATE</a></ul>
 <li> 1/6
-<a href="#event-NEBULA_SLUG_DOORS">NEBULA_SLUG_DOORS</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_DOORS">NEBULA_SLUG_DOORS</a></ul>
 <li> 1/6
-<a href="#event-NEBULA_SLUG_OXYGEN">NEBULA_SLUG_OXYGEN</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_OXYGEN">NEBULA_SLUG_OXYGEN</a></ul>
 <li> 1/6
-<a href="#event-NEBULA_SLUG_MEDBAY">NEBULA_SLUG_MEDBAY</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_MEDBAY">NEBULA_SLUG_MEDBAY</a></ul>
 </ul>
 </div>
 <h2 id="list-NEUTRAL_SLUG">NEUTRAL_SLUG</h2>
@@ -10469,70 +10630,70 @@
 <div class="indent">
 <ul class="random">
 <li> 1/13
-<a href="#event-NEBULA_SLUG_CHOOSE_DEATH">NEBULA_SLUG_CHOOSE_DEATH</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_CHOOSE_DEATH">NEBULA_SLUG_CHOOSE_DEATH</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_SLUG_HULLFIX">NEBULA_SLUG_HULLFIX</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_HULLFIX">NEBULA_SLUG_HULLFIX</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_SLUG_FAKE_STORE">NEBULA_SLUG_FAKE_STORE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_SLUG_FAKE_STORE">NEBULA_SLUG_FAKE_STORE</a></ul>
 <li> 1/13
-<a href="#event-SLUG_DRINK">SLUG_DRINK</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_DRINK">SLUG_DRINK</a></ul>
 <li> 1/13
-<a href="#event-QUEST_SLUG_PIRATE_TRAP">QUEST_SLUG_PIRATE_TRAP</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_SLUG_PIRATE_TRAP">QUEST_SLUG_PIRATE_TRAP</a></ul>
 <li> 1/13
-<a href="#event-REFUGEE_NO_DISTRESS_SLUG">REFUGEE_NO_DISTRESS_SLUG</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_NO_DISTRESS_SLUG">REFUGEE_NO_DISTRESS_SLUG</a></ul>
 <li> 1/13
-<a href="#event-ROCK_SLUG_ARGUMENT_NEBULA">ROCK_SLUG_ARGUMENT_NEBULA</a>
+<ul class="result"><li>Go to <a href="#event-ROCK_SLUG_ARGUMENT_NEBULA">ROCK_SLUG_ARGUMENT_NEBULA</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_BATTLEFIELD">NEBULA_BATTLEFIELD</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_BATTLEFIELD">NEBULA_BATTLEFIELD</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_UNDETECTED">NEBULA_REBEL_UNDETECTED</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_AUTO_DEFENSE_ITEM">NEBULA_AUTO_DEFENSE_ITEM</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_LOST_SHIP">NEBULA_LOST_SHIP</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_WEAPONS_TRADER">NEBULA_WEAPONS_TRADER</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_WEAPONS_TRADER">NEBULA_WEAPONS_TRADER</a></ul>
 <li> 1/13
-<a href="#event-NEBULA_REBEL_CHASE">NEBULA_REBEL_CHASE</a>
+<ul class="result"><li>Go to <a href="#event-NEBULA_REBEL_CHASE">NEBULA_REBEL_CHASE</a></ul>
 </ul>
 </div>
 <h2 id="list-STORM_SLUG">STORM_SLUG</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/3
-<a href="#event-STORM_SLUG_FIGHT">STORM_SLUG_FIGHT</a>
+<ul class="result"><li>Go to <a href="#event-STORM_SLUG_FIGHT">STORM_SLUG_FIGHT</a></ul>
 <li> 1/3
-<a href="#event-STORM_REBEL">STORM_REBEL</a>
+<ul class="result"><li>Go to <a href="#event-STORM_REBEL">STORM_REBEL</a></ul>
 <li> 1/3
-<a href="#event-STORM_BOARDING">STORM_BOARDING</a>
+<ul class="result"><li>Go to <a href="#event-STORM_BOARDING">STORM_BOARDING</a></ul>
 </ul>
 </div>
 <h2 id="list-DISTRESS_BEACON_SLUG">DISTRESS_BEACON_SLUG</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<a href="#event-SLUG_DISTRESS_ROCK">SLUG_DISTRESS_ROCK</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_DISTRESS_ROCK">SLUG_DISTRESS_ROCK</a></ul>
 <li> 1/8
-<a href="#event-SLUG_DISTRESS_QUESTION">SLUG_DISTRESS_QUESTION</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_DISTRESS_QUESTION">SLUG_DISTRESS_QUESTION</a></ul>
 <li> 1/8
-<a href="#event-SLUG_DISTRESS_MANTIS">SLUG_DISTRESS_MANTIS</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_DISTRESS_MANTIS">SLUG_DISTRESS_MANTIS</a></ul>
 <li> 1/8
-<a href="#event-SLUG_DISTRESS_TRICK">SLUG_DISTRESS_TRICK</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_DISTRESS_TRICK">SLUG_DISTRESS_TRICK</a></ul>
 <li> 1/8
-<a href="#event-SLUG_DISTRESS_RESCUE">SLUG_DISTRESS_RESCUE</a>
+<ul class="result"><li>Go to <a href="#event-SLUG_DISTRESS_RESCUE">SLUG_DISTRESS_RESCUE</a></ul>
 <li> 1/8
-<a href="#event-REFUGEE_DISTRESS_SLUG">REFUGEE_DISTRESS_SLUG</a>
+<ul class="result"><li>Go to <a href="#event-REFUGEE_DISTRESS_SLUG">REFUGEE_DISTRESS_SLUG</a></ul>
 <li> 1/8
-<a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CIVILIAN_BEACON">PIRATE_CIVILIAN_BEACON</a></ul>
 <li> 1/8
-<a href="#event-TRAP_BEACON">TRAP_BEACON</a>
+<ul class="result"><li>Go to <a href="#event-TRAP_BEACON">TRAP_BEACON</a></ul>
 </ul>
 </div>
 <h2 id="list-QUESTS_SLUG">QUESTS_SLUG</h2>
 <div class="indent">
 <ul class="random">
 <li> 1/1
-<a href="#event-QUEST_SLUG_PIRATE_TRAP">QUEST_SLUG_PIRATE_TRAP</a>
+<ul class="result"><li>Go to <a href="#event-QUEST_SLUG_PIRATE_TRAP">QUEST_SLUG_PIRATE_TRAP</a></ul>
 </ul>
 </div>
 <h2 id="list-NEBULA_SLUG_HULLFIX_RESULT2">NEBULA_SLUG_HULLFIX_RESULT2</h2>
@@ -10594,35 +10755,35 @@
 <div class="indent">
 <ul class="random">
 <li> 1/15
-<a href="#event-REBEL_PDS">REBEL_PDS</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_PDS">REBEL_PDS</a></ul>
 <li> 1/15
-<a href="#event-REBEL_AUTO">REBEL_AUTO</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 <li> 1/15
-<a href="#event-REBEL_PULSAR">REBEL_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-REBEL_PULSAR">REBEL_PULSAR</a></ul>
 <li> 1/15
-<a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_PULSAR">PIRATE_PULSAR</a></ul>
 <li> 1/15
-<a href="#event-PIRATE">PIRATE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE">PIRATE</a></ul>
 <li> 1/15
-<a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_CHOICE">PIRATE_CHOICE</a></ul>
 <li> 1/15
-<a href="#event-REBEL">REBEL</a>
+<ul class="result"><li>Go to <a href="#event-REBEL">REBEL</a></ul>
 <li> 1/15
-<a href="#event-SQUAT_WARNING">SQUAT_WARNING</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_WARNING">SQUAT_WARNING</a></ul>
 <li> 1/15
-<a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-SQUAT_REFUEL_STATION">SQUAT_REFUEL_STATION</a></ul>
 <li> 1/15
-<a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_ASTEROID">PIRATE_ASTEROID</a></ul>
 <li> 1/15
-<a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_REFUEL_STATION">AUTO_REFUEL_STATION</a></ul>
 <li> 1/15
-<a href="#event-PIRATE_SLAVER">PIRATE_SLAVER</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SLAVER">PIRATE_SLAVER</a></ul>
 <li> 1/15
-<a href="#event-PIRATE_SUN">PIRATE_SUN</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_SUN">PIRATE_SUN</a></ul>
 <li> 1/15
-<a href="#event-AUTO_SUN">AUTO_SUN</a>
+<ul class="result"><li>Go to <a href="#event-AUTO_SUN">AUTO_SUN</a></ul>
 <li> 1/15
-<a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a>
+<ul class="result"><li>Go to <a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a></ul>
 </ul>
 </div>
 <h1>Fights</h1>
