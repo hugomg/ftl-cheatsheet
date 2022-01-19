@@ -381,14 +381,22 @@ def blueprint_event(what, id):
         name = blueprint_name[id]
         return '<li><strong>{what}</strong> ({name})'.format(what = H(what), name = H(name))
 
+link_target_set = set()
+anchor_set = set()
+
+def make_link(typ, id):
+    anchor = typ + '-' + id
+    link_target_set.add(anchor)
+    return '<a href="#{anchor}">{id}</a>'.format(anchor = H(anchor), id = H(id))
+
 def event_link(id):
-    return '<a href="#event-{id}">{id}</a>'.format(id = H(id))
+    return make_link('event', id)
 
 def group_link(id):
-    return '<a href="#list-{id}">{id}</a>'.format(id = H(id))
+    return make_link('list', id)
 
 def ship_link(id):
-    return '<a href="#ship-{id}">{id}</a>'.format(id = H(id))
+    return make_link('ship', id)
 
 def graph_add_event(event, enemy_ship_name):
     """Interpret one <event> node from the xml file"""
@@ -1218,6 +1226,10 @@ def output_ship(shipID):
     print('</ul>')
 
 
+def output_anchor(typ, key):
+    anchor = typ + '-' + key
+    anchor_set.add(anchor)
+    print('<h2 id="{anchor}">{key}</h2>'.format(anchor = H(anchor), key = H(key)))
 
 def output_html():
 
@@ -1284,9 +1296,14 @@ def output_html():
     # Events
     print('<h1>Events</h1>')
     for key in event_dict:
-        if key.startswith('evt-'): continue
+        if key.startswith('evt-'):
+            # Generally speaking the anonymoust events always can be inlined and therefore
+            # don't need to be shown at the toplevel. However, there is one exception: one
+            # of the events of NO_FUEL_DISTRESS. We cover that case by testing if it is in
+            # the root event set.
+            if key not in root_event_set: continue
         if can_inline_event(key): continue
-        print('<h2 id="event-{key}">{key}</h2>'.format(key = H(key)))
+        output_anchor('event', key)
         print('<div class="indent">')
         output_event(key)
         print('</div>')
@@ -1295,7 +1312,7 @@ def output_html():
     print('<h1>Event Pools</h1>')
     for key in group_dict:
         if can_inline_group(key): continue
-        print('<h2 id="list-{key}">{key}</h2>'.format(key = H(key)))
+        output_anchor('list', key)
         print('<div class="indent">')
         output_group(key)
         print('</div>')
@@ -1303,7 +1320,7 @@ def output_html():
     # Ships
     print('<h1>Fights</h1>')
     for key in ship_dict:
-        print('<h2 id="ship-{key}">{key}</h2>'.format(key = H(key)))
+        output_anchor('ship', key)
         print('<div class="indent">')
         output_ship(key)
         print('</div>')
@@ -1347,6 +1364,10 @@ def main():
     for k in ship_dict.keys():
         if k not in printed_ships:
             log('missing ship:'+k)
+
+    # Check for broken links
+    for k in link_target_set - anchor_set:
+        log('broken link: '+k)
 
 if __name__ == "__main__":
     main()
