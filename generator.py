@@ -26,12 +26,12 @@ import sys
 # Misc helper functions
 #
 
-def abort(msg):
-    print(msg, file=sys.stderr)
+def abort(*args):
+    print(*args, file=sys.stderr)
     sys.exit(1)
 
-def log(msg):
-    print(msg, file=sys.stderr)
+def log(*args):
+    print(*args, file=sys.stderr)
 
 def num_range(lo, hi):
     """Convert a min/max range to human-readable form"""
@@ -280,7 +280,7 @@ def check_child_nodes(parent, known_tags):
     for child in parent:
         tag = child.tag
         if tag not in known_tags:
-            log("Not yet implemented: " + tag)
+            log("Not yet implemented", tag)
             known_tags.add(tag)
 
 #
@@ -841,7 +841,7 @@ def graph_add_event(event, enemy_ship_name):
             if sub_event is not None:
                 eventID = graph_add_event(sub_event, enemy_ship_name)
             else:
-                log("EMPTY CHOICE: " + id)
+                log("EMPTY CHOICE", id)
                 eventID = None
 
             parsed_choices.append( (req_msg+text, is_blue, eventID) )
@@ -1166,7 +1166,7 @@ def goto_event_or_group(name):
 
 def output_event(eventID):
     event = event_dict[eventID]
-    if eventID in printed_events: log('dupe:'+eventID)
+    if eventID in printed_events: log('dupe', eventID)
     printed_events.add(eventID)
 
     if (eventID in root_event_set) or (event.choices and len(event.choices) >= 2) :
@@ -1188,7 +1188,7 @@ def output_event(eventID):
 
 def output_group(groupID):
     group = group_dict[groupID]
-    if groupID in printed_groups: log('dupe:'+groupID)
+    if groupID in printed_groups: log('dupe', groupID)
     printed_groups.add(groupID)
 
     m = 0
@@ -1355,19 +1355,19 @@ def main():
     for k in event_dict:
         if k not in printed_events:
             if not k.startswith('evt-'):
-                log('missing event:'+k)
+                log('missing event', k)
 
     for k in group_dict.keys():
         if k not in printed_groups:
-            log('missing event:'+k)
+            log('missing event', k)
 
     for k in ship_dict.keys():
         if k not in printed_ships:
-            log('missing ship:'+k)
+            log('missing ship', k)
 
     # Check for broken links
     for k in link_target_set - anchor_set:
-        log('broken link: '+k)
+        log('broken link', k)
 
 if __name__ == "__main__":
     main()
