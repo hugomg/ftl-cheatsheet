@@ -1170,9 +1170,10 @@ def output_event(eventID):
     printed_events.add(eventID)
 
     if (eventID in root_event_set) or (event.choices and len(event.choices) >= 2) :
-        # Don't print the text for events without a choice,
-        # This reduces clutter, and the total Kb of the webpage.
+        # Don't print the text for events without a choice, to reduce clutter
         print(event.text_html)
+    else:
+        print('<div class="inner">{text}</div>'.format(text = event.text_html))
 
     print(event.actions_html)
 
@@ -1282,6 +1283,10 @@ def output_html():
         .blue {
             color: #10aee8;
         }
+
+        .inner { display: none; }
+        .showchildren .inner { display: block; }
+
     </style>
 </head>
 <body>
@@ -1291,11 +1296,36 @@ def output_html():
        when I am trying to remember what a particular event does.
        Use Ctrl-F to find the event your are looking for, and have fun!
     <p>Notes: You can use Ctrl-S to save a local copy of this page.
-       Some events in the list may be test/debug events, which cannot be encountered via normal gameplay.""")
+       Some events in the list may be test/debug events, which cannot be encountered via normal gameplay.
+
+    <h2>Settings</h2>
+    <ul style="list-style:none">
+        <li><input type="checkbox" id="showinner"><label for="showinner">Show text for child events</label>
+    </ul>
+
+    <script>
+        var toggle = document.getElementById('showinner')
+        update_showhidden();
+        toggle.addEventListener('change', update_showhidden);
+
+        function update_showhidden() {
+            if (toggle.checked) {
+                document.body.className = 'showchildren';
+            } else {
+                document.body.className = '';
+            }
+        }
+    </script>
+
+   """)
+
 
     # Events
+    #
+    # Sorted alphabetically for consistency. And also because, coincidentally, the first
+    # alphabetical event is one where the "show sub-event text" matters.
     print('<h1>Events</h1>')
-    for key in event_dict:
+    for key in sorted(event_dict.keys()):
         if key.startswith('evt-'):
             # Generally speaking the anonymoust events always can be inlined and therefore
             # don't need to be shown at the toplevel. However, there is one exception: one
@@ -1310,7 +1340,7 @@ def output_html():
 
     # Event groups
     print('<h1>Event Pools</h1>')
-    for key in group_dict:
+    for key in sorted(group_dict.keys()):
         if can_inline_group(key): continue
         output_anchor('list', key)
         print('<div class="indent">')
@@ -1319,7 +1349,7 @@ def output_html():
 
     # Ships
     print('<h1>Fights</h1>')
-    for key in ship_dict:
+    for key in sorted(ship_dict.keys()):
         output_anchor('ship', key)
         print('<div class="indent">')
         output_ship(key)
