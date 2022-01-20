@@ -709,25 +709,30 @@ def graph_add_event(event, enemy_ship_name):
     item_modify = event.find('item_modify')
     if item_modify is not None:
         steal = item_modify.get('steal') # Determines if "trade" ammount is shown next to the parent choice
-        for item in item_modify.iterfind('item'):
-            typ = item.get('type')
-            lo  = int(item.get('min'))
-            hi  = int(item.get('max'))
 
-            what = resource_name[typ]
+        # Show payments before rewards
+        for direction in ['minus', 'plus']:
+            for item in item_modify.iterfind('item'):
+                typ = item.get('type')
+                lo  = int(item.get('min'))
+                hi  = int(item.get('max'))
 
-            if lo >= 0 and hi >= 0:
-                rng = num_range(lo, hi)
-                actions.append('<li>+{rng} <strong>{what}</strong>'.format(
-                    rng = H(rng),
-                    what = H(what)))
-            elif lo <= 0 and hi <= 0:
-                rng = num_range(-hi, -lo)
-                actions.append('<li>−{rng} <strong>{what}</strong>'.format(
-                    rng = H(rng),
-                    what = H(what)))
-            else:
-                abort("nonsensical resource range")
+                what = resource_name[typ]
+
+                if lo >= 0 and hi >= 0:
+                    if direction == 'plus':
+                        rng = num_range(lo, hi)
+                        actions.append('<li>+{rng} <strong>{what}</strong>'.format(
+                            rng = H(rng),
+                            what = H(what)))
+                elif lo <= 0 and hi <= 0:
+                    if direction == 'minus':
+                        rng = num_range(-hi, -lo)
+                        actions.append('<li>−{rng} <strong>{what}</strong>'.format(
+                            rng = H(rng),
+                            what = H(what)))
+                else:
+                    abort("nonsensical resource range")
 
     secret_sector = event.find('secretSector')
     if secret_sector is not None:
