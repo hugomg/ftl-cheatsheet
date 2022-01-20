@@ -439,17 +439,6 @@ def graph_add_event(event, enemy_ship_name):
     actions = []
     ends_with_fight = False
 
-    fleet = event.find('fleet')
-    if fleet is not None:
-        # Show ally or rebel fleet on background
-        pass
-
-    img = event.find('img')
-    if img is not None:
-        # Custom background image
-        # attrs: back planet
-        pass
-
     hazard = event.find('environment')
     if hazard is not None:
         typ = hazard.get('type')
@@ -498,6 +487,54 @@ def graph_add_event(event, enemy_ship_name):
     if remove is not None:
         name = remove.get('name')
         actions.append('<li><strong>Remove</strong> {name}'.format(name = H(name)))
+
+    item_modify = event.find('item_modify')
+    if item_modify is not None:
+        steal = item_modify.get('steal') # Determines if "trade" ammount is shown next to the parent choice
+
+        # Show payments before rewards
+        for direction in ['minus', 'plus']:
+            for item in item_modify.iterfind('item'):
+                typ = item.get('type')
+                lo  = int(item.get('min'))
+                hi  = int(item.get('max'))
+
+                what = resource_name[typ]
+
+                if lo >= 0 and hi >= 0:
+                    if direction == 'plus':
+                        rng = num_range(lo, hi)
+                        actions.append('<li>+{rng} <strong>{what}</strong>'.format(
+                            rng = H(rng),
+                            what = H(what)))
+                elif lo <= 0 and hi <= 0:
+                    if direction == 'minus':
+                        rng = num_range(-hi, -lo)
+                        actions.append('<li>−{rng} <strong>{what}</strong>'.format(
+                            rng = H(rng),
+                            what = H(what)))
+                else:
+                    abort("nonsensical resource range")
+
+    reward = event.find('autoReward')
+    if reward is not None:
+        level = reward.get('level').upper()
+        kind  = reward.text
+
+        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augmentation'
+        elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
+        elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
+        else : blueprint = None
+
+        level_html = autoreward_level_html[level]
+        kind_html  = autoreward_kind_html[kind]
+
+        actions.append('<li><strong>{level_html}</strong> {kind_html}'.format(
+            level_html = level_html,
+            kind_html = kind_html))
+
+        if blueprint:
+            actions.append(blueprint_event(blueprint, 'RANDOM'))
 
     crew = event.find('crewMember')
     if crew is not None:
@@ -562,13 +599,6 @@ def graph_add_event(event, enemy_ship_name):
         actions.append('<li><strong>Lose {spc} Crew</strong> {clone_msg}'.format(
             spc = H(spc),
             clone_msg = clone_html))
-
-    repair = event.find('repair')
-    if repair is not None:
-        # Repair station at Last Stand
-        # I think this is redundant? There is another <damage>  tag for the hull repair
-        pass
-
     damages = event.findall('damage')
     if damages:
 
@@ -686,58 +716,6 @@ def graph_add_event(event, enemy_ship_name):
     if drone is not None:
         actions.append( blueprint_event('Drone Schematic', drone.get('name')) )
 
-    reward = event.find('autoReward')
-    if reward is not None:
-        level = reward.get('level').upper()
-        kind  = reward.text
-
-        if   kind == 'augment': kind = 'scrap_only'; blueprint = 'Augmentation'
-        elif kind == 'drone':   kind = 'scrap_only'; blueprint = 'Drone Schematic'
-        elif kind == 'weapon':  kind = 'scrap_only'; blueprint = 'Weapon'
-        else : blueprint = None
-
-        level_html = autoreward_level_html[level]
-        kind_html  = autoreward_kind_html[kind]
-
-        if blueprint:
-            actions.append(blueprint_event(blueprint, 'RANDOM'))
-
-        actions.append('<li><strong>{level_html}</strong> {kind_html}'.format(
-            level_html = level_html,
-            kind_html = kind_html))
-
-    item_modify = event.find('item_modify')
-    if item_modify is not None:
-        steal = item_modify.get('steal') # Determines if "trade" ammount is shown next to the parent choice
-
-        # Show payments before rewards
-        for direction in ['minus', 'plus']:
-            for item in item_modify.iterfind('item'):
-                typ = item.get('type')
-                lo  = int(item.get('min'))
-                hi  = int(item.get('max'))
-
-                what = resource_name[typ]
-
-                if lo >= 0 and hi >= 0:
-                    if direction == 'plus':
-                        rng = num_range(lo, hi)
-                        actions.append('<li>+{rng} <strong>{what}</strong>'.format(
-                            rng = H(rng),
-                            what = H(what)))
-                elif lo <= 0 and hi <= 0:
-                    if direction == 'minus':
-                        rng = num_range(-hi, -lo)
-                        actions.append('<li>−{rng} <strong>{what}</strong>'.format(
-                            rng = H(rng),
-                            what = H(what)))
-                else:
-                    abort("nonsensical resource range")
-
-    secret_sector = event.find('secretSector')
-    if secret_sector is not None:
-        actions.append('<li><strong>Travel</strong> to the crystal sector!')
-
     quest = event.find('quest')
     if quest is not None:
         id = quest.get('event')
@@ -759,6 +737,10 @@ def graph_add_event(event, enemy_ship_name):
         id = unlock.get('id')
         name = unlock_name[id]
         actions.append('<li><strong>Unlock</strong> the {name}'.format(name = H(name)))
+
+    secret_sector = event.find('secretSector')
+    if secret_sector is not None:
+        actions.append('<li><strong>Travel</strong> to the crystal sector!')
 
     store = event.find('store')
     if store is not None:
@@ -797,7 +779,26 @@ def graph_add_event(event, enemy_ship_name):
         if is_hostile and enemy_ship_name:
             ends_with_fight = True
 
+    #
+    # Things that I ignore
+    #
 
+    fleet = event.find('fleet')
+    if fleet is not None:
+        # Show ally or rebel fleet on background
+        pass
+
+    img = event.find('img')
+    if img is not None:
+        # Custom background image
+        # attrs: back planet
+        pass
+
+    repair = event.find('repair')
+    if repair is not None:
+        # Repair station at Last Stand
+        # I think this is redundant? There is another <damage>  tag for the hull repair
+        pass
 
     #
     # Choices
