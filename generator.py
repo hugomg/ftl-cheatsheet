@@ -1319,31 +1319,32 @@ def output_html():
                 document.body.className = '';
             }
         }
-    </script>
-
-   """)
+    </script>""")
 
 
-    # Events
-    #
     # Sorted alphabetically for consistency. And also because, coincidentally, the first
     # alphabetical event is one where the "show sub-event text" matters.
-    print('<h1>Events</h1>')
-    for key in sorted(event_dict.keys()):
-        if can_inline_event(key): continue
-        output_anchor('event', key)
-        print('<div class="indent">')
-        output_event(key)
-        print('</div>')
+    items = []
+    for key in event_dict: items.append((key, 'event'))
+    for key in group_dict: items.append((key, 'group'))
+    items.sort(key = lambda x: x[0])
 
-    # Event groups
-    print('<h1>Event Pools</h1>')
-    for key in sorted(group_dict.keys()):
-        if can_inline_group(key): continue
-        output_anchor('list', key)
-        print('<div class="indent">')
-        output_group(key)
-        print('</div>')
+    print('<h1>Events</h1>')
+    for (key, typ) in items:
+        if typ == 'event':
+            if can_inline_event(key): continue
+            output_anchor('event', key)
+            print('<div class="indent">')
+            output_event(key)
+            print('</div>')
+        elif typ == 'group':
+            if can_inline_group(key): continue
+            output_anchor('list', key)
+            print('<div class="indent">')
+            output_group(key)
+            print('</div>')
+        else:
+            assert False
 
     # Ships
     print('<h1>Fights</h1>')
