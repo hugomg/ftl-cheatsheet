@@ -1306,7 +1306,8 @@ def output_html():
        when I am trying to remember what a particular event does.
        Use Ctrl-F to find the event your are looking for, and have fun!
     <p>Notes: You can use Ctrl-S to save a local copy of this page.
-       Some events in the list may be test/debug events, which cannot be encountered via normal gameplay.
+       Some events in the list may be test or demo events, which cannot be encountered via normal gameplay.
+       It you have a suggestion, you can send feedback <a href="https://github.com/hugomg/ftl-cheatsheet/issues">here</a>.
 
     <h2>Settings</h2>
     <ul style="list-style:none">
