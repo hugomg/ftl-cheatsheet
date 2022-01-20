@@ -1304,7 +1304,7 @@ def output_html():
 
     <h2>Settings</h2>
     <ul style="list-style:none">
-        <li><input type="checkbox" id="showinner"><label for="showinner">Show text for child events</label>
+        <li><input type="checkbox" id="showinner"><label for="showinner">Show full text for event responses</label>
     </ul>
 
     <script>
