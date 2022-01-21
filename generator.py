@@ -1174,12 +1174,12 @@ def goto_event_or_group(name):
     else:
         assert False
 
-def output_event(eventID):
+def output_event(eventID, is_toplevel=False):
     event = event_dict[eventID]
     if eventID in printed_events: log('dupe', eventID)
     printed_events.add(eventID)
 
-    if (eventID in root_event_set) or (event.choices and len(event.choices) >= 2) :
+    if is_toplevel or (event.choices and len(event.choices) >= 2) :
         # Don't print the text for events without a choice, to reduce clutter
         print(event.text_html)
     else:
@@ -1342,7 +1342,7 @@ def output_html():
             if can_inline_event(key): continue
             output_anchor('event', key)
             print('<div class="indent">')
-            output_event(key)
+            output_event(key, True)
             print('</div>')
         elif typ == 'group':
             if can_inline_group(key): continue
