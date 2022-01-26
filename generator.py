@@ -1240,7 +1240,7 @@ def output_ship(shipID):
 def output_anchor(typ, key):
     anchor = typ + '-' + key
     anchor_set.add(anchor)
-    print('<h2 id="{anchor}">{key}</h2>'.format(anchor = H(anchor), key = H(key)))
+    print('<h2 id="{anchor}"><a href="#{anchor}">{key}</a></h2>'.format(anchor = H(anchor), key = H(key)))
 
 def output_html():
 
@@ -1268,6 +1268,10 @@ def output_html():
 
         h2 {
             font-size: medium;
+        }
+
+        h2 > a {
+            color: inherit !important;
         }
 
         /* Our notation for lists */
