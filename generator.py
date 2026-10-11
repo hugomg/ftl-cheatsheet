@@ -346,23 +346,27 @@ def build_graph():
         for group in tree.iterfind('eventList'): group_keys.add(group.attrib['name'])
 
     overrides = []
-    for filename in glob.glob("*.xml"):
-        tree = ET.parse(filename)
 
+    trees = [ET.parse(filename) for filename in glob.glob("*.xml")]
+
+    for tree in trees:
         for txtgroup in tree.iterfind('textList'):
             key = txtgroup.get('name')
             assert key not in texts_dict
             texts_dict[key] = [node for node in txtgroup.iterfind('text')]
 
+    for tree in trees:
         for event in tree.iterfind("event"):
             graph_add_event(event, None)
 
+    for tree in trees:
         for group in tree.iterfind('eventList'):
             if group.get('name').startswith('OVERRIDE_'):
                 overrides.append(group)
             else:
                 graph_add_group(group)
 
+    for tree in trees:
         for ship in tree.iterfind("ship"):
             graph_add_ship(ship)
 
@@ -639,7 +643,7 @@ def graph_add_event(event, enemy_ship_name):
 
         if typ == 'clear':
             template = '<strong>Restore Power</strong> to {system}'
-            
+
         elif typ == 'divide':
             if amount != '2': abort("expected <status> divide is not by 2")
             template = '<strong>Half Power</strong> to {system}'
