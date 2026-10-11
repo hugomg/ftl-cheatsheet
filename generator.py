@@ -1253,6 +1253,7 @@ def output_html():
 <html>
 <head>
     <meta charset="utf-8">
+    <title>FTL Cheatsheet</title>
     <style>
 
         body {
