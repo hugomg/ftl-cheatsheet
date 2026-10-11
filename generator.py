@@ -334,39 +334,38 @@ def gen_event_id():
 
 def build_graph():
 
+    trees = [ET.parse(filename) for filename in glob.glob("*.xml")]
+
     # Compute the full set of event ids ahead of time
     # because when we process the <quest> item we need to know
     # what kind of thing it refers to. (Unfortunately, we cannot
     # use a shared ID for everythign because there are some events
     # and ships that have the same ID)
-    for filename in glob.glob("*.xml"):
-        tree = ET.parse(filename)
+    for tree in trees:
         for event in tree.iterfind("event"): event_keys.add(event.attrib['name'])
         for ship in tree.iterfind("ship"): ship_keys.add(ship.attrib['name'])
         for group in tree.iterfind('eventList'): group_keys.add(group.attrib['name'])
 
-    overrides = []
-
-    trees = [ET.parse(filename) for filename in glob.glob("*.xml")]
-
+    # Also compute text nodes ahead of time. Some files mention text nodes from
+    # other files. For instance, events_ships.xml refers to surrender text).
     for tree in trees:
         for txtgroup in tree.iterfind('textList'):
             key = txtgroup.get('name')
             assert key not in texts_dict
             texts_dict[key] = [node for node in txtgroup.iterfind('text')]
 
+    overrides = []
+
     for tree in trees:
         for event in tree.iterfind("event"):
             graph_add_event(event, None)
 
-    for tree in trees:
         for group in tree.iterfind('eventList'):
             if group.get('name').startswith('OVERRIDE_'):
                 overrides.append(group)
             else:
                 graph_add_group(group)
 
-    for tree in trees:
         for ship in tree.iterfind("ship"):
             graph_add_ship(ship)
 
