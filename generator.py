@@ -1262,6 +1262,7 @@ def output_html():
             color: #222;
             max-width:50em;
             margin: 0 auto;
+            padding: 2em;
         }
 
         /* The "visited" colors for links is not very useful */
