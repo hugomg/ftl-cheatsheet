@@ -1223,6 +1223,9 @@ def init_root_events():
     add_root_event('NO_FUEL_DISTRESS')
     # (events_nebula.xml)
     add_root_event("FLEET_EASY_NEBULA")
+    # (newEvents.xml)
+    add_root_event("NEUTRAL")
+    add_root_event("NEUTRAL_EXIT")
 
     # Sector events
     for sector in ET.parse("sector_data.xml").iterfind("sectorDescription"):
@@ -1265,6 +1268,7 @@ def can_inline_group(name):
     return (
         group_nparents[name] == 1 and
         (name not in overlapped_event_names) and
+        (name not in root_event_set) and
         (name not in quest_groups_set))
 
 def goto_group_or_event(name):
