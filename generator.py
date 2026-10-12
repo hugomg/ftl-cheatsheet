@@ -284,6 +284,120 @@ def check_child_nodes(parent, known_tags):
             known_tags.add(tag)
 
 #
+# Unused events (double checked by hand)
+#
+
+
+def set_of_lines(string):
+    return set(string.split())
+
+peaceful_ships = set_of_lines("""
+    CIVILIAN_SHIP
+    ROCK_UNLOCK1
+""")
+
+unused_events = set_of_lines("""
+    ASTEROID_TEST
+    AUTO_BAIT
+    BIG_NAME_TEST
+    BOARDERS_ASTEROID
+    BOARDERS_ASTEROID_GHOST
+    BOARDERS_HACKING_2
+    BOARDER_TEST
+    CASH_IN_DRONE
+    CHARACTER_TEST
+    CREW_DEAD_TEST
+    CREW_TEST
+    CRYSTAL_TEST
+    DEATH_TEST
+    DEMO_END
+    DERELICT_TREASURE
+    DOCK_BOMB_SALESMAN
+    DUMMY
+    ENGI_MONSTER
+    ENGI_REFUGEES
+    FREE_AUG
+    FREE_AUGMENT
+    FREE_NANO
+    FUEL_ESCAPE_FLEET
+    FUEL_ESCAPE_PDS
+    FUEL_ESCAPE_PULSAR
+    GHOST_BOARDED
+    GHOST_SCRAP
+    GHOST_SHIP
+    LONE_SHUTTLE
+    MANTIS_CAPTURE_COMMANDO
+    MANTIS_GAMBLE
+    NEBULA_NOTHING_TEST
+    NEW
+    NEWSHIP1
+    NEWSHIP2
+    PDS_TEST
+    PULSAR
+    REBEL_AUTO_PDS
+    REBEL_PDS
+    REMOVAL_TEST
+    ROCK_NURSERY
+    ROCK_NURSERY_LOSE
+    ROCK_NURSERY_WIN
+    ROCK_ZOLTAN_HELP
+    SLUG_DISTRESS_PILOTING
+    START_DEMO
+    STEALTH_1
+    STEALTH_2
+    STEALTH_3
+    STEALTH_4
+    STEALTH_5
+    STEALTH_6
+    STEALTH_7
+    TEST_EVENT
+    TEST_EVENT2
+    UNLOCK_STEALTH
+    ZOLTAN_SURRENDER
+""")
+
+unused_groups = set_of_lines("""
+    DERELICT_ENGI
+    DERELICT_TREASURE_REWARD
+    GHOST_BOARDING
+    GHOST_DOCK
+    GHOST_SHIP
+    GHOST_SPACE
+    GHOST_STAND
+    HOSTILE2
+    HOSTILE_BOARDING
+    LONE_SHUTTLE_DESTROY
+    LONE_SHUTTLE_WAIT
+    MANTIS_CAPTURE_COMMANDO_KILL
+    MANTIS_CAPTURE_COMMANDO_RELEASE
+    MANTIS_CAPTURE_COMMANDO_TALK
+    MANTIS_GAMBLE_BLUE
+    MANTIS_GAMBLE_RED
+    NEBULA_ROCK
+    NEUTRAL_SLUG
+    NON_HOSTILE
+    ROCK_NURSERY_AUTHORITY
+    ROCK_NURSERY_STUDENTS
+    SLUG_DISTRESS_PILOTING_SWEAR
+    QUESTS_CRYSTAL
+    QUESTS_SLUG
+""")
+
+unused_ships = set_of_lines("""
+    GHOST_SHIP
+    IMPOSSIBLE_PIRATE
+    JELLY_STATUS_PILOT
+    LONG_ELITE
+    NEWSHIP1
+    NEWSHIP2
+    NEW_TESTS
+    REBEL_AUTO_BAIT
+    ROCK_ZOLTAN_HELP_ROCK
+    ROCK_ZOLTAN_HELP_ZOLTAN
+    ZOLTAN_PIRATE
+""")
+
+#
 # Event graph
 #
 # The first thing we do is parse all the event nodes into an event graph, giving each node an unique ID.
@@ -321,11 +435,6 @@ texts_dict = {} # <testList>
 event_dict = {} # <event>
 ship_dict  = {} # <ship>
 group_dict = {} # <eventList>
-
-peaceful_ships = {
-    'CIVILIAN_SHIP',
-    'ROCK_UNLOCK1',
-}
 
 quest_events_set = set()
 quest_groups_set = set()
@@ -1114,7 +1223,7 @@ def init_root_events():
         for lst in sector.iterfind("event"):
             mincount = int(lst.get("min"))
             maxcount = int(lst.get("max"))
-            if mincount <= maxcount:
+            if mincount <= maxcount and 0 < maxcount:
                 add_root_event(lst.get("name"))
 
     # Boss events
@@ -1238,10 +1347,20 @@ def output_ship(shipID):
     print('</ul>')
 
 
-def output_anchor(typ, key):
+def output_anchor(typ, key, is_unused):
     anchor = typ + '-' + key
     anchor_set.add(anchor)
-    print('<h2 id="{anchor}"><a href="#{anchor}">{key}</a></h2>'.format(anchor = H(anchor), key = H(key)))
+
+    if is_unused:
+        optclass = ' class="unused"'
+    else:
+        optclass = ''
+
+    print('<h2 id="{anchor}"{optclass}><a href="#{anchor}">{key}</a></h2>'.format(
+        anchor = H(anchor),
+        key = H(key),
+        optclass = optclass
+    ))
 
 def output_html():
 
@@ -1277,6 +1396,10 @@ def output_html():
             color: inherit !important;
         }
 
+        h2.unused, h2.unused + div {
+            color: rgb(100,100,100);
+        }
+
         /* Our notation for lists */
         .texts  { list-style: circle;  } /* RNG text alternatives */
         .random { list-style: circle;  } /* RNG event alternatives */
@@ -1302,7 +1425,15 @@ def output_html():
         }
 
         .inner { display: none; }
-        .showchildren .inner { display: block; }
+        body.showchildren .inner { display: block; }
+
+
+        h2.unused, h2.unused + div { display: none; }
+        body.showunused h2.unused,
+        body.showunused h2.unused + div { display: block; }
+
+        .inner { display: none; }
+        body.showchildren .inner { display: block; }
 
     </style>
 </head>
@@ -1312,24 +1443,36 @@ def output_html():
        I created it because I got tired of wading through slow wiki pages and unreadable XML data files.
        Press <kbd>Ctrl</kbd>-<kbd>F</kbd> to search for an event, and have fun!
 
-    <p>Some events in the list may be test events, which cannot be encountered via normal gameplay.
-       If you have a suggestion, you can send your feedback <a href="https://github.com/hugomg/ftl-cheatsheet/issues">here</a>.
+    <p>If you have any feedback about this page, contact me via <a href="https://github.com/hugomg/ftl-cheatsheet/issues">Github</a>.
 
-    <h2>Settings</h2>
+    <h3>Settings</h3>
     <ul style="list-style:none">
         <li><input type="checkbox" id="showinner"><label for="showinner">Show event responses</label>
+        <li><input type="checkbox" id="showunused"><label for="showunused">Show unused events</label>
     </ul>
 
     <script>
-        document
-            .getElementById('showinner')
-            .addEventListener('change', function(evt) {
-                if (evt.target.checked) {
-                    document.body.classList.add('showchildren');
-                } else {
-                    document.body.classList.remove('showchildren');
-                }
-            })
+        var toggleInner = document.getElementById('showinner')
+        function updateInner() {
+            if (toggleInner.checked) {
+                document.body.classList.add('showchildren');
+            } else {
+                document.body.classList.remove('showchildren');
+            }
+        }
+        updateInner();
+        toggleInner.addEventListener('change', updateInner);
+
+        var toggleUnused = document.getElementById('showunused')
+        function updateUnused() {
+            if (toggleUnused.checked) {
+                document.body.classList.add('showunused');
+            } else {
+                document.body.classList.remove('showunused');
+            }
+        }
+        updateUnused();
+        toggleUnused.addEventListener('change', updateUnused);
     </script>""")
 
 
@@ -1344,13 +1487,15 @@ def output_html():
     for (key, typ) in items:
         if typ == 'event':
             if can_inline_event(key): continue
-            output_anchor('event', key)
+            is_unused = (key in unused_events)
+            output_anchor('event', key, is_unused)
             print('<div class="indent">')
             output_event(key, True)
             print('</div>')
         elif typ == 'group':
             if can_inline_group(key): continue
-            output_anchor('list', key)
+            is_unused = (key in unused_groups)
+            output_anchor('list', key, is_unused)
             print('<div class="indent">')
             output_group(key)
             print('</div>')
@@ -1360,7 +1505,8 @@ def output_html():
     # Ships
     print('<h1>Fights</h1>')
     for key in sorted(ship_dict.keys()):
-        output_anchor('ship', key)
+        is_unused = (key in unused_ships)
+        output_anchor('ship', key, is_unused)
         print('<div class="indent">')
         output_ship(key)
         print('</div>')
@@ -1453,109 +1599,17 @@ for id in quest_events_set:
 for id in quest_groups_set:
     traverse_event_or_group(id)
 
-def set_of_lines(string):
-    return set(string.split())
 
 print("===== EVENTS NOT VISITED =====", file=sys.stderr)
-events_not_visited = event_keys - visited_events - set_of_lines("""
-    ASTEROID_TEST
-    AUTO_BAIT
-    BIG_NAME_TEST
-    BOARDERS_ASTEROID
-    BOARDERS_ASTEROID_GHOST
-    BOARDERS_HACKING_2
-    BOARDER_TEST
-    CASH_IN_DRONE
-    CHARACTER_TEST
-    CREW_DEAD_TEST
-    CREW_TEST
-    CRYSTAL_TEST
-    DEATH_TEST
-    DEMO_END
-    DERELICT_TREASURE
-    DOCK_BOMB_SALESMAN
-    DUMMY
-    ENGI_MONSTER
-    ENGI_REFUGEES
-    FREE_AUG
-    FREE_AUGMENT
-    FREE_NANO
-    FUEL_ESCAPE_FLEET
-    FUEL_ESCAPE_PDS
-    FUEL_ESCAPE_PULSAR
-    GHOST_BOARDED
-    GHOST_SCRAP
-    GHOST_SHIP
-    LONE_SHUTTLE
-    MANTIS_CAPTURE_COMMANDO
-    MANTIS_GAMBLE
-    NEBULA_NOTHING_TEST
-    NEW
-    NEWSHIP1
-    NEWSHIP2
-    PDS_TEST
-    PULSAR
-    REBEL_AUTO_PDS
-    REBEL_PDS
-    REMOVAL_TEST
-    ROCK_NURSERY
-    ROCK_NURSERY_LOSE
-    ROCK_NURSERY_WIN
-    ROCK_ZOLTAN_HELP
-    SLUG_DISTRESS_PILOTING
-    START_DEMO
-    STEALTH_1
-    STEALTH_2
-    STEALTH_3
-    STEALTH_4
-    STEALTH_5
-    STEALTH_6
-    STEALTH_7
-    TEST_EVENT
-    TEST_EVENT2
-    UNLOCK_STEALTH
-    ZOLTAN_SURRENDER
-""")
+events_not_visited = event_keys - visited_events - unused_events
 for id in sorted(events_not_visited): print(id, file=sys.stderr)
 
 
 print("===== GROUPS NOT VISITED =====", file=sys.stderr)
-groups_not_visited = group_keys - visited_events - set_of_lines("""
-    DERELICT_ENGI
-    DERELICT_TREASURE_REWARD
-    GHOST_SHIP
-    HOSTILE2
-    LONE_SHUTTLE_DESTROY
-    LONE_SHUTTLE_WAIT
-    MANTIS_CAPTURE_COMMANDO_KILL
-    MANTIS_CAPTURE_COMMANDO_RELEASE
-    MANTIS_CAPTURE_COMMANDO_TALK
-    MANTIS_GAMBLE_BLUE
-    MANTIS_GAMBLE_RED
-    NEBULA_ROCK
-    NEUTRAL_SLUG
-    NON_HOSTILE
-    ROCK_NURSERY_AUTHORITY
-    ROCK_NURSERY_STUDENTS
-    SLUG_DISTRESS_PILOTING_SWEAR
-    QUESTS_CRYSTAL
-    QUESTS_SLUG
-""")
+groups_not_visited = group_keys - visited_events - unused_groups
 for id in sorted(groups_not_visited): print(id, file=sys.stderr)
 
 
 print("===== SHIPS NOT VISITED =====", file=sys.stderr)
-ships_not_visited = ship_keys - visited_ships - set_of_lines("""
-    GHOST_SHIP
-    IMPOSSIBLE_PIRATE
-    JELLY_STATUS_PILOT
-    LONG_ELITE
-    NEWSHIP1
-    NEWSHIP2
-    NEW_TESTS
-    REBEL_AUTO_BAIT
-    ROCK_ZOLTAN_HELP_ROCK
-    ROCK_ZOLTAN_HELP_ZOLTAN
-    ZOLTAN_PIRATE
-""")
+ships_not_visited = ship_keys - visited_ships - unused_ships
 for id in sorted(ships_not_visited): print(id, file=sys.stderr)

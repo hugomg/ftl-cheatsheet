@@ -30,6 +30,10 @@
             color: inherit !important;
         }
 
+        h2.unused, h2.unused + div {
+            color: rgb(100,100,100);
+        }
+
         /* Our notation for lists */
         .texts  { list-style: circle;  } /* RNG text alternatives */
         .random { list-style: circle;  } /* RNG event alternatives */
@@ -55,7 +59,15 @@
         }
 
         .inner { display: none; }
-        .showchildren .inner { display: block; }
+        body.showchildren .inner { display: block; }
+
+
+        h2.unused, h2.unused + div { display: none; }
+        body.showunused h2.unused,
+        body.showunused h2.unused + div { display: block; }
+
+        .inner { display: none; }
+        body.showchildren .inner { display: block; }
 
     </style>
 </head>
@@ -65,24 +77,36 @@
        I created it because I got tired of wading through slow wiki pages and unreadable XML data files.
        Press <kbd>Ctrl</kbd>-<kbd>F</kbd> to search for an event, and have fun!
 
-    <p>Some events in the list may be test events, which cannot be encountered via normal gameplay.
-       If you have a suggestion, you can send your feedback <a href="https://github.com/hugomg/ftl-cheatsheet/issues">here</a>.
+    <p>If you have any feedback about this page, contact me via <a href="https://github.com/hugomg/ftl-cheatsheet/issues">Github</a>.
 
-    <h2>Settings</h2>
+    <h3>Settings</h3>
     <ul style="list-style:none">
         <li><input type="checkbox" id="showinner"><label for="showinner">Show event responses</label>
+        <li><input type="checkbox" id="showunused"><label for="showunused">Show unused events</label>
     </ul>
 
     <script>
-        document
-            .getElementById('showinner')
-            .addEventListener('change', function(evt) {
-                if (evt.target.checked) {
-                    document.body.classList.add('showchildren');
-                } else {
-                    document.body.classList.remove('showchildren');
-                }
-            })
+        var toggleInner = document.getElementById('showinner')
+        function updateInner() {
+            if (toggleInner.checked) {
+                document.body.classList.add('showchildren');
+            } else {
+                document.body.classList.remove('showchildren');
+            }
+        }
+        updateInner();
+        toggleInner.addEventListener('change', updateInner);
+
+        var toggleUnused = document.getElementById('showunused')
+        function updateUnused() {
+            if (toggleUnused.checked) {
+                document.body.classList.add('showunused');
+            } else {
+                document.body.classList.remove('showunused');
+            }
+        }
+        updateUnused();
+        toggleUnused.addEventListener('change', updateUnused);
     </script>
 <h1>Events</h1>
 <h2 id="event-ALISON_DEFECTOR"><a href="#event-ALISON_DEFECTOR">ALISON_DEFECTOR</a></h2>
@@ -364,7 +388,7 @@
 <li><strong>Fight</strong> a <a href="#ship-PIRATE">PIRATE</a></ul>
 </ul>
 </div>
-<h2 id="event-ASTEROID_TEST"><a href="#event-ASTEROID_TEST">ASTEROID_TEST</a></h2>
+<h2 id="event-ASTEROID_TEST" class="unused"><a href="#event-ASTEROID_TEST">ASTEROID_TEST</a></h2>
 <div class="indent">
 <p>We&#x27;ve come out in an asteroid field! We&#x27;ll have to wait for the FTL to charge before we can get out of here. Let&#x27;s hope the ship holds up.</p>
 <ul class="result"><li><strong>Environment</strong> is Asteroid Field</ul>
@@ -380,7 +404,7 @@
 <ul class="result"><li><strong>Environment</strong> is Asteroid Field
 <li><strong>Fight</strong> a <a href="#ship-REBEL_AUTO">REBEL_AUTO</a></ul>
 </div>
-<h2 id="event-AUTO_BAIT"><a href="#event-AUTO_BAIT">AUTO_BAIT</a></h2>
+<h2 id="event-AUTO_BAIT" class="unused"><a href="#event-AUTO_BAIT">AUTO_BAIT</a></h2>
 <div class="indent">
 <ul class="texts"><li>You discover one of the Rebel&#x27;s autonomous scouts. The ship&#x27;s AI wastes no time in engaging your ship.<li>Your ship is hailed: &quot;This is an automated message. Resisting our takeover is pointless. Prepare to die.&quot; It appears this Rebel ship is run by an AI.<li>A Rebel autonomous scout is exploring this beacon. You attempt to hide behind a nearby moon, but the ship finds you and begins its assault.<li>The AI of a nearby small Rebel scout immediately identifies you as a threat and engages.<li>A Rebel ship moves in to engage. You attempt to open communications, but realize the futility of that action when you see the ship is run by an AI.<li>This must be one of the Rebels&#x27; unmanned scout ships. Looks like there&#x27;s no way around a fight.<li>Another unmanned ship patrols this area. You prepare the ship for combat.<li>This beacon is being patrolled by a unmanned scout. A fight is unavoidable.<li>A small shuttle appears on the local radar. Turns out it is a Rebel automated scout!</ul>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-REBEL_AUTO_BAIT">REBEL_AUTO_BAIT</a></ul>
@@ -581,7 +605,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-BIG_NAME_TEST"><a href="#event-BIG_NAME_TEST">BIG_NAME_TEST</a></h2>
+<h2 id="event-BIG_NAME_TEST" class="unused"><a href="#event-BIG_NAME_TEST">BIG_NAME_TEST</a></h2>
 <div class="indent">
 <p>A ship with pirate markings hails you: &quot;Hello, we know you have %crew on board. The bounty on %crew_his head is substantial, hand %crew_him over and we&#x27;ll share it.&quot;</p>
 <ul class="result"><li><strong>Encounter</strong> a <a href="#ship-PIRATE">PIRATE</a></ul>
@@ -609,36 +633,6 @@
 <ul class="texts"><li>What appears to be a civilian ship sends a friendly hail. As you approach the vessel, you detect a teleporter signal but it&#x27;s too late... intruders have beamed aboard!<li>A heavily damaged ship is drifting near this beacon. You receive a communication: &quot;Hello! Nice of you to drop by. As you can see, our ship has seen better days. Yours is looking quite nice, I think we might be taking it from you now.&quot; Intruders beam aboard.<li>You detect life-signs actually on the beacon itself! A teleporter signal warns you but it&#x27;s too late, they&#x27;ve beamed from the beacon onto your ship and seem intent on taking it over.<li>Your ship detects a faint distress signal on a nearby moon. As you approach the rock, warning lights flash as hostiles beam aboard the ship from some hidden location.<li>As you arrive, you become aware of a small Rebel outpost near the beacon. You are hardly able to bark an order before a small team is beamed aboard your ship. They must have been expecting you...</ul>
 <ul class="result"><li><strong>Boarded</strong> by  3-5  Human</strong></ul>
 </div>
-<h2 id="event-BOARDERS_ASTEROID"><a href="#event-BOARDERS_ASTEROID">BOARDERS_ASTEROID</a></h2>
-<div class="indent">
-<p>You jump into a perilous asteroid field. Worse, sensors show a pirate stronghold has locked onto our ship and is activating a teleporter. Prepare for a fight!</p>
-<ul class="result"><li><strong>Environment</strong> is Asteroid Field
-<li><strong>Boarded</strong> by  2-4  Human</strong></ul>
-</div>
-<h2 id="event-BOARDERS_ASTEROID_GHOST"><a href="#event-BOARDERS_ASTEROID_GHOST">BOARDERS_ASTEROID_GHOST</a></h2>
-<div class="indent">
-<p>You jump into the middle of an asteroid field. Looking around, you find you are surrounded by dozens of wrecks of other ships. Faint wisps of light can be seen moving between wrecks. As you watch, they seem to be changing path and floating toward your ship!</p>
-
-<ol class="choice">
-<li><em >Prepare for a fight!</em>
-<div>
-<div class="inner"></div>
-<ul class="result"><li><strong>Environment</strong> is Asteroid Field
-<li><strong>Boarded</strong> by  3-6  Ghost</strong></ul>
-</div>
-<li><em class="blue">(engines ≥ 5) Activate full impulse drive to escape.</em>
-<div>
-<div class="inner"><p>With your Advanced Engines you were able to quickly get out of the asteroid field, however your ship took a number of hits on the way out.</p></div>
-<ul class="result"><li>4 <strong>Hull Damage</strong>
-<li>1 <strong>System Damage</strong> to random system</strong></ul>
-</div>
-<li><em class="blue">(pilot ≥ 2) Have your pilot maneuver you out of the asteroid field.</em>
-<div>
-<div class="inner"><p>Thanks to your pilot, you were able escape the worst of the asteroid field unscathed. However, the wisps of light stream out of the field following your ship!</p></div>
-<ul class="result"><li><strong>Boarded</strong> by  2-4  Ghost</strong></ul>
-</div>
-</ol>
-</div>
 <h2 id="event-BOARDERS_CRYSTAL"><a href="#event-BOARDERS_CRYSTAL">BOARDERS_CRYSTAL</a></h2>
 <div class="indent">
 <ul class="texts"><li>You detect a heavily armed Crystalline ship escorting some sort of prison vessel. Scans indicate there are a number of non-Crystal based life forms aboard; they must be rounding up all of the intruders in their space! Before you can react, you hear the telltale sounds of a teleporter going off.<li>You arrive near a small settlement and a lone guard ship moves to intercept you. You try to contact them but they are refusing all hails. Suddenly you hear lasers ricocheting from within the ship. You&#x27;ve been boarded!<li>You pick up chatter from a nearby ship, &quot;Yes... Here are some interesting specimens. Try to take them alive this time, there&#x27;s a lot of money to be had on aliens.&quot; Scanners indicate a remote teleporter was just used.</ul>
@@ -661,7 +655,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-BOARDERS_HACKING_2"><a href="#event-BOARDERS_HACKING_2">BOARDERS_HACKING_2</a></h2>
+<h2 id="event-BOARDERS_HACKING_2" class="unused"><a href="#event-BOARDERS_HACKING_2">BOARDERS_HACKING_2</a></h2>
 <div class="indent">
 
 <ul class="result"><li>Nothing happens</ul>
@@ -745,7 +739,7 @@
 <ul class="result"><li>Go to <a href="#event-BOARDERS_HACKING">BOARDERS_HACKING</a></ul>
 </ul>
 </div>
-<h2 id="event-BOARDER_TEST"><a href="#event-BOARDER_TEST">BOARDER_TEST</a></h2>
+<h2 id="event-BOARDER_TEST" class="unused"><a href="#event-BOARDER_TEST">BOARDER_TEST</a></h2>
 <div class="indent">
 <p>Oh no enemies!</p>
 <ul class="result"><li><strong>Boarded</strong> by  3-5  Human</strong>
@@ -929,7 +923,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-CASH_IN_DRONE"><a href="#event-CASH_IN_DRONE">CASH_IN_DRONE</a></h2>
+<h2 id="event-CASH_IN_DRONE" class="unused"><a href="#event-CASH_IN_DRONE">CASH_IN_DRONE</a></h2>
 <div class="indent">
 <p>Your ship is currently not equipped with a Drone system. You reduce the Drone schematic to scrap.</p>
 
@@ -941,7 +935,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-CHARACTER_TEST"><a href="#event-CHARACTER_TEST">CHARACTER_TEST</a></h2>
+<h2 id="event-CHARACTER_TEST" class="unused"><a href="#event-CHARACTER_TEST">CHARACTER_TEST</a></h2>
 <div class="indent">
 <p>`abcdefghijklmno °±²³´µ¶·¸¹º»¼½ ¾¿ÀÁÂÃÄÅÆÇ ÈÉÊËÌÍÎÏ ÐÑÒÓÔÕ Ö×ØÙÚÛ ÜÝÞßàá âãäåæç èéêëìí îïðñòóô õö÷øùúûüýþ ÿŒœŠšŸƒ</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -1117,7 +1111,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-CREW_DEAD_TEST"><a href="#event-CREW_DEAD_TEST">CREW_DEAD_TEST</a></h2>
+<h2 id="event-CREW_DEAD_TEST" class="unused"><a href="#event-CREW_DEAD_TEST">CREW_DEAD_TEST</a></h2>
 <div class="indent">
 <p>Oh no! Your crew is dead.</p>
 <ul class="result"><li><strong>Lose  Crew</strong> <strong>(cannot be cloned)</strong></ul>
@@ -1127,7 +1121,7 @@
 <p>With your teleporter damaged and no way to fix it, you take one of the enemy ship&#x27;s shuttles to return to your own ship.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-CREW_TEST"><a href="#event-CREW_TEST">CREW_TEST</a></h2>
+<h2 id="event-CREW_TEST" class="unused"><a href="#event-CREW_TEST">CREW_TEST</a></h2>
 <div class="indent">
 <p>Crew Test</p>
 <ul class="result"><li><strong>Gain 2 Crew</strong></ul>
@@ -1616,7 +1610,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-CRYSTAL_TEST"><a href="#event-CRYSTAL_TEST">CRYSTAL_TEST</a></h2>
+<h2 id="event-CRYSTAL_TEST" class="unused"><a href="#event-CRYSTAL_TEST">CRYSTAL_TEST</a></h2>
 <div class="indent">
 <p>Testing Crystal Teleport</p>
 
@@ -1658,7 +1652,7 @@
 <li><strong>Weapon</strong></ul>
 </ul>
 </div>
-<h2 id="event-DEATH_TEST"><a href="#event-DEATH_TEST">DEATH_TEST</a></h2>
+<h2 id="event-DEATH_TEST" class="unused"><a href="#event-DEATH_TEST">DEATH_TEST</a></h2>
 <div class="indent">
 <p>Death Test</p>
 <ul class="result"><li><strong>Lose Crew</strong></ul>
@@ -1699,13 +1693,13 @@
 <ul class="result"><li><strong>Rebel Fleet Advances</strong> by 1 jump</ul>
 </ul>
 </div>
-<h2 id="event-DEMO_END"><a href="#event-DEMO_END">DEMO_END</a></h2>
+<h2 id="event-DEMO_END" class="unused"><a href="#event-DEMO_END">DEMO_END</a></h2>
 <div class="indent">
 <p>Congratulations, that&#x27;s the end of the training simulation! As a final lesson, you&#x27;ll experience what it&#x27;s like to be destroyed by a more powerful enemy. This is an unfinished version of the most powerful ship in the Rebel fleet, though it should still be sufficient to destroy your puny ship. And we&#x27;ve shutdown your engines as well, so there&#x27;s no use trying to run away.</p>
 <ul class="result"><li><strong>Disable</strong> engines
 <li><strong>Fight</strong> a <a href="#ship-IMPOSSIBLE_PIRATE">IMPOSSIBLE_PIRATE</a></ul>
 </div>
-<h2 id="event-DERELICT_TREASURE"><a href="#event-DERELICT_TREASURE">DERELICT_TREASURE</a></h2>
+<h2 id="event-DERELICT_TREASURE" class="unused"><a href="#event-DERELICT_TREASURE">DERELICT_TREASURE</a></h2>
 <div class="indent">
 <ul class="texts"><li>You stumble upon the remnents of a recent battle. One ship nearby looks like it could still have some valuable resources.<li>A derelict Selz class freighter is floating near this beacon. It could contain something valuable.<li>A massive space station is orbitting a nearby moon. Initial scans show it to be empty and abandoned.</ul>
 
@@ -2369,7 +2363,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-DOCK_BOMB_SALESMAN"><a href="#event-DOCK_BOMB_SALESMAN">DOCK_BOMB_SALESMAN</a></h2>
+<h2 id="event-DOCK_BOMB_SALESMAN" class="unused"><a href="#event-DOCK_BOMB_SALESMAN">DOCK_BOMB_SALESMAN</a></h2>
 <div class="indent">
 <p>A human in an exquisite suit meets you on board. &quot;Welcome to my ship! We specialize in explosives of all kinds, can I interest you in any?&quot;</p>
 
@@ -2623,7 +2617,7 @@
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-REBEL_AUTO">REBEL_AUTO</a></ul>
 </ul>
 </div>
-<h2 id="event-DUMMY"><a href="#event-DUMMY">DUMMY</a></h2>
+<h2 id="event-DUMMY" class="unused"><a href="#event-DUMMY">DUMMY</a></h2>
 <div class="indent">
 <p>Dummy</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -2726,7 +2720,7 @@
 <ul class="texts"><li>A mixed radar signal turns out to be a Mantis attack ship scavenging the remains of an Engi carrier. They turn and fight.<li>You come across a Mantis raider taking pot shots at a defenceless Engi supply station. Discovering its weapons aren&#x27;t much of a match for the station&#x27;s armour, it turns on your ship. Battle stations!<li>The area looks clear, and you prepare to jump off, but a Mantis scout jumps in behind you! They&#x27;re as surprised as you are, but their weapons are already online.<li>You find a Mantis ship harrying a small squad of Engi. They make it to the node and jump off, leaving you toe to toe with their pursuer!</ul>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-MANTIS_FIGHT">MANTIS_FIGHT</a></ul>
 </div>
-<h2 id="event-ENGI_MONSTER"><a href="#event-ENGI_MONSTER">ENGI_MONSTER</a></h2>
+<h2 id="event-ENGI_MONSTER" class="unused"><a href="#event-ENGI_MONSTER">ENGI_MONSTER</a></h2>
 <div class="indent">
 <p>As you jump in you&#x27;re hailed urgently by an Engi science vessel in the distance. &quot;We propose that you do not see the creature.&quot; There&#x27;s nothing on the scanner, which is when you realize you can&#x27;t see the creature because you&#x27;re inside it!</p>
 
@@ -2760,7 +2754,7 @@
 <p>The rebel fighter here would seem to suggest elements of the rebel fleet are already making incursions on Engi space. You move to engage.</p>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-REBEL">REBEL</a></ul>
 </div>
-<h2 id="event-ENGI_REFUGEES"><a href="#event-ENGI_REFUGEES">ENGI_REFUGEES</a></h2>
+<h2 id="event-ENGI_REFUGEES" class="unused"><a href="#event-ENGI_REFUGEES">ENGI_REFUGEES</a></h2>
 <div class="indent">
 <p>You come across a freighter of Engi refugees fleeing the Rebels. Their ship is seriously damaged and they clearly need help.</p>
 
@@ -3342,12 +3336,12 @@
 </ol>
 </ul>
 </div>
-<h2 id="event-FREE_AUG"><a href="#event-FREE_AUG">FREE_AUG</a></h2>
+<h2 id="event-FREE_AUG" class="unused"><a href="#event-FREE_AUG">FREE_AUG</a></h2>
 <div class="indent">
 <p>FREE AUG!</p>
 <ul class="result"><li><strong>Augmentation</strong></ul>
 </div>
-<h2 id="event-FREE_AUGMENT"><a href="#event-FREE_AUGMENT">FREE_AUGMENT</a></h2>
+<h2 id="event-FREE_AUGMENT" class="unused"><a href="#event-FREE_AUGMENT">FREE_AUGMENT</a></h2>
 <div class="indent">
 <p>Wow! A ship enhancement is just floating in space. %crew seems especially excited about this one.</p>
 <ul class="result"><li><strong>Augmentation</strong></ul>
@@ -3357,7 +3351,7 @@
 <ul class="texts"><li>You arrive in a system and immediately discover a pirate ship nearby. Strangely, scans indicate there are no lifeforms aboard. You salvage anything useful, but find no clue as to the whereabouts of the former crew.<li>Not much remains in this abandoned system; however, scans reveal a nearby mining platform with some salvageable materials.<li>As you arrive in the system you are hailed by a loyalist settlement. Upon learning of your quest, they offer you supplies.<li>Debris from a forgotten battle still orbits the gas giant in this system. Some of it still might be usable.<li>You receive a message from a nearby station, &quot;A Federation cruiser jumping into Rebel territory? Quite the bold move.&quot; You quickly move to arm the weapons but he continues, &quot;Lucky for you we&#x27;re not all in support of the Rebellion. Perhaps these supplies will help you get to friendlier space alive.&quot;<li>You happen upon the remains of a space station. It has been mostly picked clean but there appears to be a few materials that will aid you in your mission.</ul>
 <ul class="result"><li><strong>Medium</strong> scrap and low resources</ul>
 </div>
-<h2 id="event-FREE_NANO"><a href="#event-FREE_NANO">FREE_NANO</a></h2>
+<h2 id="event-FREE_NANO" class="unused"><a href="#event-FREE_NANO">FREE_NANO</a></h2>
 <div class="indent">
 <p>FREE NANO!</p>
 <ul class="result"><li><strong>Augmentation</strong> (Engi Med-bot Dispersal)</ul>
@@ -3634,17 +3628,17 @@
 <p>While waiting, you managed to navigate out of the asteroid field using only your impulse engines.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-FUEL_ESCAPE_FLEET"><a href="#event-FUEL_ESCAPE_FLEET">FUEL_ESCAPE_FLEET</a></h2>
+<h2 id="event-FUEL_ESCAPE_FLEET" class="unused"><a href="#event-FUEL_ESCAPE_FLEET">FUEL_ESCAPE_FLEET</a></h2>
 <div class="indent">
 <p>Your pilot deftly avoids the artillery fire from the surrounding fleet while you try to sort out exactly what your plan is....</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-FUEL_ESCAPE_PDS"><a href="#event-FUEL_ESCAPE_PDS">FUEL_ESCAPE_PDS</a></h2>
+<h2 id="event-FUEL_ESCAPE_PDS" class="unused"><a href="#event-FUEL_ESCAPE_PDS">FUEL_ESCAPE_PDS</a></h2>
 <div class="indent">
 <p>Using your impulse engines, you were able to pull to a safe distance from the hostile planet.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-FUEL_ESCAPE_PULSAR"><a href="#event-FUEL_ESCAPE_PULSAR">FUEL_ESCAPE_PULSAR</a></h2>
+<h2 id="event-FUEL_ESCAPE_PULSAR" class="unused"><a href="#event-FUEL_ESCAPE_PULSAR">FUEL_ESCAPE_PULSAR</a></h2>
 <div class="indent">
 <p>Taking advantage of the last of your fuel reserves, you were able to navigate to a safe distance from the pulsar.</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -4109,12 +4103,12 @@
 <ul class="result"><li>Nothing happens</ul>
 </ul>
 </div>
-<h2 id="event-GHOST_BOARDED"><a href="#event-GHOST_BOARDED">GHOST_BOARDED</a></h2>
+<h2 id="event-GHOST_BOARDED" class="unused"><a href="#event-GHOST_BOARDED">GHOST_BOARDED</a></h2>
 <div class="indent">
 <p>The ghosts follow your crew-members back on board the ship!</p>
 <ul class="result"><li><strong>Boarded</strong> by  2-4  Ghost</strong></ul>
 </div>
-<h2 id="list-GHOST_BOARDING"><a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></h2>
+<h2 id="list-GHOST_BOARDING" class="unused"><a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
@@ -4169,7 +4163,7 @@
 </ol>
 </ul>
 </div>
-<h2 id="event-GHOST_SCRAP"><a href="#event-GHOST_SCRAP">GHOST_SCRAP</a></h2>
+<h2 id="event-GHOST_SCRAP" class="unused"><a href="#event-GHOST_SCRAP">GHOST_SCRAP</a></h2>
 <div class="indent">
 <p>You recover what you can before making preparations to jump away.</p>
 <ul class="result"><li><strong>Low</strong> scrap</ul>
@@ -4180,48 +4174,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-GHOST_SHIP"><a href="#event-GHOST_SHIP">GHOST_SHIP</a></h2>
-<div class="indent">
-<ul class="texts"><li>This beacon lies in an empty section of space. You almost move on before spotting a heavily damaged ship drifting nearby. The ship&#x27;s markings are unfamiliar.<li>You share this beacon with just one other ship, but it appears ancient and long since abandoned.<li>Another ship is jumping away just as you arrive. They send out a quick communication before their jump completes: &quot;That ruined bulk is more trouble than it&#x27;s worth.&quot; You see a drifting, abandoned vessel nearby.<li>There&#x27;s a heavily damaged ship at this beacon. You briefly pick up a very distorted communication from the ship but are unable to understand it. Your sensors detect no life-signs.</ul>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-GHOST_SHIP">GHOST_SHIP</a></ul>
-<ol class="choice">
-<li><em >This is a great opportunity. Let&#x27;s dock and see if we can find valuable supplies.</em>
-<div>
-<ul class="random">
-<li> 1/2
-<p>Your crew complains of hearing strange voices as they work. One requests that they end the salvage operation early.</p>
-
-<ol class="choice">
-<li><em >They&#x27;re being ridiculous. Finish the job.</em>
-<div>
-<ul class="result"><li>Go to <a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></ul>
-</div>
-<li><em >They&#x27;ve gathered enough supplies. Let&#x27;s get going.</em>
-<div>
-<ul class="result"><li>Go to <a href="#event-GHOST_SCRAP">GHOST_SCRAP</a></ul>
-</div>
-<li><em class="blue">(sensors ≥ 3) Wait, sensors are picking up something strange...</em>
-<div>
-<div class="inner"><p>Your sensors are picking up some subtle but anomalous activity, it&#x27;s as if the ship is slowly activating. You pull everyone back to your ship with what they have gathered.</p></div>
-<ul class="result"><li><strong>Medium</strong> scrap</ul>
-</div>
-</ol>
-<li> 1/2
-<ul class="result"><li>Go to <a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></ul>
-</ul>
-</div>
-<li><em >We&#x27;re in a hurry, let&#x27;s just quickly pull some scrap off the ship.</em>
-<div>
-<ul class="result"><li>Go to <a href="#event-GHOST_SCRAP">GHOST_SCRAP</a></ul>
-</div>
-<li><em >Something seems wrong here. Let&#x27;s just leave.</em>
-<div>
-<div class="inner"></div>
-<ul class="result"><li>Nothing happens</ul>
-</div>
-</ol>
-</div>
-<h2 id="list-GHOST_SPACE"><a href="#list-GHOST_SPACE">GHOST_SPACE</a></h2>
+<h2 id="list-GHOST_SPACE" class="unused"><a href="#list-GHOST_SPACE">GHOST_SPACE</a></h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
@@ -4442,7 +4395,7 @@
 </ul>
 </ul>
 </div>
-<h2 id="list-HOSTILE2"><a href="#list-HOSTILE2">HOSTILE2</a></h2>
+<h2 id="list-HOSTILE2" class="unused"><a href="#list-HOSTILE2">HOSTILE2</a></h2>
 <div class="indent">
 <ul class="random">
 <li> 1/15
@@ -4498,21 +4451,80 @@
 <ul class="result"><li>Go to <a href="#event-PIRATE_NO_ESCAPE">PIRATE_NO_ESCAPE</a></ul>
 </ul>
 </div>
-<h2 id="list-HOSTILE_BOARDING"><a href="#list-HOSTILE_BOARDING">HOSTILE_BOARDING</a></h2>
+<h2 id="list-HOSTILE_BOARDING" class="unused"><a href="#list-HOSTILE_BOARDING">HOSTILE_BOARDING</a></h2>
 <div class="indent">
 <ul class="random">
 <li> 1/8
-<ul class="result"><li>Go to <a href="#event-BOARDERS_ASTEROID_GHOST">BOARDERS_ASTEROID_GHOST</a></ul>
+<p>You jump into the middle of an asteroid field. Looking around, you find you are surrounded by dozens of wrecks of other ships. Faint wisps of light can be seen moving between wrecks. As you watch, they seem to be changing path and floating toward your ship!</p>
+
+<ol class="choice">
+<li><em >Prepare for a fight!</em>
+<div>
+<div class="inner"></div>
+<ul class="result"><li><strong>Environment</strong> is Asteroid Field
+<li><strong>Boarded</strong> by  3-6  Ghost</strong></ul>
+</div>
+<li><em class="blue">(engines ≥ 5) Activate full impulse drive to escape.</em>
+<div>
+<div class="inner"><p>With your Advanced Engines you were able to quickly get out of the asteroid field, however your ship took a number of hits on the way out.</p></div>
+<ul class="result"><li>4 <strong>Hull Damage</strong>
+<li>1 <strong>System Damage</strong> to random system</strong></ul>
+</div>
+<li><em class="blue">(pilot ≥ 2) Have your pilot maneuver you out of the asteroid field.</em>
+<div>
+<div class="inner"><p>Thanks to your pilot, you were able escape the worst of the asteroid field unscathed. However, the wisps of light stream out of the field following your ship!</p></div>
+<ul class="result"><li><strong>Boarded</strong> by  2-4  Ghost</strong></ul>
+</div>
+</ol>
 <li> 1/8
 <ul class="result"><li>Go to <a href="#event-STATION_SICK">STATION_SICK</a></ul>
 <li> 1/8
 <ul class="result"><li>Go to <a href="#event-BOARDERS_SUN">BOARDERS_SUN</a></ul>
 <li> 1/8
-<ul class="result"><li>Go to <a href="#event-BOARDERS_ASTEROID">BOARDERS_ASTEROID</a></ul>
+<div class="inner"><p>You jump into a perilous asteroid field. Worse, sensors show a pirate stronghold has locked onto our ship and is activating a teleporter. Prepare for a fight!</p></div>
+<ul class="result"><li><strong>Environment</strong> is Asteroid Field
+<li><strong>Boarded</strong> by  2-4  Human</strong></ul>
 <li> 1/8
 <ul class="result"><li>Go to <a href="#event-BOARDERS">BOARDERS</a></ul>
 <li> 1/8
-<ul class="result"><li>Go to <a href="#event-GHOST_SHIP">GHOST_SHIP</a></ul>
+<ul class="texts"><li>This beacon lies in an empty section of space. You almost move on before spotting a heavily damaged ship drifting nearby. The ship&#x27;s markings are unfamiliar.<li>You share this beacon with just one other ship, but it appears ancient and long since abandoned.<li>Another ship is jumping away just as you arrive. They send out a quick communication before their jump completes: &quot;That ruined bulk is more trouble than it&#x27;s worth.&quot; You see a drifting, abandoned vessel nearby.<li>There&#x27;s a heavily damaged ship at this beacon. You briefly pick up a very distorted communication from the ship but are unable to understand it. Your sensors detect no life-signs.</ul>
+<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-GHOST_SHIP">GHOST_SHIP</a></ul>
+<ol class="choice">
+<li><em >This is a great opportunity. Let&#x27;s dock and see if we can find valuable supplies.</em>
+<div>
+<ul class="random">
+<li> 1/2
+<p>Your crew complains of hearing strange voices as they work. One requests that they end the salvage operation early.</p>
+
+<ol class="choice">
+<li><em >They&#x27;re being ridiculous. Finish the job.</em>
+<div>
+<ul class="result"><li>Go to <a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></ul>
+</div>
+<li><em >They&#x27;ve gathered enough supplies. Let&#x27;s get going.</em>
+<div>
+<ul class="result"><li>Go to <a href="#event-GHOST_SCRAP">GHOST_SCRAP</a></ul>
+</div>
+<li><em class="blue">(sensors ≥ 3) Wait, sensors are picking up something strange...</em>
+<div>
+<div class="inner"><p>Your sensors are picking up some subtle but anomalous activity, it&#x27;s as if the ship is slowly activating. You pull everyone back to your ship with what they have gathered.</p></div>
+<ul class="result"><li><strong>Medium</strong> scrap</ul>
+</div>
+</ol>
+<li> 1/2
+<ul class="result"><li>Go to <a href="#list-GHOST_BOARDING">GHOST_BOARDING</a></ul>
+</ul>
+</div>
+<li><em >We&#x27;re in a hurry, let&#x27;s just quickly pull some scrap off the ship.</em>
+<div>
+<ul class="result"><li>Go to <a href="#event-GHOST_SCRAP">GHOST_SCRAP</a></ul>
+</div>
+<li><em >Something seems wrong here. Let&#x27;s just leave.</em>
+<div>
+<div class="inner"></div>
+<ul class="result"><li>Nothing happens</ul>
+</div>
+</ol>
 <li> 1/8
 <ul class="result"><li>Go to <a href="#event-FLOATING_CARGO">FLOATING_CARGO</a></ul>
 <li> 1/8
@@ -5727,7 +5739,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-LONE_SHUTTLE"><a href="#event-LONE_SHUTTLE">LONE_SHUTTLE</a></h2>
+<h2 id="event-LONE_SHUTTLE" class="unused"><a href="#event-LONE_SHUTTLE">LONE_SHUTTLE</a></h2>
 <div class="indent">
 <p>A small, one man shuttle craft is headed straight for you. Repeated hails is yielding no response. You&#x27;ve got a strange feeling about this.</p>
 
@@ -5781,7 +5793,7 @@
 <ul class="texts"><li>A derelict and still smoking Mantis vessel floats by. The battle must have been recent; its surviving crew beam aboard. Prepare for a fight!<li>Your world, all of a sudden, changes. The Mantis are on board your ship.<li>You hear a grating rattle and a soft clicking. You reach for your pistol.</ul>
 <ul class="result"><li><strong>Boarded</strong> by  2-4  Mantis</strong></ul>
 </div>
-<h2 id="event-MANTIS_CAPTURE_COMMANDO"><a href="#event-MANTIS_CAPTURE_COMMANDO">MANTIS_CAPTURE_COMMANDO</a></h2>
+<h2 id="event-MANTIS_CAPTURE_COMMANDO" class="unused"><a href="#event-MANTIS_CAPTURE_COMMANDO">MANTIS_CAPTURE_COMMANDO</a></h2>
 <div class="indent">
 <p>You come across an Engi wreck with one life-sign aboard; it turns out to be the sole survivor of the Mantis boarding party that wiped out the ship&#x27;s crew. He&#x27;s in no state to fight and he&#x27;s brought aboard.</p>
 <ul class="result"><li><strong>Encounter</strong> a <a href="#ship-ENGI_SHIP">ENGI_SHIP</a></ul>
@@ -5926,7 +5938,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-MANTIS_GAMBLE"><a href="#event-MANTIS_GAMBLE">MANTIS_GAMBLE</a></h2>
+<h2 id="event-MANTIS_GAMBLE" class="unused"><a href="#event-MANTIS_GAMBLE">MANTIS_GAMBLE</a></h2>
 <div class="indent">
 <p>This node is currently home to a Mantis leisure ship: a place of brothels and combat arenas for warriors to release steam. When they scan your inventory they indicate that you&#x27;re eligible to engage in a grand game of chance.</p>
 
@@ -6659,7 +6671,7 @@
 <ul class="texts"><li>When it comes to Slugs, no news is not necessarily good news. However, if they are watching, they don&#x27;t seem to want to confront you.<li>It&#x27;s not unusual to feel paranoia in a Slug controlled nebula, but for once, it is unfounded.<li>Either this part of Slug space is deserted, or it&#x27;s too dense for even Slugs to detect your presence. Time to move.<li>This area of the nebula seems entirely empty until a small Slug transport and its escorts emerges suddenly from through the clouds, only to disappear again in a matter of seconds.<li>You explore around the beacon and are shocked when a rock the size of a small moon suddenly looms ahead of you. Scans reveal the solid-looking rock is just a husk, almost entirely mined out of useful minerals.<li>There are a number of small stations for travellers in the area, lit up by guiding lights and advertisements. Only Slug ships are docked so you decide it&#x27;s better to avoid a confrontation and steer clear.</ul>
 <ul class="result"><li><strong>Environment</strong> is Nebula</ul>
 </div>
-<h2 id="event-NEBULA_NOTHING_TEST"><a href="#event-NEBULA_NOTHING_TEST">NEBULA_NOTHING_TEST</a></h2>
+<h2 id="event-NEBULA_NOTHING_TEST" class="unused"><a href="#event-NEBULA_NOTHING_TEST">NEBULA_NOTHING_TEST</a></h2>
 <div class="indent">
 <p>Appears that this is an empty nebula beacon. %crew, uncomfortable with the silence, distracts %crew_himself by playing death metal over the ship speakers.</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -6853,7 +6865,7 @@
 </div>
 </ol>
 </div>
-<h2 id="list-NEBULA_ROCK"><a href="#list-NEBULA_ROCK">NEBULA_ROCK</a></h2>
+<h2 id="list-NEBULA_ROCK" class="unused"><a href="#list-NEBULA_ROCK">NEBULA_ROCK</a></h2>
 <div class="indent">
 <ul class="random">
 </ul>
@@ -7547,7 +7559,7 @@
 <ul class="result"><li>Go to <a href="#event-ROCK_SLUG_ARGUMENT">ROCK_SLUG_ARGUMENT</a></ul>
 </ul>
 </div>
-<h2 id="list-NEUTRAL_SLUG"><a href="#list-NEUTRAL_SLUG">NEUTRAL_SLUG</a></h2>
+<h2 id="list-NEUTRAL_SLUG" class="unused"><a href="#list-NEUTRAL_SLUG">NEUTRAL_SLUG</a></h2>
 <div class="indent">
 <ul class="random">
 </ul>
@@ -7573,22 +7585,22 @@
 <ul class="result"><li>Go to <a href="#event-ASTEROID_EXPLORE">ASTEROID_EXPLORE</a></ul>
 </ul>
 </div>
-<h2 id="event-NEW"><a href="#event-NEW">NEW</a></h2>
+<h2 id="event-NEW" class="unused"><a href="#event-NEW">NEW</a></h2>
 <div class="indent">
 
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-NEW_TESTS">NEW_TESTS</a></ul>
 </div>
-<h2 id="event-NEWSHIP1"><a href="#event-NEWSHIP1">NEWSHIP1</a></h2>
+<h2 id="event-NEWSHIP1" class="unused"><a href="#event-NEWSHIP1">NEWSHIP1</a></h2>
 <div class="indent">
 <p>whatever</p>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-NEWSHIP1">NEWSHIP1</a></ul>
 </div>
-<h2 id="event-NEWSHIP2"><a href="#event-NEWSHIP2">NEWSHIP2</a></h2>
+<h2 id="event-NEWSHIP2" class="unused"><a href="#event-NEWSHIP2">NEWSHIP2</a></h2>
 <div class="indent">
 <p>whatever</p>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-NEWSHIP2">NEWSHIP2</a></ul>
 </div>
-<h2 id="list-NON_HOSTILE"><a href="#list-NON_HOSTILE">NON_HOSTILE</a></h2>
+<h2 id="list-NON_HOSTILE" class="unused"><a href="#list-NON_HOSTILE">NON_HOSTILE</a></h2>
 <div class="indent">
 <ul class="random">
 <li> 1/2
@@ -7855,7 +7867,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-PDS_TEST"><a href="#event-PDS_TEST">PDS_TEST</a></h2>
+<h2 id="event-PDS_TEST" class="unused"><a href="#event-PDS_TEST">PDS_TEST</a></h2>
 <div class="indent">
 <p>Oh no! This planet is friendly to the Rebels and is shooting at us!</p>
 <ul class="result"><li><strong>Environment</strong> is Confused Anti-Ship Battery targeting both ships
@@ -8167,7 +8179,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-PULSAR"><a href="#event-PULSAR">PULSAR</a></h2>
+<h2 id="event-PULSAR" class="unused"><a href="#event-PULSAR">PULSAR</a></h2>
 <div class="indent">
 <p>Oh no! A pulsar!</p>
 <ul class="result"><li><strong>Environment</strong> is Pulsar
@@ -8192,7 +8204,7 @@
 <ul class="result"><li>Go to <a href="#event-QUEST_CONSTRUCTIONYARD">QUEST_CONSTRUCTIONYARD</a></ul>
 </ul>
 </div>
-<h2 id="list-QUESTS_CRYSTAL"><a href="#list-QUESTS_CRYSTAL">QUESTS_CRYSTAL</a></h2>
+<h2 id="list-QUESTS_CRYSTAL" class="unused"><a href="#list-QUESTS_CRYSTAL">QUESTS_CRYSTAL</a></h2>
 <div class="indent">
 <ul class="random">
 </ul>
@@ -8252,7 +8264,7 @@
 <ul class="result"><li>Go to <a href="#event-QUEST_CREWDEAD_START">QUEST_CREWDEAD_START</a></ul>
 </ul>
 </div>
-<h2 id="list-QUESTS_SLUG"><a href="#list-QUESTS_SLUG">QUESTS_SLUG</a></h2>
+<h2 id="list-QUESTS_SLUG" class="unused"><a href="#list-QUESTS_SLUG">QUESTS_SLUG</a></h2>
 <div class="indent">
 <ul class="random">
 <li> 1/1
@@ -8598,7 +8610,7 @@
 <ul class="texts"><li>You discover one of the Rebel&#x27;s autonomous scouts. The ship&#x27;s AI wastes no time in engaging your ship.<li>Your ship is hailed: &quot;This is an automated message. Resisting our takeover is pointless. Prepare to die.&quot; It appears this Rebel ship is run by an AI.<li>A Rebel autonomous scout is exploring this beacon. You attempt to hide behind a nearby moon, but the ship finds you and begins its assault.<li>The AI of a nearby small Rebel scout immediately identifies you as a threat and engages.<li>A Rebel ship moves in to engage. You attempt to open communications, but realize the futility of that action when you see the ship is run by an AI.<li>This must be one of the Rebels&#x27; unmanned scout ships. Looks like there&#x27;s no way around a fight.<li>Another unmanned ship patrols this area. You prepare the ship for combat.<li>This beacon is being patrolled by a unmanned scout. A fight is unavoidable.<li>A small shuttle appears on the local radar. Turns out it is a Rebel automated scout!</ul>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-REBEL_AUTO">REBEL_AUTO</a></ul>
 </div>
-<h2 id="event-REBEL_AUTO_PDS"><a href="#event-REBEL_AUTO_PDS">REBEL_AUTO_PDS</a></h2>
+<h2 id="event-REBEL_AUTO_PDS" class="unused"><a href="#event-REBEL_AUTO_PDS">REBEL_AUTO_PDS</a></h2>
 <div class="indent">
 <ul class="texts"><li>As soon as you arrive multiple warnings go off. A hostile automated ship is detected and an Anti-Ship Battery begins firing. This doesn&#x27;t look good!<li>As soon as you arrive multiple warnings go off. A hostile automated ship is detected and an Anti-Ship Battery begins firing. This doesn&#x27;t look good!<li>As soon as you arrive multiple warnings go off. A hostile automated ship is detected and an Anti-Ship Battery begins firing. This doesn&#x27;t look good!<li>As soon as you arrive multiple warnings go off. A hostile automated ship is detected and an Anti-Ship Battery begins firing. This doesn&#x27;t look good!</ul>
 <ul class="result"><li><strong>Environment</strong> is Anti-Ship Battery targeting us
@@ -9116,7 +9128,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-REMOVAL_TEST"><a href="#event-REMOVAL_TEST">REMOVAL_TEST</a></h2>
+<h2 id="event-REMOVAL_TEST" class="unused"><a href="#event-REMOVAL_TEST">REMOVAL_TEST</a></h2>
 <div class="indent">
 <p>Oh no! Your drone is gone.</p>
 <ul class="result"><li><strong>Remove</strong> COMBAT_1</ul>
@@ -9344,7 +9356,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-ROCK_NURSERY"><a href="#event-ROCK_NURSERY">ROCK_NURSERY</a></h2>
+<h2 id="event-ROCK_NURSERY" class="unused"><a href="#event-ROCK_NURSERY">ROCK_NURSERY</a></h2>
 <div class="indent">
 <p>Fluctuating life-signs are reported near the surface of a hazy, pock-marked moon in the vicinity. It seems this is a Rock nursery where the young are &#x27;acclimatized&#x27; to their religion - only there&#x27;s been some kind of coup and the students are running amok!</p>
 
@@ -9528,12 +9540,12 @@
 </div>
 </ol>
 </div>
-<h2 id="event-ROCK_NURSERY_LOSE"><a href="#event-ROCK_NURSERY_LOSE">ROCK_NURSERY_LOSE</a></h2>
+<h2 id="event-ROCK_NURSERY_LOSE" class="unused"><a href="#event-ROCK_NURSERY_LOSE">ROCK_NURSERY_LOSE</a></h2>
 <div class="indent">
 <p>Fully aware that their victory was threatened by your arrival, the survivors immediately dispatch a ship to eliminate you!</p>
 <ul class="result"><li><strong>Fight</strong> a <a href="#ship-ROCK_SHIP">ROCK_SHIP</a></ul>
 </div>
-<h2 id="event-ROCK_NURSERY_WIN"><a href="#event-ROCK_NURSERY_WIN">ROCK_NURSERY_WIN</a></h2>
+<h2 id="event-ROCK_NURSERY_WIN" class="unused"><a href="#event-ROCK_NURSERY_WIN">ROCK_NURSERY_WIN</a></h2>
 <div class="indent">
 <p>In return for your support during the fight the survivors reward you with the funds set aside for prison transport. You leave before anyone changes their mind!</p>
 <ul class="result"><li><strong>High</strong> scrap and low resources</ul>
@@ -9818,7 +9830,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-ROCK_ZOLTAN_HELP"><a href="#event-ROCK_ZOLTAN_HELP">ROCK_ZOLTAN_HELP</a></h2>
+<h2 id="event-ROCK_ZOLTAN_HELP" class="unused"><a href="#event-ROCK_ZOLTAN_HELP">ROCK_ZOLTAN_HELP</a></h2>
 <div class="indent">
 <p>It seems a Zoltan ship came here to liberate a Rock settlement from their &#x27;oppressive belief system&#x27;, and that the settlement did not appreciate it - long-range scanners suggest the Zoltan and their pursuers will be here at any moment!</p>
 
@@ -10160,7 +10172,7 @@
 <li><strong>Augmentation</strong></ul>
 </ul>
 </div>
-<h2 id="event-SLUG_DISTRESS_PILOTING"><a href="#event-SLUG_DISTRESS_PILOTING">SLUG_DISTRESS_PILOTING</a></h2>
+<h2 id="event-SLUG_DISTRESS_PILOTING" class="unused"><a href="#event-SLUG_DISTRESS_PILOTING">SLUG_DISTRESS_PILOTING</a></h2>
 <div class="indent">
 <p>The distress signal originates from a tampered jump beacon. A Slug vessel jumps in and announces he has hacked your engines system. &quot;Of course if you, as one of the few remaining ships in the Federation, swear allegiance to the Slug Empire you will be free to go.&quot;</p>
 <ul class="result"><li><strong>Environment</strong> is Nebula
@@ -10648,7 +10660,7 @@
 <ul class="texts"><li>You&#x27;ve entered Zoltan territory. This species is not renowned for giving anything for nothing, but you can always be assured a fair hearing.<li>The Zoltan patrol their borders but let you pass when you ID as Federation. Let&#x27;s hope they won&#x27;t be so courteous to the Rebels.<li>You arrive in Zoltan space. From what you have heard they anticipated the coming war and made preparations to hold their borders.<li>You&#x27;re far from Federation home space here in Zoltan territory, and it&#x27;s not clear whether the authorities will have any goodwill remaining. Still, you have to push forward.</ul>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-START_DEMO"><a href="#event-START_DEMO">START_DEMO</a></h2>
+<h2 id="event-START_DEMO" class="unused"><a href="#event-START_DEMO">START_DEMO</a></h2>
 <div class="indent">
 <p>Welcome to the Federation training simulation! You&#x27;re about to be sent on a very dangerous mission carrying data vital to the Federation fleet. We&#x27;ve put this simulator together to give you an idea of what to expect on the actual journey. Explore the sector, gather supplies, but get to the exit before the simulated Rebel fleet catches up!</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -10754,37 +10766,37 @@
 </ol>
 </ul>
 </div>
-<h2 id="event-STEALTH_1"><a href="#event-STEALTH_1">STEALTH_1</a></h2>
+<h2 id="event-STEALTH_1" class="unused"><a href="#event-STEALTH_1">STEALTH_1</a></h2>
 <div class="indent">
 <p>This is a prototype ship which utilizes advanced Cloaking technology. The trade-off is lack of shields or weaponry. Take advantage of the cloaking device&#x27;s ability to make enemy shots miss.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-STEALTH_2"><a href="#event-STEALTH_2">STEALTH_2</a></h2>
+<h2 id="event-STEALTH_2" class="unused"><a href="#event-STEALTH_2">STEALTH_2</a></h2>
 <div class="indent">
 <p>This ship was based on designs that existed before shielding technology was standard in all ships. Its armored hull and increased mobility are its primary assets.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-STEALTH_3"><a href="#event-STEALTH_3">STEALTH_3</a></h2>
+<h2 id="event-STEALTH_3" class="unused"><a href="#event-STEALTH_3">STEALTH_3</a></h2>
 <div class="indent">
 <p>This ship is designed to test the Federation&#x27;s new advanced shield recharging technology. Unfortunately, you&#x27;re being forced to test it alone.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-STEALTH_4"><a href="#event-STEALTH_4">STEALTH_4</a></h2>
+<h2 id="event-STEALTH_4" class="unused"><a href="#event-STEALTH_4">STEALTH_4</a></h2>
 <div class="indent">
 <p>This ship was designed for troop transport behind enemy lines. As such, it isn&#x27;t equipped with weapons by default but is crewed by the best of the best.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-STEALTH_5"><a href="#event-STEALTH_5">STEALTH_5</a></h2>
+<h2 id="event-STEALTH_5" class="unused"><a href="#event-STEALTH_5">STEALTH_5</a></h2>
 <div class="indent">
 <p>This ship is a modified mining vessel that contained advanced AI for drone management. It isn&#x27;t quite combat ready, but hopefully the drones will cover its shortcomings.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-STEALTH_6"><a href="#event-STEALTH_6">STEALTH_6</a></h2>
+<h2 id="event-STEALTH_6" class="unused"><a href="#event-STEALTH_6">STEALTH_6</a></h2>
 <div class="indent">
 <p>Your new vessel is equipped with state of the art androids and beam weaponry. It was difficult to find a full crew since the androids are rather terrifying to work with.</p>
 <ul class="result"><li>Nothing happens</ul>
 </div>
-<h2 id="event-STEALTH_7"><a href="#event-STEALTH_7">STEALTH_7</a></h2>
+<h2 id="event-STEALTH_7" class="unused"><a href="#event-STEALTH_7">STEALTH_7</a></h2>
 <div class="indent">
 <p>The engineer who designed this ship clearly loved missiles. Few opponents will be able to withstand this ship&#x27;s missile barrage, but be sure to watch your ammo reserves.</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -11227,7 +11239,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-TEST_EVENT"><a href="#event-TEST_EVENT">TEST_EVENT</a></h2>
+<h2 id="event-TEST_EVENT" class="unused"><a href="#event-TEST_EVENT">TEST_EVENT</a></h2>
 <div class="indent">
 <p>This looks good...</p>
 
@@ -11241,7 +11253,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-TEST_EVENT2"><a href="#event-TEST_EVENT2">TEST_EVENT2</a></h2>
+<h2 id="event-TEST_EVENT2" class="unused"><a href="#event-TEST_EVENT2">TEST_EVENT2</a></h2>
 <div class="indent">
 <p>Limited systems!</p>
 <ul class="result"><li><strong>Limit Power</strong> to sensors, down to 1
@@ -11498,7 +11510,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-UNLOCK_STEALTH"><a href="#event-UNLOCK_STEALTH">UNLOCK_STEALTH</a></h2>
+<h2 id="event-UNLOCK_STEALTH" class="unused"><a href="#event-UNLOCK_STEALTH">UNLOCK_STEALTH</a></h2>
 <div class="indent">
 <p>You stumble across a hidden Federation research laboratory! They have been experimenting with some unique ship designs. You download their blueprints for future use.</p>
 <ul class="result"><li>Nothing happens</ul>
@@ -11990,7 +12002,7 @@
 </div>
 </ol>
 </div>
-<h2 id="event-ZOLTAN_SURRENDER"><a href="#event-ZOLTAN_SURRENDER">ZOLTAN_SURRENDER</a></h2>
+<h2 id="event-ZOLTAN_SURRENDER" class="unused"><a href="#event-ZOLTAN_SURRENDER">ZOLTAN_SURRENDER</a></h2>
 <div class="indent">
 <ul class="texts"><li>&quot;Yes, yes, you&#x27;ve demonstrated your species&#x27; capacity for violence quite extensively, well done. If we reward your efforts will you bother someone else?&quot;<li>The enemy ship hails; the vidscreen shows their bridge showered in sparks from malfunctioning equipment - it&#x27;s safe to assume they&#x27;re trying to surrender. Accept their offer?<li>Communications report that the Zoltan are broadcasting on all frequencies. The captain appears on screen and says, &quot;Yes, I am not surprised, your species hardly looks enlightened. Fine. Take what you wish.&quot;<li>The Zoltan captain hails and mutters something about the border patrol force catching up with you someday; you&#x27;re more interested in his offer of surrender.<li>&quot;We assumed that your species&#x27; intelligence was directly proportional to your brute strength. We yield.&quot;<li>&quot;You have bested us. If only your species&#x27; efforts were put to use improving the galaxy rather than your military might.&quot;<li>&quot;Yes, yes, you&#x27;ve demonstrated your species&#x27; capacity for violence quite extensively, well done. If we reward your efforts will you bother someone else?&quot;<li>The enemy ship hails; the vidscreen shows their bridge showered in sparks from malfunctioning equipment - it&#x27;s safe to assume they&#x27;re trying to surrender. Accept their offer?<li>Communications report that the Zoltan are broadcasting on all frequencies. The captain appears on screen and says, &quot;Yes, I am not surprised, your species hardly looks enlightened. Fine. Take what you wish.&quot;<li>The Zoltan captain hails and mutters something about the border patrol force catching up with you someday; you&#x27;re more interested in his offer of surrender.<li>&quot;We assumed that your species&#x27; intelligence was directly proportional to your brute strength. We yield.&quot;<li>&quot;You have bested us. If only your species&#x27; efforts were put to use improving the galaxy rather than your military might.&quot;</ul>
 
@@ -12661,7 +12673,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-GHOST_SHIP"><a href="#ship-GHOST_SHIP">GHOST_SHIP</a></h2>
+<h2 id="ship-GHOST_SHIP" class="unused"><a href="#ship-GHOST_SHIP">GHOST_SHIP</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -12676,7 +12688,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-IMPOSSIBLE_PIRATE"><a href="#ship-IMPOSSIBLE_PIRATE">IMPOSSIBLE_PIRATE</a></h2>
+<h2 id="ship-IMPOSSIBLE_PIRATE" class="unused"><a href="#ship-IMPOSSIBLE_PIRATE">IMPOSSIBLE_PIRATE</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -12949,7 +12961,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-JELLY_STATUS_PILOT"><a href="#ship-JELLY_STATUS_PILOT">JELLY_STATUS_PILOT</a></h2>
+<h2 id="ship-JELLY_STATUS_PILOT" class="unused"><a href="#ship-JELLY_STATUS_PILOT">JELLY_STATUS_PILOT</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -13371,7 +13383,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-LONG_ELITE"><a href="#ship-LONG_ELITE">LONG_ELITE</a></h2>
+<h2 id="ship-LONG_ELITE" class="unused"><a href="#ship-LONG_ELITE">LONG_ELITE</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -13686,7 +13698,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-NEWSHIP1"><a href="#ship-NEWSHIP1">NEWSHIP1</a></h2>
+<h2 id="ship-NEWSHIP1" class="unused"><a href="#ship-NEWSHIP1">NEWSHIP1</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -13701,7 +13713,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-NEWSHIP2"><a href="#ship-NEWSHIP2">NEWSHIP2</a></h2>
+<h2 id="ship-NEWSHIP2" class="unused"><a href="#ship-NEWSHIP2">NEWSHIP2</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -13720,7 +13732,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-NEW_TESTS"><a href="#ship-NEW_TESTS">NEW_TESTS</a></h2>
+<h2 id="ship-NEW_TESTS" class="unused"><a href="#ship-NEW_TESTS">NEW_TESTS</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -14275,7 +14287,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-REBEL_AUTO_BAIT"><a href="#ship-REBEL_AUTO_BAIT">REBEL_AUTO_BAIT</a></h2>
+<h2 id="ship-REBEL_AUTO_BAIT" class="unused"><a href="#ship-REBEL_AUTO_BAIT">REBEL_AUTO_BAIT</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -14802,7 +14814,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-ROCK_ZOLTAN_HELP_ROCK"><a href="#ship-ROCK_ZOLTAN_HELP_ROCK">ROCK_ZOLTAN_HELP_ROCK</a></h2>
+<h2 id="ship-ROCK_ZOLTAN_HELP_ROCK" class="unused"><a href="#ship-ROCK_ZOLTAN_HELP_ROCK">ROCK_ZOLTAN_HELP_ROCK</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -14831,7 +14843,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-ROCK_ZOLTAN_HELP_ZOLTAN"><a href="#ship-ROCK_ZOLTAN_HELP_ZOLTAN">ROCK_ZOLTAN_HELP_ZOLTAN</a></h2>
+<h2 id="ship-ROCK_ZOLTAN_HELP_ZOLTAN" class="unused"><a href="#ship-ROCK_ZOLTAN_HELP_ZOLTAN">ROCK_ZOLTAN_HELP_ZOLTAN</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
@@ -15209,7 +15221,7 @@
 </div>
 </ul>
 </div>
-<h2 id="ship-ZOLTAN_PIRATE"><a href="#ship-ZOLTAN_PIRATE">ZOLTAN_PIRATE</a></h2>
+<h2 id="ship-ZOLTAN_PIRATE" class="unused"><a href="#ship-ZOLTAN_PIRATE">ZOLTAN_PIRATE</a></h2>
 <div class="indent">
 <ul class="fight">
 <li><em>You destroy the enemy ship</em>
