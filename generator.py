@@ -1594,20 +1594,20 @@ def main():
 
     events_not_visited = event_keys - visited_events - unused_events
     if events_not_visited:
-        print("===== EVENTS NOT VISITED =====", file=sys.stderr)
-        for id in sorted(events_not_visited): print(id, file=sys.stderr)
+        log("===== EVENTS NOT VISITED =====")
+        for id in sorted(events_not_visited): log(id)
 
 
     groups_not_visited = group_keys - visited_events - unused_groups
     if groups_not_visited:
-        print("===== GROUPS NOT VISITED =====", file=sys.stderr)
-        for id in sorted(groups_not_visited): print(id, file=sys.stderr)
+        log("===== GROUPS NOT VISITED =====")
+        for id in sorted(groups_not_visited): log(id)
 
 
     ships_not_visited = ship_keys - visited_ships - unused_ships
     if ships_not_visited:
-        print("===== SHIPS NOT VISITED =====", file=sys.stderr)
-        for id in sorted(ships_not_visited): print(id, file=sys.stderr)
+        log("===== SHIPS NOT VISITED =====")
+        for id in sorted(ships_not_visited): log(id)
 
     # Check overlapped events
     if (event_keys & group_keys) != overlapped_event_names:
