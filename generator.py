@@ -1298,10 +1298,10 @@ def output_event(eventID, is_toplevel=False):
         print('<ol class="choice">')
         for (text, is_blue, nextID) in event.choices:
             cls_html = 'class="blue"' if is_blue else ''
-            print('<li><em {cls_html}>{text}</em></li>'.format(cls_html = cls_html, text = H(text)))
+            print('<li><em {cls_html}>{text}</em>'.format(cls_html = cls_html, text = H(text)))
             print('<div>')
             goto_group_or_event(nextID)
-            print('</div>')
+            print('</div></li>')
         print('</ol>')
 
 def output_group(groupID):
