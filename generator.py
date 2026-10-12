@@ -1497,7 +1497,6 @@ def output_html():
     for key in sorted(ship_dict.keys()):
         if key in peaceful_ships: continue
         begin_section(key in unused_ships)
-        print('<section>')
         output_anchor('ship', key)
         print('<div class="indent">')
         output_ship(key)
@@ -1513,109 +1512,100 @@ def output_html():
 #
 
 
-def main():
+# Parse arguments
+parser = argparse.ArgumentParser(description="Create an FTL Cheatsheet in HTML")
+parser.add_argument('datadir', metavar='DATADIR', type=str, help="Path to FTL data folder")
+args = parser.parse_args()
 
-    # Parse arguments
-    parser = argparse.ArgumentParser(description="Create an FTL Cheatsheet in HTML")
-    parser.add_argument('datadir', metavar='DATADIR', type=str, help="Path to FTL data folder")
-    args = parser.parse_args()
+# Generate the HTML file
+os.chdir(args.datadir)
+init_translations()
+init_blueprint_names()
+build_graph()
+canonicalize_groups()
+init_nesting()
+init_root_events()
+output_html()
 
-    # Generate the HTML file
-    os.chdir(args.datadir)
-    init_translations()
-    init_blueprint_names()
-    build_graph()
-    canonicalize_groups()
-    init_nesting()
-    init_root_events()
-    output_html()
-
-    # Check for forgotten events
-    for k in event_dict:
-        if k not in printed_events:
-            if not k.startswith('evt-'):
-                log('missing event', k)
-
-    for k in group_dict.keys():
-        if k not in printed_groups:
+# Check for forgotten events
+for k in event_dict:
+    if k not in printed_events:
+        if not k.startswith('evt-'):
             log('missing event', k)
 
-    for k in ship_dict.keys():
-        if k not in printed_ships and k not in peaceful_ships:
-            log('missing ship', k)
+for k in group_dict.keys():
+    if k not in printed_groups:
+        log('missing event', k)
 
-    # Check for broken links
-    for k in link_target_set - anchor_set:
-        log('broken link', k)
+for k in ship_dict.keys():
+    if k not in printed_ships and k not in peaceful_ships:
+        log('missing ship', k)
 
-    visited_events = set() # or groups...
-    visited_ships  = set()
+# Check for broken links
+for k in link_target_set - anchor_set:
+    log('broken link', k)
 
-    #
-    # Sanity check for unused events
-    #
+visited_events = set() # or groups...
+visited_ships  = set()
 
-    def traverse_event_or_group(id):
-        if id in visited_events: return
-        visited_events.add(id)
+#
+# Sanity check for unused events
+#
 
-        if id in group_dict:
-            group = group_dict[id]
-            for (weight, childId) in group:
+def traverse_event_or_group(id):
+    if id in visited_events: return
+    visited_events.add(id)
+
+    if id in group_dict:
+        group = group_dict[id]
+        for (weight, childId) in group:
+            traverse_event_or_group(childId)
+
+    elif id in event_dict:
+        evt = event_dict[id]
+        if evt.choices:
+            for (req, msg, childId) in evt.choices:
                 traverse_event_or_group(childId)
+        if evt.fight:
+            traverse_ship(evt.fight)
 
-        elif id in event_dict:
-            evt = event_dict[id]
-            if evt.choices:
-                for (req, msg, childId) in evt.choices:
-                    traverse_event_or_group(childId)
-            if evt.fight:
-                traverse_ship(evt.fight)
+    else:
+        assert False
 
-        else:
-            assert False
+def traverse_ship(id):
+    if id in visited_ships: return
+    visited_ships.add(id)
 
-    def traverse_ship(id):
-        if id in visited_ships: return
-        visited_ships.add(id)
+    ship = ship_dict[id]
+    for key in ship_event_types:
+        child = ship.get(key)
+        if child:
+            traverse_event_or_group(child)
 
-        ship = ship_dict[id]
-        for key in ship_event_types:
-            child = ship.get(key)
-            if child:
-                traverse_event_or_group(child)
+for id in root_event_list:
+    traverse_event_or_group(id)
+for id in quest_events_set:
+    traverse_event_or_group(id)
+for id in quest_groups_set:
+    traverse_event_or_group(id)
 
-    for id in root_event_list:
-        traverse_event_or_group(id)
-    for id in quest_events_set:
-        traverse_event_or_group(id)
-    for id in quest_groups_set:
-        traverse_event_or_group(id)
-
-    events_not_visited = event_keys - visited_events - unused_events
-    if events_not_visited:
-        log("===== EVENTS NOT VISITED =====")
-        for id in sorted(events_not_visited): log(id)
+events_not_visited = event_keys - visited_events - unused_events
+if events_not_visited:
+    log("===== EVENTS NOT VISITED =====")
+    for id in sorted(events_not_visited): log(id)
 
 
-    groups_not_visited = group_keys - visited_events - unused_groups
-    if groups_not_visited:
-        log("===== GROUPS NOT VISITED =====")
-        for id in sorted(groups_not_visited): log(id)
+groups_not_visited = group_keys - visited_events - unused_groups
+if groups_not_visited:
+    log("===== GROUPS NOT VISITED =====")
+    for id in sorted(groups_not_visited): log(id)
 
 
-    ships_not_visited = ship_keys - visited_ships - unused_ships
-    if ships_not_visited:
-        log("===== SHIPS NOT VISITED =====")
-        for id in sorted(ships_not_visited): log(id)
+ships_not_visited = ship_keys - visited_ships - unused_ships
+if ships_not_visited:
+    log("===== SHIPS NOT VISITED =====")
+    for id in sorted(ships_not_visited): log(id)
 
-    # Check overlapped events
-    if (event_keys & group_keys) != overlapped_event_names:
-        log("there is a problem with the overlapped event name list")
-
-
-
-if __name__ == "__main__":
-    main()
-
-
+# Check overlapped events
+if (event_keys & group_keys) != overlapped_event_names:
+    log("there is a problem with the overlapped event name list")
