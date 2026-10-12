@@ -287,13 +287,21 @@ def check_child_nodes(parent, known_tags):
 # Unused events (double checked by hand)
 #
 
-
 def set_of_lines(string):
     return set(string.split())
 
+# Don't show friendly ships in "Fights" list.
 peaceful_ships = set_of_lines("""
     CIVILIAN_SHIP
     ROCK_UNLOCK1
+""")
+
+# When the event name and group name overlap the group name takes precedence.
+# In effect, these events become unused and are removed from their lists.
+overlapped_event_names = set_of_lines("""
+    BOARDERS_PIRATE
+    NEBULA_PIRATE
+    NEBULA_REBEL
 """)
 
 unused_events = set_of_lines("""
@@ -415,11 +423,7 @@ unused_ships = set_of_lines("""
 # references to events we haven't processed yet. Secondly, it will allow us to de-duplicate events with
 # repeated choices (such as DESTROYED_DEFAULT and DEAD_CREW_DEFAULT). To simplify this deduplication,
 # we represent the data using namedTuples and we store all the event actions in a single HTML string.
-#
-# Note: eventid may refer to either an individual event, or to an event group. Unfortunately, there
-# are some identifiers (e.g. NEBULA_PIRATE) that are used both as an eventList and as an individual
-# event. Therefore, the meaning depends on context. If we are in an event group, then child events
-# prioritize the individual event namespace. Otherwise, the event group namespace takes priority.
+
 
 from collections import namedtuple
 
@@ -1066,15 +1070,17 @@ def graph_add_ship(ship):
 
 def graph_add_group(group):
 
+    key = group.get("name").removeprefix("OVERRIDE_")
+
     # Consistency check
     check_schema(group, group_schema)
 
     cases = []
     for event in group.iterfind('event'):
         eventID = graph_add_event(event, None)
-        cases.append((1, eventID))
+        if eventID != key: # resolve self loops with overlapped names (eg. NEBULA_REBEL)
+            cases.append((1, eventID))
 
-    key = group.get("name").removeprefix("OVERRIDE_")
     assert key not in group_dict
     group_dict[key] = cases
 
@@ -1130,7 +1136,6 @@ event_nparents = {}
 group_nparents = {}
 ship_nparents  = {}
 
-
 def init_nesting():
 
     for k in event_dict:
@@ -1145,7 +1150,6 @@ def init_nesting():
     for a, ev in event_dict.items():
         if ev.choices:
             for (_,_, b) in ev.choices:
-                # group priority
                 if   b in group_nparents: group_nparents[b] += 1
                 elif b in event_nparents: event_nparents[b] += 1
         if ev.fight:
@@ -1153,13 +1157,11 @@ def init_nesting():
 
     for a, group in group_dict.items():
         for (_, b) in group:
-            # event priority
-            if   b in event_nparents: event_nparents[b] += 1
-            elif b in group_nparents: group_nparents[b] += 1
+            if   b in group_nparents: group_nparents[b] += 1
+            elif b in event_nparents: event_nparents[b] += 1
 
     for a, ship in ship_dict.items():
         for tag, b in ship.items():
-            # group priority
             if   b in group_nparents: group_nparents[b] += 1
             elif b in event_nparents: event_nparents[b] += 1
 
@@ -1262,6 +1264,7 @@ def can_inline_event(name):
 def can_inline_group(name):
     return (
         group_nparents[name] == 1 and
+        (name not in overlapped_event_names) and
         (name not in quest_groups_set))
 
 def goto_group_or_event(name):
@@ -1275,20 +1278,6 @@ def goto_group_or_event(name):
             output_event(name)
         else:
             goto_url(event_link(name))
-    else:
-        assert False
-
-def goto_event_or_group(name):
-    if name in event_dict:
-        if can_inline_event(name):
-            output_event(name)
-        else:
-            goto_url(event_link(name))
-    elif   name in group_dict:
-        if can_inline_group(name):
-            output_group(name)
-        else:
-            goto_url(group_link(name))
     else:
         assert False
 
@@ -1328,7 +1317,7 @@ def output_group(groupID):
     for (n, nextID) in group:
         print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
         #print('<li> {p}%'.format(p =  "%2.0f"%math.floor(100.0 * n / m)))
-        goto_event_or_group(nextID)
+        goto_group_or_event(nextID)
     if not group:
         print('<li> Nothing happens')
 
@@ -1486,7 +1475,7 @@ def output_html():
     for (key, typ) in items:
         if typ == 'event':
             if can_inline_event(key): continue
-            begin_section(key in unused_events)
+            begin_section(key in unused_events or key in overlapped_event_names)
             output_anchor('event', key)
             print('<div class="indent">')
             output_event(key, True)
@@ -1559,64 +1548,74 @@ def main():
     for k in link_target_set - anchor_set:
         log('broken link', k)
 
+    visited_events = set() # or groups...
+    visited_ships  = set()
+
+    #
+    # Sanity check for unused events
+    #
+
+    def traverse_event_or_group(id):
+        if id in visited_events: return
+        visited_events.add(id)
+
+        if id in group_dict:
+            group = group_dict[id]
+            for (weight, childId) in group:
+                traverse_event_or_group(childId)
+
+        elif id in event_dict:
+            evt = event_dict[id]
+            if evt.choices:
+                for (req, msg, childId) in evt.choices:
+                    traverse_event_or_group(childId)
+            if evt.fight:
+                traverse_ship(evt.fight)
+
+        else:
+            assert False
+
+    def traverse_ship(id):
+        if id in visited_ships: return
+        visited_ships.add(id)
+
+        ship = ship_dict[id]
+        for key in ship_event_types:
+            child = ship.get(key)
+            if child:
+                traverse_event_or_group(child)
+
+    for id in root_event_list:
+        traverse_event_or_group(id)
+    for id in quest_events_set:
+        traverse_event_or_group(id)
+    for id in quest_groups_set:
+        traverse_event_or_group(id)
+
+    events_not_visited = event_keys - visited_events - unused_events
+    if events_not_visited:
+        print("===== EVENTS NOT VISITED =====", file=sys.stderr)
+        for id in sorted(events_not_visited): print(id, file=sys.stderr)
+
+
+    groups_not_visited = group_keys - visited_events - unused_groups
+    if groups_not_visited:
+        print("===== GROUPS NOT VISITED =====", file=sys.stderr)
+        for id in sorted(groups_not_visited): print(id, file=sys.stderr)
+
+
+    ships_not_visited = ship_keys - visited_ships - unused_ships
+    if ships_not_visited:
+        print("===== SHIPS NOT VISITED =====", file=sys.stderr)
+        for id in sorted(ships_not_visited): print(id, file=sys.stderr)
+
+    # Check overlapped events
+    if (event_keys & group_keys) != overlapped_event_names:
+        log("there is a problem with the overlapped event name list")
+
+
+
 if __name__ == "__main__":
     main()
 
 
-visited_events = set() # or groups...
-visited_ships  = set()
-
-def traverse_event_or_group(id):
-    if id in visited_events: return
-    visited_events.add(id)
-
-    if id in group_dict:
-        group = group_dict[id]
-        for (weight, childId) in group:
-            traverse_event_or_group(childId)
-
-    elif id in event_dict:
-        evt = event_dict[id]
-        if evt.choices:
-            for (req, msg, childId) in evt.choices:
-                traverse_event_or_group(childId)
-        if evt.fight:
-            traverse_ship(evt.fight)
-
-    else:
-        assert False
-
-def traverse_ship(id):
-    if id in visited_ships: return
-    visited_ships.add(id)
-
-    ship = ship_dict[id]
-    for key in ship_event_types:
-        child = ship.get(key)
-        if child:
-            traverse_event_or_group(child)
-
-for id in root_event_list:
-    traverse_event_or_group(id)
-for id in quest_events_set:
-    traverse_event_or_group(id)
-for id in quest_groups_set:
-    traverse_event_or_group(id)
-
-
-events_not_visited = event_keys - visited_events - unused_events
-if events_not_visited:
-    print("===== EVENTS NOT VISITED =====", file=sys.stderr)
-    for id in sorted(events_not_visited): print(id, file=sys.stderr)
-
-
-groups_not_visited = group_keys - visited_events - unused_groups
-if groups_not_visited:
-    print("===== GROUPS NOT VISITED =====", file=sys.stderr)
-    for id in sorted(groups_not_visited): print(id, file=sys.stderr)
-
-
-ships_not_visited = ship_keys - visited_ships - unused_ships
-if ships_not_visited:
-    print("===== SHIPS NOT VISITED =====", file=sys.stderr)
-    for id in sorted(ships_not_visited): print(id, file=sys.stderr)
