@@ -1354,20 +1354,22 @@ def output_ship(shipID):
     if surrender: case(surrender, "The enemy ship offers to surrender")
     print('</ul>')
 
+def begin_section(is_unused):
+    if is_unused:
+        print('<section class="unused">')
+    else:
+        print('<section>')
 
-def output_anchor(typ, key, is_unused):
+def end_section():
+    print('</section>')
+
+
+def output_anchor(typ, key):
     anchor = typ + '-' + key
     anchor_set.add(anchor)
-
-    if is_unused:
-        optclass = ' class="unused"'
-    else:
-        optclass = ''
-
-    print('<h2 id="{anchor}"{optclass}><a href="#{anchor}">{key}</a></h2>'.format(
+    print('<h2 id="{anchor}"><a href="#{anchor}">{key}</a></h2>'.format(
         anchor = H(anchor),
-        key = H(key),
-        optclass = optclass
+        key = H(key)
     ))
 
 def output_html():
@@ -1404,8 +1406,13 @@ def output_html():
             color: inherit !important;
         }
 
-        h2.unused, h2.unused + div {
+        .unused {
             color: rgb(100,100,100);
+        }
+
+        .unused h2:after {
+            font-size: smaller;
+            content: " (unused)";
         }
 
         /* Our notation for lists */
@@ -1435,14 +1442,8 @@ def output_html():
         .inner { display: none; }
         body.showchildren .inner { display: block; }
 
-
-        h2.unused, h2.unused + div { display: none; }
-        body.showunused h2.unused,
-        body.showunused h2.unused + div { display: block; }
-
-        .inner { display: none; }
-        body.showchildren .inner { display: block; }
-
+        .unused, { display: none; }
+        body.showunused .unused { display: block; }
     </style>
 </head>
 <body>
@@ -1483,18 +1484,20 @@ def output_html():
     for (key, typ) in items:
         if typ == 'event':
             if can_inline_event(key): continue
-            is_unused = (key in unused_events)
-            output_anchor('event', key, is_unused)
+            begin_section(key in unused_events)
+            output_anchor('event', key)
             print('<div class="indent">')
             output_event(key, True)
             print('</div>')
+            end_section()
         elif typ == 'group':
             if can_inline_group(key): continue
-            is_unused = (key in unused_groups)
-            output_anchor('list', key, is_unused)
+            begin_section(key in unused_groups)
+            output_anchor('list', key)
             print('<div class="indent">')
             output_group(key)
             print('</div>')
+            end_section()
         else:
             assert False
 
@@ -1502,11 +1505,13 @@ def output_html():
     print('<h1>Fights</h1>')
     for key in sorted(ship_dict.keys()):
         if key in peaceful_ships: continue
-        is_unused = (key in unused_ships)
-        output_anchor('ship', key, is_unused)
+        begin_section(key in unused_ships)
+        print('<section>')
+        output_anchor('ship', key)
         print('<div class="indent">')
         output_ship(key)
         print('</div>')
+        end_section()
 
     print("""
 </body>
