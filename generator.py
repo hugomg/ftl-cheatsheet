@@ -511,12 +511,12 @@ def blueprint_event(what, id):
     """Common functionality for adding weapon/drone/augment"""
 
     if id == 'RANDOM':
-        return '<li><strong>{what}</strong>'.format(what = H(what))
+        return '<li><strong>{what}</strong></li>'.format(what = H(what))
     elif id == 'DLC_AUGMENTS' or id == 'DLC_DRONES' or id == 'DLC_WEAPONS':
-        return '<li><strong>{what}</strong> (from Advanced Edition)'.format(what = H(what))
+        return '<li><strong>{what}</strong> (from Advanced Edition)</li>'.format(what = H(what))
     else:
         name = blueprint_name[id]
-        return '<li><strong>{what}</strong> ({name})'.format(what = H(what), name = H(name))
+        return '<li><strong>{what}</strong> ({name})</li>'.format(what = H(what), name = H(name))
 
 link_target_set = set()
 anchor_set = set()
@@ -557,7 +557,7 @@ def graph_add_event(event, enemy_ship_name):
             out.append('<ul class="texts">')
             for child_text_node in texts_dict[textID]:
                 text = translate_message(child_text_node)
-                out.append('<li>{text}'.format(text = H(text)))
+                out.append('<li>{text}</li>'.format(text = H(text)))
             out.append('</ul>')
 
             text_html = ''.join(out)
@@ -592,7 +592,7 @@ def graph_add_event(event, enemy_ship_name):
             else: assert False
         else: assert False
 
-        actions.append('<li><strong>Environment</strong> is {what}'.format(what = H(what)))
+        actions.append('<li><strong>Environment</strong> is {what}</li>'.format(what = H(what)))
 
     boarders = event.find('boarders')
     if boarders is not None:
@@ -613,7 +613,7 @@ def graph_add_event(event, enemy_ship_name):
         else:
             breach_html = ''
 
-        actions.append('<li><strong>Boarded</strong> by {num} {spc}</strong>{breach_html}'.format(
+        actions.append('<li><strong>Boarded</strong> by {num} {spc}{breach_html}</li>'.format(
             num = H(num),
             spc = H(spc),
             breach_html = breach_html))
@@ -621,7 +621,7 @@ def graph_add_event(event, enemy_ship_name):
     remove = event.find('remove')
     if remove is not None:
         name = remove.get('name')
-        actions.append('<li><strong>Remove</strong> {name}'.format(name = H(name)))
+        actions.append('<li><strong>Remove</strong> {name}</li>'.format(name = H(name)))
 
     item_modify = event.find('item_modify')
     if item_modify is not None:
@@ -639,13 +639,13 @@ def graph_add_event(event, enemy_ship_name):
                 if lo >= 0 and hi >= 0:
                     if direction == 'plus':
                         rng = num_range(lo, hi)
-                        actions.append('<li>+{rng} <strong>{what}</strong>'.format(
+                        actions.append('<li>+{rng} <strong>{what}</strong></li>'.format(
                             rng = H(rng),
                             what = H(what)))
                 elif lo <= 0 and hi <= 0:
                     if direction == 'minus':
                         rng = num_range(-hi, -lo)
-                        actions.append('<li>−{rng} <strong>{what}</strong>'.format(
+                        actions.append('<li>−{rng} <strong>{what}</strong></li>'.format(
                             rng = H(rng),
                             what = H(what)))
                 else:
@@ -664,7 +664,7 @@ def graph_add_event(event, enemy_ship_name):
         level_html = autoreward_level_html[level]
         kind_html  = autoreward_kind_html[kind]
 
-        actions.append('<li><strong>{level_html}</strong> {kind_html}'.format(
+        actions.append('<li><strong>{level_html}</strong> {kind_html}</li>'.format(
             level_html = level_html,
             kind_html = kind_html))
 
@@ -701,11 +701,11 @@ def graph_add_event(event, enemy_ship_name):
 
         n = str(abs(amount_num))
 
-        if   amount_num <= -2: template = '<li><strong>Lose {n} Crew</strong>'
-        elif amount_num == -1: template = '<li><strong>Lose Crew</strong>'
+        if   amount_num <= -2: template = '<li><strong>Lose {n} Crew</strong></li>'
+        elif amount_num == -1: template = '<li><strong>Lose Crew</strong></li>'
         elif amount_num ==  0: template = None; log("receive 0 crew")
-        elif amount_num ==  1: template = '<li><strong>Gain Crew</strong>{extra_str}'
-        elif amount_num >=  2: template = '<li><strong>Gain {n} Crew</strong>{extra_str}'
+        elif amount_num ==  1: template = '<li><strong>Gain Crew</strong>{extra_str}</li>'
+        elif amount_num >=  2: template = '<li><strong>Gain {n} Crew</strong>{extra_str}</li>'
 
         if template:
             actions.append(template.format(n = H(n), extra_str = H(extra_str)))
@@ -731,7 +731,7 @@ def graph_add_event(event, enemy_ship_name):
         else:
             msg = ''
 
-        actions.append('<li><strong>Lose {spc} Crew</strong> {clone_msg}'.format(
+        actions.append('<li><strong>Lose {spc} Crew</strong> {clone_msg}</li>'.format(
             spc = H(spc),
             clone_msg = clone_html))
     damages = event.findall('damage')
@@ -743,9 +743,9 @@ def graph_add_event(event, enemy_ship_name):
             hull += int(damage.get('amount'))
 
         if hull < 0:
-             actions.append("<li>{amount} <strong>Hull Repair</strong>".format(amount = H(str(-hull))))
+             actions.append("<li>{amount} <strong>Hull Repair</strong></li>".format(amount = H(str(-hull))))
         elif hull > 0:
-             actions.append('<li>{amount} <strong>Hull Damage</strong>'.format(amount = H(str(hull))))
+             actions.append('<li>{amount} <strong>Hull Damage</strong></li>'.format(amount = H(str(hull))))
 
         # System damage
         for damage in damages:
@@ -759,7 +759,7 @@ def graph_add_event(event, enemy_ship_name):
                 else:
                     effect_msg = ''
 
-                actions.append('<li>{amount} <strong>System Damage</strong> to {system}{effect_msg}</strong>'.format(
+                actions.append('<li>{amount} <strong>System Damage</strong> to {system}{effect_msg}</li>'.format(
                      amount = H(amount),
                      system = H(system),
                      effect_msg = H(effect_msg)))
@@ -798,7 +798,7 @@ def graph_add_event(event, enemy_ship_name):
         else:
             abort('Unknown <status> target:', target)
 
-        actions.append('<li>'+msg_html)
+        actions.append('<li>'+msg_html+'</li>')
 
     pursuit = event.find('modifyPursuit')
     if pursuit is not None:
@@ -819,14 +819,14 @@ def graph_add_event(event, enemy_ship_name):
         else:
              abort('fleet pursuit 0?')
 
-        actions.append('<li><strong>{what}</strong> by {n} {plural}'.format(
+        actions.append('<li><strong>{what}</strong> by {n} {plural}</li>'.format(
             what = H(what),
             n = H(n),
             plural = H(plural)))
 
     reveal_map = event.find('reveal_map')
     if reveal_map is not None:
-        actions.append('<li><strong>Map Update</strong>')
+        actions.append('<li><strong>Map Update</strong></li>')
 
     upgrade = event.find("upgrade")
     if upgrade is not None:
@@ -834,7 +834,7 @@ def graph_add_event(event, enemy_ship_name):
         systemID = upgrade.get('system')
 
         system = system_name[systemID]
-        html = '<li><strong>Upgrade</strong> {system}'.format(system = H(system))
+        html = '<li><strong>Upgrade</strong> {system}</li>'.format(system = H(system))
         if amount != '1':
             html += ' (by {amount})'.format(amount = H(amount))
         actions.append(html)
@@ -865,21 +865,21 @@ def graph_add_event(event, enemy_ship_name):
             url_html = group_link(id)
         else:
             assert False
-        actions.append('<li><strong>Quest</strong> marker for {url_html}'.format(url_html = url_html))
+        actions.append('<li><strong>Quest</strong> marker for {url_html}</li>'.format(url_html = url_html))
 
     unlock = event.find("unlockShip")
     if unlock is not None:
         id = unlock.get('id')
         name = unlock_name[id]
-        actions.append('<li><strong>Unlock</strong> the {name}'.format(name = H(name)))
+        actions.append('<li><strong>Unlock</strong> the {name}</li>'.format(name = H(name)))
 
     secret_sector = event.find('secretSector')
     if secret_sector is not None:
-        actions.append('<li><strong>Travel</strong> to the crystal sector!')
+        actions.append('<li><strong>Travel</strong> to the crystal sector!</li>')
 
     store = event.find('store')
     if store is not None:
-        actions.append('<li><strong>Enter Store</strong>')
+        actions.append('<li><strong>Enter Store</strong></li>')
 
     ship = event.find('ship')
     if ship is not None:
@@ -906,14 +906,14 @@ def graph_add_event(event, enemy_ship_name):
                 name_html = ship_link(enemy_ship_name)
 
             if is_hostile:
-                actions.append('<li><strong>Fight</strong> a {name_html}'.format(name_html = name_html))
+                actions.append('<li><strong>Fight</strong> a {name_html}</li>'.format(name_html = name_html))
             else:
-                actions.append('<li><strong>Encounter</strong> a {name_html}'.format(name_html = name_html))
+                actions.append('<li><strong>Encounter</strong> a {name_html}</li>'.format(name_html = name_html))
         else:
             if is_hostile:
-                actions.append('<li><strong>Fight</strong>')
+                actions.append('<li><strong>Fight</strong></li>')
             else:
-                actions.append('<li><strong>End Fight</strong>')
+                actions.append('<li><strong>End Fight</strong></li>')
 
         if is_hostile and enemy_ship_name:
             assert enemy_ship_name not in peaceful_ships
@@ -1013,7 +1013,7 @@ def graph_add_event(event, enemy_ship_name):
         fight = None
 
     if (not actions) and (not parsed_choices) and (not ends_with_fight):
-        actions_html = '<ul class="result"><li>Nothing happens</ul>'
+        actions_html = '<ul class="result"><li>Nothing happens</li></ul>'
 
     key = key or gen_event_id()
     assert key not in event_dict
@@ -1253,7 +1253,7 @@ printed_groups = set()
 printed_ships = set()
 
 def goto_url(url):
-    print('<ul class="result"><li>Go to {url}</ul>'.format(url = url))
+    print('<ul class="result"><li>Go to {url}</li></ul>'.format(url = url))
 
 def can_inline_event(name):
     return name.startswith('evt') or (
@@ -1298,7 +1298,7 @@ def output_event(eventID, is_toplevel=False):
         print('<ol class="choice">')
         for (text, is_blue, nextID) in event.choices:
             cls_html = 'class="blue"' if is_blue else ''
-            print('<li><em {cls_html}>{text}</em>'.format(cls_html = cls_html, text = H(text)))
+            print('<li><em {cls_html}>{text}</em></li>'.format(cls_html = cls_html, text = H(text)))
             print('<div>')
             goto_group_or_event(nextID)
             print('</div>')
@@ -1315,11 +1315,10 @@ def output_group(groupID):
 
     print('<ul class="random">')
     for (n, nextID) in group:
-        print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
-        #print('<li> {p}%'.format(p =  "%2.0f"%math.floor(100.0 * n / m)))
+        print('<li> {n}/{m}</li>'.format(n = H(str(n)), m = H(str(m))))
         goto_group_or_event(nextID)
     if not group:
-        print('<li> Nothing happens')
+        print('<li> Nothing happens</li>')
 
     print('</ul>')
 
@@ -1328,7 +1327,7 @@ def output_ship(shipID):
     printed_ships.add(shipID)
 
     def case(evtID, msg):
-        print('<li><em>{msg}</em>'.format(msg = H(msg)))
+        print('<li><em>{msg}</em></li>'.format(msg = H(msg)))
         print('<div>')
         goto_group_or_event(evtID)
         print('</div>')
@@ -1447,8 +1446,8 @@ def output_html():
 
     <h3>Settings</h3>
     <ul style="list-style:none">
-        <li><input type="checkbox" id="showinner"><label for="showinner">Show event responses</label>
-        <li><input type="checkbox" id="showunused"><label for="showunused">Show unused events</label>
+        <li><input type="checkbox" id="showinner"><label for="showinner">Show event responses</label></li>
+        <li><input type="checkbox" id="showunused"><label for="showunused">Show unused events</label></li>
     </ul>
 
     <script>
