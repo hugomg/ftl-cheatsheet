@@ -1453,24 +1453,12 @@ def output_html():
 
     <script>
         var toggleInner = document.getElementById('showinner')
-        function updateInner() {
-            if (toggleInner.checked) {
-                document.body.classList.add('showchildren');
-            } else {
-                document.body.classList.remove('showchildren');
-            }
-        }
+        function updateInner() { document.body.classList.toggle('showchildren', toggleInner.checked); }
         updateInner();
         toggleInner.addEventListener('change', updateInner);
 
         var toggleUnused = document.getElementById('showunused')
-        function updateUnused() {
-            if (toggleUnused.checked) {
-                document.body.classList.add('showunused');
-            } else {
-                document.body.classList.remove('showunused');
-            }
-        }
+        function updateUnused() { document.body.classList.toggle('showunused', toggleUnused.checked); }
         updateUnused();
         toggleUnused.addEventListener('change', updateUnused);
     </script>""")
@@ -1600,16 +1588,19 @@ for id in quest_groups_set:
     traverse_event_or_group(id)
 
 
-print("===== EVENTS NOT VISITED =====", file=sys.stderr)
 events_not_visited = event_keys - visited_events - unused_events
-for id in sorted(events_not_visited): print(id, file=sys.stderr)
+if events_not_visited:
+    print("===== EVENTS NOT VISITED =====", file=sys.stderr)
+    for id in sorted(events_not_visited): print(id, file=sys.stderr)
 
 
-print("===== GROUPS NOT VISITED =====", file=sys.stderr)
 groups_not_visited = group_keys - visited_events - unused_groups
-for id in sorted(groups_not_visited): print(id, file=sys.stderr)
+if groups_not_visited:
+    print("===== GROUPS NOT VISITED =====", file=sys.stderr)
+    for id in sorted(groups_not_visited): print(id, file=sys.stderr)
 
 
-print("===== SHIPS NOT VISITED =====", file=sys.stderr)
 ships_not_visited = ship_keys - visited_ships - unused_ships
-for id in sorted(ships_not_visited): print(id, file=sys.stderr)
+if ships_not_visited:
+    print("===== SHIPS NOT VISITED =====", file=sys.stderr)
+    for id in sorted(ships_not_visited): print(id, file=sys.stderr)
