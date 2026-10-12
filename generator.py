@@ -1329,6 +1329,8 @@ def output_group(groupID):
         print('<li> {n}/{m}'.format(n = H(str(n)), m = H(str(m))))
         #print('<li> {p}%'.format(p =  "%2.0f"%math.floor(100.0 * n / m)))
         goto_event_or_group(nextID)
+    if not group:
+        print('<li> Nothing happens')
 
     print('</ul>')
 
