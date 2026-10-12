@@ -1433,7 +1433,7 @@ def output_html():
         .inner { display: none; }
         body.showchildren .inner { display: block; }
 
-        .unused, { display: none; }
+        .unused { display: none; }
         body.showunused .unused { display: block; }
     </style>
 </head>
