@@ -322,6 +322,8 @@ unused_events = set_of_lines("""
     FUEL_ESCAPE_FLEET
     FUEL_ESCAPE_PDS
     FUEL_ESCAPE_PULSAR
+    FUEL_FLEET_DISTRESS
+    FUEL_OFF_ROCK_CURIOUS
     GHOST_BOARDED
     GHOST_SCRAP
     GHOST_SHIP
@@ -334,6 +336,8 @@ unused_events = set_of_lines("""
     NEWSHIP2
     PDS_TEST
     PULSAR
+    QUEST_STORE
+    PIRATE_SURRENDER_CIVILAN
     REBEL_AUTO_PDS
     REBEL_PDS
     REMOVAL_TEST
@@ -350,15 +354,19 @@ unused_events = set_of_lines("""
     STEALTH_5
     STEALTH_6
     STEALTH_7
+    STORE_RESCUE
     TEST_EVENT
     TEST_EVENT2
     UNLOCK_STEALTH
     ZOLTAN_SURRENDER
 """)
 
+
+
 unused_groups = set_of_lines("""
     DERELICT_ENGI
     DERELICT_TREASURE_REWARD
+    FUEL_OFF_ROCK_CURIOUS_LIST
     GHOST_BOARDING
     GHOST_DOCK
     GHOST_SHIP
@@ -378,12 +386,14 @@ unused_groups = set_of_lines("""
     NON_HOSTILE
     ROCK_NURSERY_AUTHORITY
     ROCK_NURSERY_STUDENTS
+    SAVE_CIVILIAN_LIST_LANIUS
     SLUG_DISTRESS_PILOTING_SWEAR
     QUESTS_CRYSTAL
     QUESTS_SLUG
 """)
 
 unused_ships = set_of_lines("""
+    FUEL_OFF_ROCK_CURIOUS
     GHOST_SHIP
     IMPOSSIBLE_PIRATE
     JELLY_STATUS_PILOT
@@ -461,8 +471,7 @@ def build_graph():
             event_keys.add(event.attrib['name'])
 
         for ship in tree.iterfind("ship"):
-            if ship.attrib['name'] not in peaceful_ships:
-                ship_keys.add(ship.attrib['name'])
+            ship_keys.add(ship.attrib['name'])
 
         for group in tree.iterfind('eventList'):
             group_keys.add(group.attrib['name'].removeprefix("OVERRIDE_"))
@@ -492,8 +501,7 @@ def build_graph():
                 graph_add_group(group)
 
         for ship in tree.iterfind("ship"):
-            if ship.get('name') not in peaceful_ships:
-                graph_add_ship(ship)
+            graph_add_ship(ship)
 
 def blueprint_event(what, id):
     """Common functionality for adding weapon/drone/augment"""
@@ -995,7 +1003,7 @@ def graph_add_event(event, enemy_ship_name):
     else:
         actions_html = ''
 
-    if ends_with_fight:
+    if enemy_ship_name:
         fight = enemy_ship_name
     else:
         fight = None
@@ -1493,6 +1501,7 @@ def output_html():
     # Ships
     print('<h1>Fights</h1>')
     for key in sorted(ship_dict.keys()):
+        if key in peaceful_ships: continue
         is_unused = (key in unused_ships)
         output_anchor('ship', key, is_unused)
         print('<div class="indent">')
@@ -1536,7 +1545,7 @@ def main():
             log('missing event', k)
 
     for k in ship_dict.keys():
-        if k not in printed_ships:
+        if k not in printed_ships and k not in peaceful_ships:
             log('missing ship', k)
 
     # Check for broken links
