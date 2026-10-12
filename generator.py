@@ -308,7 +308,7 @@ Event = namedtuple('Event', [
 
 Fight = namedtuple('Fight', [
     'destroyed', # eventid
-    'dead_crew', # eventid
+    'deadCrew', # eventid
     'gotaway',   # eventid
     'surrender', # eventid
 ])
@@ -321,6 +321,11 @@ texts_dict = {} # <testList>
 event_dict = {} # <event>
 ship_dict  = {} # <ship>
 group_dict = {} # <eventList>
+
+peaceful_ships = {
+    'CIVILIAN_SHIP',
+    'ROCK_UNLOCK1',
+}
 
 quest_events_set = set()
 quest_groups_set = set()
@@ -342,9 +347,16 @@ def build_graph():
     # use a shared ID for everythign because there are some events
     # and ships that have the same ID)
     for tree in trees:
-        for event in tree.iterfind("event"): event_keys.add(event.attrib['name'])
-        for ship in tree.iterfind("ship"): ship_keys.add(ship.attrib['name'])
-        for group in tree.iterfind('eventList'): group_keys.add(group.attrib['name'])
+
+        for event in tree.iterfind("event"):
+            event_keys.add(event.attrib['name'])
+
+        for ship in tree.iterfind("ship"):
+            if ship.attrib['name'] not in peaceful_ships:
+                ship_keys.add(ship.attrib['name'])
+
+        for group in tree.iterfind('eventList'):
+            group_keys.add(group.attrib['name'].removeprefix("OVERRIDE_"))
 
     # Also compute text nodes ahead of time. Some files mention text nodes from
     # other files. For instance, events_ships.xml refers to surrender text).
@@ -354,24 +366,25 @@ def build_graph():
             assert key not in texts_dict
             texts_dict[key] = [node for node in txtgroup.iterfind('text')]
 
-    overrides = []
+    # Identify which events are overwritten
+    overwritten = set()
+    for tree in trees:
+        for group in tree.iterfind('eventList'):
+            name = group.get('name')
+            if name.startswith('OVERRIDE_'):
+                overwritten.add(name.removeprefix("OVERRIDE_"))
 
     for tree in trees:
         for event in tree.iterfind("event"):
             graph_add_event(event, None)
 
         for group in tree.iterfind('eventList'):
-            if group.get('name').startswith('OVERRIDE_'):
-                overrides.append(group)
-            else:
+            if group.get('name') not in overwritten:
                 graph_add_group(group)
 
         for ship in tree.iterfind("ship"):
-            graph_add_ship(ship)
-
-    for group in overrides:
-        graph_add_group(group)
-
+            if ship.get('name') not in peaceful_ships:
+                graph_add_ship(ship)
 
 def blueprint_event(what, id):
     """Common functionality for adding weapon/drone/augment"""
@@ -445,8 +458,6 @@ def graph_add_event(event, enemy_ship_name):
     hazard = event.find('environment')
     if hazard is not None:
         typ = hazard.get('type')
-
-
         if   typ == 'asteroid': what = "Asteroid Field"
         elif typ == 'nebula': what = "Nebula"
         elif typ == 'pulsar': what = "Pulsar"
@@ -751,11 +762,6 @@ def graph_add_event(event, enemy_ship_name):
 
     ship = event.find('ship')
     if ship is not None:
-        shipID = ship.get('load')
-        if shipID:
-            url_html = ship_link(shipID)
-            enemy_ship_name = shipID
-
         hostility = ship.get('hostile')
         if hostility:
             hostility = hostility.lower()
@@ -768,11 +774,20 @@ def graph_add_event(event, enemy_ship_name):
         else:
             is_hostile = False
 
+        shipID = ship.get('load')
         if shipID:
-            if is_hostile:
-                actions.append('<li><strong>Fight</strong> a {url_html}'.format(url_html = url_html))
+            enemy_ship_name = shipID
+
+        if shipID:
+            if enemy_ship_name in peaceful_ships:
+                name_html = enemy_ship_name
             else:
-                actions.append('<li><strong>Encounter</strong> a {url_html}'.format(url_html = url_html))
+                name_html = ship_link(enemy_ship_name)
+
+            if is_hostile:
+                actions.append('<li><strong>Fight</strong> a {name_html}'.format(name_html = name_html))
+            else:
+                actions.append('<li><strong>Encounter</strong> a {name_html}'.format(name_html = name_html))
         else:
             if is_hostile:
                 actions.append('<li><strong>Fight</strong>')
@@ -780,6 +795,7 @@ def graph_add_event(event, enemy_ship_name):
                 actions.append('<li><strong>End Fight</strong>')
 
         if is_hostile and enemy_ship_name:
+            assert enemy_ship_name not in peaceful_ships
             ends_with_fight = True
 
     #
@@ -891,7 +907,7 @@ def graph_add_event(event, enemy_ship_name):
 # Ship nodes
 #
 
-ship_event_types = ['destroyed', 'deadCrew', 'gotaway', 'surrender']
+ship_event_types = ['destroyed', 'deadCrew', 'escape', 'gotaway', 'surrender']
 
 def graph_add_ship(ship):
 
@@ -924,7 +940,8 @@ def graph_add_ship(ship):
     assert key not in ship_dict
     ship_dict[key] = {
         'destroyed': evts['destroyed'],
-        'dead_crew': evts['deadCrew'],
+        'deadCrew': evts['deadCrew'],
+        'escape'   : evts['escape'],
         'gotaway'  : evts['gotaway'],
         'surrender': evts['surrender'], # attrs: chance min max
     }
@@ -940,12 +957,8 @@ def graph_add_group(group):
         eventID = graph_add_event(event, None)
         cases.append((1, eventID))
 
-    key = group.get("name")
-    if key.startswith("OVERRIDE_"):
-        key = key.removeprefix("OVERRIDE_")
-    else:
-        assert key not in group_dict
-
+    key = group.get("name").removeprefix("OVERRIDE_")
+    assert key not in group_dict
     group_dict[key] = cases
 
     return key
@@ -1039,27 +1052,17 @@ def init_nesting():
 # Events that are not reachable from these are considered to be unused test/debug events
 #
 
-
+# TODO untangle events and groups
 root_event_set  = set()
 root_event_list = []
 
 def add_root_event(name):
-    if name in event_dict:
-        if name not in root_event_set:
-            root_event_set.add(name)
-            root_event_list.append(name)
-    elif name in group_dict:
-        for (_, ev) in group_dict[name]:
-            add_root_event(ev)
-    else:
-        # event does not exist
-        assert False
+    if name not in root_event_set:
+        root_event_set.add(name)
+        root_event_list.append(name)
 
-def add_root_group(name):
     if name in event_dict:
-        if name not in root_event_set:
-            root_event_set.add(name)
-            root_event_list.append(name)
+        pass
     elif name in group_dict:
         for (_, ev) in group_dict[name]:
             add_root_event(ev)
@@ -1072,13 +1075,13 @@ def init_root_events():
     # These appear to be hardcoded events
     # That don't happen at the start of a beacon
     add_root_event("STALEMATE_SURRENDER")
+    add_root_event("BOSS_STALEMATE")
     add_root_event("CREW_STUCK")
     add_root_event("FUEL_ESCAPE_SUN")
     add_root_event("FUEL_ESCAPE_STORM")
     add_root_event("FUEL_ESCAPE_ASTEROIDS")
     add_root_event("AUGMENT_FULL")
     add_root_event("EQUIP_FULL")
-    add_root_event("START_DEMO")
     add_root_event("START_GAME")
     add_root_event("TUTORIAL_START")
     add_root_event("TUTORIAL_MISSILE")
@@ -1086,7 +1089,7 @@ def init_root_events():
     add_root_event("TOO_MANY_CREW")
 
     # These are hardcoded "structural" events
-    add_root_event("START_BEACON")
+    # (events.xml)
     add_root_event("FINISH_BEACON")
     add_root_event("FINISH_BEACON_NEBULA")
     add_root_event("FLEET_EASY")
@@ -1094,37 +1097,32 @@ def init_root_events():
     add_root_event("FLEET_EASY_BEACON")
     add_root_event("FLEET_EASY_BEACON_DLC")
     add_root_event("FLEET_HARD")
-    add_root_event("NOTHING")
-    add_root_event('FEDERATION_BASE')
-
-    # No fuel events
+    # (events_fuel.xml)
     add_root_event('NO_FUEL_FLEET')
     add_root_event('NO_FUEL_FLEET_DLC')
-    add_root_group('NO_FUEL')
-    add_root_group('NO_FUEL_DISTRESS')
+    add_root_event('NO_FUEL')
+    add_root_event('NO_FUEL_DISTRESS')
+    # (events_nebula.xml)
+    add_root_event("FLEET_EASY_NEBULA")
 
-    tree = ET.parse("sector_data.xml")
-    for sector in tree.iterfind("sectorDescription"):
+    # Sector events
+    for sector in ET.parse("sector_data.xml").iterfind("sectorDescription"):
         start_event = sector.find("startEvent")
         if start_event is not None:
             add_root_event(start_event.text)
+
         for lst in sector.iterfind("event"):
-            add_root_group(lst.get("name"))
+            mincount = int(lst.get("min"))
+            maxcount = int(lst.get("max"))
+            if mincount <= maxcount:
+                add_root_event(lst.get("name"))
 
-    # Last stand events
-    tree = ET.parse("events_boss.xml")
-    for event in tree.iterfind("event"):
+    # Boss events
+    boss_sector = ET.parse("events_boss.xml")
+    for event in boss_sector.iterfind("event"):
         add_root_event(event.get("name"))
-
-    # DLC Events that I don't understand exactly
-    # how they're added to the event list. But
-    # they are...
-    add_root_group("HOSTILE1")
-    add_root_group("HOSTILE2")
-
-    # The parser seems to be buggy for this one,
-    # because there is a neaby commented-out event
-    add_root_event('DOCK_DRONE_SALESMAN')
+    for event in boss_sector.iterfind("eventList"):
+        add_root_event(event.get("name"))
 
 #
 # HTML
@@ -1228,13 +1226,13 @@ def output_ship(shipID):
         print('</div>')
 
     destroyed = ship.get('destroyed')
-    dead_crew = ship.get('dead_crew')
+    deadCrew = ship.get('deadCrew')
     gotaway   = ship.get('gotaway')
     surrender = ship.get('surrender')
 
     print('<ul class="fight">')
     if destroyed: case(destroyed, "You destroy the enemy ship")
-    if dead_crew: case(dead_crew, "You kill the enemy crew")
+    if deadCrew: case(deadCrew, "You kill the enemy crew")
     if gotaway:   case(gotaway,   "The enemy ship escaped")
     if surrender: case(surrender, "The enemy ship offers to surrender")
     print('</ul>')
@@ -1323,17 +1321,15 @@ def output_html():
     </ul>
 
     <script>
-        var toggle = document.getElementById('showinner')
-        update_showhidden();
-        toggle.addEventListener('change', update_showhidden);
-
-        function update_showhidden() {
-            if (toggle.checked) {
-                document.body.className = 'showchildren';
-            } else {
-                document.body.className = '';
-            }
-        }
+        document
+            .getElementById('showinner')
+            .addEventListener('change', function(evt) {
+                if (evt.target.checked) {
+                    document.body.classList.add('showchildren');
+                } else {
+                    document.body.classList.remove('showchildren');
+                }
+            })
     </script>""")
 
 
@@ -1415,3 +1411,151 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+visited_events = set() # or groups...
+visited_ships  = set()
+
+def traverse_event_or_group(id):
+    if id in visited_events: return
+    visited_events.add(id)
+
+    if id in group_dict:
+        group = group_dict[id]
+        for (weight, childId) in group:
+            traverse_event_or_group(childId)
+
+    elif id in event_dict:
+        evt = event_dict[id]
+        if evt.choices:
+            for (req, msg, childId) in evt.choices:
+                traverse_event_or_group(childId)
+        if evt.fight:
+            traverse_ship(evt.fight)
+
+    else:
+        assert False
+
+def traverse_ship(id):
+    if id in visited_ships: return
+    visited_ships.add(id)
+
+    ship = ship_dict[id]
+    for key in ship_event_types:
+        child = ship.get(key)
+        if child:
+            traverse_event_or_group(child)
+
+for id in root_event_list:
+    traverse_event_or_group(id)
+for id in quest_events_set:
+    traverse_event_or_group(id)
+for id in quest_groups_set:
+    traverse_event_or_group(id)
+
+def set_of_lines(string):
+    return set(string.split())
+
+print("===== EVENTS NOT VISITED =====", file=sys.stderr)
+events_not_visited = event_keys - visited_events - set_of_lines("""
+    ASTEROID_TEST
+    AUTO_BAIT
+    BIG_NAME_TEST
+    BOARDERS_ASTEROID
+    BOARDERS_ASTEROID_GHOST
+    BOARDERS_HACKING_2
+    BOARDER_TEST
+    CASH_IN_DRONE
+    CHARACTER_TEST
+    CREW_DEAD_TEST
+    CREW_TEST
+    CRYSTAL_TEST
+    DEATH_TEST
+    DEMO_END
+    DERELICT_TREASURE
+    DOCK_BOMB_SALESMAN
+    DUMMY
+    ENGI_MONSTER
+    ENGI_REFUGEES
+    FREE_AUG
+    FREE_AUGMENT
+    FREE_NANO
+    FUEL_ESCAPE_FLEET
+    FUEL_ESCAPE_PDS
+    FUEL_ESCAPE_PULSAR
+    GHOST_BOARDED
+    GHOST_SCRAP
+    GHOST_SHIP
+    LONE_SHUTTLE
+    MANTIS_CAPTURE_COMMANDO
+    MANTIS_GAMBLE
+    NEBULA_NOTHING_TEST
+    NEW
+    NEWSHIP1
+    NEWSHIP2
+    PDS_TEST
+    PULSAR
+    REBEL_AUTO_PDS
+    REBEL_PDS
+    REMOVAL_TEST
+    ROCK_NURSERY
+    ROCK_NURSERY_LOSE
+    ROCK_NURSERY_WIN
+    ROCK_ZOLTAN_HELP
+    SLUG_DISTRESS_PILOTING
+    START_DEMO
+    STEALTH_1
+    STEALTH_2
+    STEALTH_3
+    STEALTH_4
+    STEALTH_5
+    STEALTH_6
+    STEALTH_7
+    TEST_EVENT
+    TEST_EVENT2
+    UNLOCK_STEALTH
+    ZOLTAN_SURRENDER
+""")
+for id in sorted(events_not_visited): print(id, file=sys.stderr)
+
+
+print("===== GROUPS NOT VISITED =====", file=sys.stderr)
+groups_not_visited = group_keys - visited_events - set_of_lines("""
+    DERELICT_ENGI
+    DERELICT_TREASURE_REWARD
+    GHOST_SHIP
+    HOSTILE2
+    LONE_SHUTTLE_DESTROY
+    LONE_SHUTTLE_WAIT
+    MANTIS_CAPTURE_COMMANDO_KILL
+    MANTIS_CAPTURE_COMMANDO_RELEASE
+    MANTIS_CAPTURE_COMMANDO_TALK
+    MANTIS_GAMBLE_BLUE
+    MANTIS_GAMBLE_RED
+    NEBULA_ROCK
+    NEUTRAL_SLUG
+    NON_HOSTILE
+    ROCK_NURSERY_AUTHORITY
+    ROCK_NURSERY_STUDENTS
+    SLUG_DISTRESS_PILOTING_SWEAR
+    QUESTS_CRYSTAL
+    QUESTS_SLUG
+""")
+for id in sorted(groups_not_visited): print(id, file=sys.stderr)
+
+
+print("===== SHIPS NOT VISITED =====", file=sys.stderr)
+ships_not_visited = ship_keys - visited_ships - set_of_lines("""
+    GHOST_SHIP
+    IMPOSSIBLE_PIRATE
+    JELLY_STATUS_PILOT
+    LONG_ELITE
+    NEWSHIP1
+    NEWSHIP2
+    NEW_TESTS
+    REBEL_AUTO_BAIT
+    ROCK_ZOLTAN_HELP_ROCK
+    ROCK_ZOLTAN_HELP_ZOLTAN
+    ZOLTAN_PIRATE
+""")
+for id in sorted(ships_not_visited): print(id, file=sys.stderr)

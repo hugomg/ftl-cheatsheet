@@ -74,17 +74,15 @@
     </ul>
 
     <script>
-        var toggle = document.getElementById('showinner')
-        update_showhidden();
-        toggle.addEventListener('change', update_showhidden);
-
-        function update_showhidden() {
-            if (toggle.checked) {
-                document.body.className = 'showchildren';
-            } else {
-                document.body.className = '';
-            }
-        }
+        document
+            .getElementById('showinner')
+            .addEventListener('change', function(evt) {
+                if (evt.target.checked) {
+                    document.body.classList.add('showchildren');
+                } else {
+                    document.body.classList.remove('showchildren');
+                }
+            })
     </script>
 <h1>Events</h1>
 <h2 id="event-ALISON_DEFECTOR"><a href="#event-ALISON_DEFECTOR">ALISON_DEFECTOR</a></h2>
@@ -2405,8 +2403,10 @@
 </div>
 </ol>
 </div>
-<h2 id="event-DOCK_DRONE_SALESMAN"><a href="#event-DOCK_DRONE_SALESMAN">DOCK_DRONE_SALESMAN</a></h2>
+<h2 id="list-DOCK_PIRATE_SALESMAN"><a href="#list-DOCK_PIRATE_SALESMAN">DOCK_PIRATE_SALESMAN</a></h2>
 <div class="indent">
+<ul class="random">
+<li> 1/1
 <p>A human in an exquisite suit meets you on board. &quot;Welcome to my ship! We specialize in drones of all kinds, can I interest you in any?&quot;</p>
 
 <ol class="choice">
@@ -2450,12 +2450,6 @@
 <li><strong>Fight</strong> a <a href="#ship-PIRATE">PIRATE</a></ul>
 </div>
 </ol>
-</div>
-<h2 id="list-DOCK_PIRATE_SALESMAN"><a href="#list-DOCK_PIRATE_SALESMAN">DOCK_PIRATE_SALESMAN</a></h2>
-<div class="indent">
-<ul class="random">
-<li> 1/1
-<ul class="result"><li>Go to <a href="#event-DOCK_DRONE_SALESMAN">DOCK_DRONE_SALESMAN</a></ul>
 </ul>
 </div>
 <h2 id="event-DONOR_BLACK_RAVEN"><a href="#event-DONOR_BLACK_RAVEN">DONOR_BLACK_RAVEN</a></h2>
@@ -3054,7 +3048,7 @@
 <h2 id="event-ESCORT_BEACON"><a href="#event-ESCORT_BEACON">ESCORT_BEACON</a></h2>
 <div class="indent">
 <p>Once you arrive at the location of the distress call a civilian ship hails you, &quot;Thanks for responding to our beacon. Our FTL navigation has gone haywire and we can&#x27;t plot a course to the nearest depot to get it fixed. Could you lead us there?&quot;</p>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <ol class="choice">
 <li><em >Lead them to their destination.</em>
 <div>
@@ -3371,7 +3365,7 @@
 <h2 id="event-FRIENDLY_BEACON"><a href="#event-FRIENDLY_BEACON">FRIENDLY_BEACON</a></h2>
 <div class="indent">
 <ul class="texts"><li>&quot;Greetings! It is so good to see you! We&#x27;ve been out of fuel and floating out here for weeks. We were terrified a pirate or those damn Rebels would find us first. Could you spare some fuel?&quot;<li>You arrive to find a ship floating among some debris. &quot;Hello. Our impulse drives are shot and we can&#x27;t jump. Could you give us some fuel?&quot;<li>A small civilian ship flies over as soon as you arrive. You&#x27;re prepared to fight but they just inform you that they&#x27;re out of FTL fuel and can&#x27;t jump.<li>&quot;Hello. We used our last FTL fuel to jump to this station.&quot; They indicate a burnt out husk of debris and warped metal. &quot;As you can see the war must have spread to this sector. We&#x27;ve been stranded ever since.&quot;<li>The ship emitting the distress beacon messages you, &quot;Sorry to bother you, but we&#x27;re out of fuel and can&#x27;t get out of this barren sector. Could you help us out?</ul>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <ol class="choice">
 <li><em >Give them the fuel.</em>
 <div>
@@ -3564,10 +3558,10 @@
 <li> 1/4
 <div class="inner"><p>They pull close to your ship and unload some fuel saying, &quot;Try not to run out of fuel again. These are dangerous times; who knows who could have showed up.&quot;</p></div>
 <ul class="result"><li>+ 2-6  <strong>Fuel</strong>
-<li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <li> 1/4
 <p>They approach and dock with your ship. On board they present an offer.</p>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <ol class="choice">
 <li><em >Gladly trade.</em>
 <div>
@@ -3593,7 +3587,7 @@
 <li> 1/3
 <div class="inner"><p>&quot;I assure you that we mean no harm. See, we&#x27;ll send some fuel over on a transport.&quot; A small ship docks and offloads some fuel just as they said. They leave, saying, &quot;Stay cautious, friend.&quot;</p></div>
 <ul class="result"><li>+ 1-4  <strong>Fuel</strong>
-<li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <li> 1/3
 <div class="inner"><p>&quot;No one trusts anyone these days...&quot; The ship jumps away.</p></div>
 <ul class="result"><li>Nothing happens</ul>
@@ -4016,7 +4010,7 @@
 <h2 id="event-FUEL_TRADER"><a href="#event-FUEL_TRADER">FUEL_TRADER</a></h2>
 <div class="indent">
 <ul class="texts"><li>A merchant ship jumps into the sector and you quickly hail them asking for help. They respond, &quot;Perhaps we could work out an exchange...&quot;<li>A number of ships pass through the sector. You relay your message to each, and one finally responds. &quot;I can&#x27;t help much right now but perhaps we can trade.&quot;<li>A nearby settlement sends a small ship in your direction. It keeps its distance and hails you, &quot;We can give you fuel for a price. Just don&#x27;t even think of doing anything rash. We&#x27;ve got a teleporter at our base and a squad ready to defend us.<li>A large caravan of merchant ships jumps to a location near your position. Sensing an opportunity, one ship breaks off from the fleet to offer you an exchange.<li>A modified YT-1300 freighter jumps to an area near your sector. Your gut tells you these people are smugglers, but they seem to be feeling altruistic and present an offer of assistance.</ul>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <ol class="choice">
 <li><em >Gladly trade.</em>
 <div>
@@ -4031,7 +4025,7 @@
 <h2 id="event-FUEL_TRADER_DISTRESS"><a href="#event-FUEL_TRADER_DISTRESS">FUEL_TRADER_DISTRESS</a></h2>
 <div class="indent">
 <ul class="texts"><li>A merchant ship jumps into the sector, obviously responding to your ship&#x27;s distress beacon. They hail you offering a trade for fuel.<li>A ship arrives at the beacon. &quot;We noticed your distress signal. I assume you&#x27;re out of fuel? We&#x27;re a bit low ourselves but perhaps we can make a trade.&quot;<li>A ship traveling near the beacon approaches your ship and hails you. &quot;Out of fuel? This is a good opportunity for both of us... Care to trade?&quot;<li>A mercenary ship arrives at the beacon. &quot;We have a bit of extra fuel we can give you... for a price.&quot;</ul>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <ol class="choice">
 <li><em >Gladly trade.</em>
 <div>
@@ -4452,7 +4446,28 @@
 <div class="indent">
 <ul class="random">
 <li> 1/15
-<ul class="result"><li>Go to <a href="#event-REBEL_PDS">REBEL_PDS</a></ul>
+<ul class="texts"><li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!<li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!<li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!<li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!</ul>
+<ul class="result"><li><strong>Environment</strong> is Anti-Ship Battery targeting us
+<li><strong>Fight</strong> a <a href="#ship-REBEL">REBEL</a></ul>
+<ol class="choice">
+<li><em >Prepare to fight.</em>
+<div>
+<div class="inner"></div>
+<ul class="result"><li>Nothing happens</ul>
+</div>
+<li><em >(Simple Hacking) Confuse the Anti-Ship Battery&#x27;s targets.</em>
+<div>
+<div class="inner"><p>You spot a weakness in the targeting satellites. Your crew is able to launch a hacking drone to confuse the Anti-Ship Battery&#x27;s targeting matrix. It should also fire on the Rebel ship now.</p></div>
+<ul class="result"><li><strong>Environment</strong> is Confused Anti-Ship Battery targeting both ships
+<li>−1 <strong>Drone Parts</strong></ul>
+</div>
+<li><em >(hacking ≥ 3) Overwrite the Anti-Ship Battery&#x27;s target.</em>
+<div>
+<div class="inner"><p>You spot a weakness in the targeting satellites. Your crew is able to launch an improved hacking drone to overwrite the Anti-Ship Battery&#x27;s targeting matrix. It will fire on the Rebel ship instead!</p></div>
+<ul class="result"><li><strong>Environment</strong> is Friendly Anti-Ship Battery
+<li>−1 <strong>Drone Parts</strong></ul>
+</div>
+</ol>
 <li> 1/15
 <ul class="result"><li>Go to <a href="#event-REBEL_AUTO">REBEL_AUTO</a></ul>
 <li> 1/15
@@ -8422,7 +8437,7 @@
 <h2 id="event-QUEST_ESCORT"><a href="#event-QUEST_ESCORT">QUEST_ESCORT</a></h2>
 <div class="indent">
 <ul class="texts"><li>After a short time you receive a message, &quot;Hello. I hope it&#x27;s not a bother, but I&#x27;m looking for an escort to a nearby system. This region is quite dangerous and our ship is not well-armed.&quot;<li>There is a single ship at this beacon. They hail you, &quot;We could really use some help. Our FTL navigation system is shot. Can you help us get to a nearby station where they can patch us up?&quot;<li>&quot;Hello,&quot; your communicator opens a hail from a nearby ship. &quot;Our weapon systems are malfunctioning and we&#x27;re too afraid of pirates to travel home unassisted. Can you escort us?&quot;</ul>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a CIVILIAN_SHIP</ul>
 <ol class="choice">
 <li><em >Accept.</em>
 <div>
@@ -8692,31 +8707,6 @@
 <div class="indent">
 <ul class="texts"><li>You make to preparations to leave. One of the civilian leaders contacts you: &quot;That Rebel was our sole source of supplies. You have doomed us all.&quot;<li>You leave the civilians with the supplies, though without the Rebel that was running supplies to them its unlikely they&#x27;ll live long.<li>You wonder if any more Rebels will be available to help these civilians on the edge of nowhere. Oh well, for you a few more dead Rebels matter more than the lives of a thousand colonists.<li>Before your FTL drive charges, you receive a hail: &quot;My son was on that ship. He only helped the Rebels because they cared enough to help us. Without him to find us supplies, we&#x27;ll likely be forgotten and die out here.&quot;</ul>
 <ul class="result"><li>Nothing happens</ul>
-</div>
-<h2 id="event-REBEL_PDS"><a href="#event-REBEL_PDS">REBEL_PDS</a></h2>
-<div class="indent">
-<ul class="texts"><li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!<li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!<li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!<li>You&#x27;re shocked to discover a Rebel forward base on this planet. A patrol ship moves in to intercept and sensors indicate an Anti-Ship Battery is about to fire. We&#x27;ve got to get out of here!</ul>
-<ul class="result"><li><strong>Environment</strong> is Anti-Ship Battery targeting us
-<li><strong>Fight</strong> a <a href="#ship-REBEL">REBEL</a></ul>
-<ol class="choice">
-<li><em >Prepare to fight.</em>
-<div>
-<div class="inner"></div>
-<ul class="result"><li>Nothing happens</ul>
-</div>
-<li><em >(Simple Hacking) Confuse the Anti-Ship Battery&#x27;s targets.</em>
-<div>
-<div class="inner"><p>You spot a weakness in the targeting satellites. Your crew is able to launch a hacking drone to confuse the Anti-Ship Battery&#x27;s targeting matrix. It should also fire on the Rebel ship now.</p></div>
-<ul class="result"><li><strong>Environment</strong> is Confused Anti-Ship Battery targeting both ships
-<li>−1 <strong>Drone Parts</strong></ul>
-</div>
-<li><em >(hacking ≥ 3) Overwrite the Anti-Ship Battery&#x27;s target.</em>
-<div>
-<div class="inner"><p>You spot a weakness in the targeting satellites. Your crew is able to launch an improved hacking drone to overwrite the Anti-Ship Battery&#x27;s targeting matrix. It will fire on the Rebel ship instead!</p></div>
-<ul class="result"><li><strong>Environment</strong> is Friendly Anti-Ship Battery
-<li>−1 <strong>Drone Parts</strong></ul>
-</div>
-</ol>
 </div>
 <h2 id="event-REBEL_PULSAR"><a href="#event-REBEL_PULSAR">REBEL_PULSAR</a></h2>
 <div class="indent">
@@ -9811,7 +9801,7 @@
 <h2 id="event-ROCK_UNLOCK3"><a href="#event-ROCK_UNLOCK3">ROCK_UNLOCK3</a></h2>
 <div class="indent">
 <p>You arrive at a massive Rockman shipyard and notice the ship that had just tried to kill you is docked and already being repaired. &quot;Well fought! I must say I did not expect you to survive.&quot;</p>
-<ul class="result"><li><strong>Encounter</strong> a <a href="#ship-ROCK_UNLOCK1">ROCK_UNLOCK1</a></ul>
+<ul class="result"><li><strong>Encounter</strong> a ROCK_UNLOCK1</ul>
 <ol class="choice">
 <li><em >Continue...</em>
 <div>
@@ -12181,19 +12171,6 @@
 <ul class="result"><li>Go to <a href="#list-BOSS_SCOUT_RESCUE_LIST">BOSS_SCOUT_RESCUE_LIST</a></ul>
 </div>
 </ol>
-</div>
-</ul>
-</div>
-<h2 id="ship-CIVILIAN_SHIP"><a href="#ship-CIVILIAN_SHIP">CIVILIAN_SHIP</a></h2>
-<div class="indent">
-<ul class="fight">
-<li><em>You destroy the enemy ship</em>
-<div>
-<ul class="result"><li>Go to <a href="#list-DESTROYED_DEFAULT">DESTROYED_DEFAULT</a></ul>
-</div>
-<li><em>You kill the enemy crew</em>
-<div>
-<ul class="result"><li>Go to <a href="#list-DEAD_CREW_DEFAULT">DEAD_CREW_DEFAULT</a></ul>
 </div>
 </ul>
 </div>
@@ -14802,19 +14779,6 @@
 <ul class="result"><li>Go to <a href="#list-ROCK_SLUG_GRATEFUL">ROCK_SLUG_GRATEFUL</a></ul>
 </div>
 </ol>
-</div>
-</ul>
-</div>
-<h2 id="ship-ROCK_UNLOCK1"><a href="#ship-ROCK_UNLOCK1">ROCK_UNLOCK1</a></h2>
-<div class="indent">
-<ul class="fight">
-<li><em>You destroy the enemy ship</em>
-<div>
-<ul class="result"><li>Go to <a href="#list-DESTROYED_DEFAULT">DESTROYED_DEFAULT</a></ul>
-</div>
-<li><em>You kill the enemy crew</em>
-<div>
-<ul class="result"><li>Go to <a href="#list-DEAD_CREW_DEFAULT">DEAD_CREW_DEFAULT</a></ul>
 </div>
 </ul>
 </div>
